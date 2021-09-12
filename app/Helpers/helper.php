@@ -1,7 +1,5 @@
 <?php
 
-namespace App\Helper;
-
 
 function numberTowords($num)
 {

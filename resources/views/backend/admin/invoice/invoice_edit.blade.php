@@ -160,7 +160,6 @@
                                                         $amount = $installment->amount?? 0;
                                                         $interest = $installment->interest?? 0;
                                                         $daycount = $installment->dayCount??0 ;
-
                                                         if($daycount > 0 ){
                                                             $interestAmount = $daycount * ($amount * $interest)/100;
                                                             $totalAmount =  $interestAmount + $amount;

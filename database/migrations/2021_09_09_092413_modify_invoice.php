@@ -19,6 +19,7 @@ class ModifyInvoice extends Migration
         foreach($dropTable as $table){
             Schema::dropIfExists($table);
         }
+        
         Schema::create('invoices', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->bigIncrements('id');

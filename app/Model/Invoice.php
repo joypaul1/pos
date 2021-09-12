@@ -63,7 +63,7 @@ class Invoice extends Model
         return $this->hasOne(InvoiceInstallment::class, 'invoice_id', 'id')->latest();
     }
 
-     public function getDayCountAttribute()
+    public function getDayCountAttribute()
     {
         if($this->installment()->first()){
             $date   = Carbon::parse($this->installment()->first()->date);

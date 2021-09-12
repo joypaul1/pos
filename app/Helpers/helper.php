@@ -3,7 +3,6 @@
 
 function numberTowords($num)
 {
-
     $ones = array(
         0 =>"ZERO",
         1 => "ONE",

@@ -285,7 +285,7 @@ class InvoiceController extends Controller
                 ]);
 
                 if (!empty($request->new_installAmount && $request->new_installmentDate)) {
-                    $v = $invoice->installment()->create([
+                    $invoice->installment()->create([
                         'payment_id'   =>  $invoicePayment->id,
                         'customer_id'   => $request->customer_id,
                         'amount'        => $request->new_installAmount,

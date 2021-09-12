@@ -350,9 +350,8 @@
                   <td class="text-left"
                     style="border-left: 0; border-bottom: 2px dotted gray"
                     colspan="6"
-                    {{-- @dd($inoive->total_amount); --}}
                   > {{ numberTowords($invoice->total_amount??'0' ) }} ONLY. </td>
-                  {{-- > {{ global_function_example('hello world') }}</td> --}}
+
                   <td
                     class="text-center"
                     style="font-size: 16px; font-weight: 600"
@@ -448,6 +447,9 @@
           return true;
         }
       });
+      $(document).ready(function(){
+            window.print();
+      })
     </script>
   </body>
 </html>

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class InvoiceDetail extends Model
 {
     protected $guarded= ['id'];
+
     public static function boot()
     {
         parent::boot();

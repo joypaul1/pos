@@ -23,6 +23,7 @@ use App\Models\Installment;
 use Carbon\Carbon;
 use Session;
 use PDF;
+
 date_default_timezone_set("Asia/Dhaka");
 
 class InvoiceController extends Controller
@@ -113,12 +114,12 @@ class InvoiceController extends Controller
                                 InvoiceDetail::create($invoice_details);
                             }
 
-                            $payment['invoice_id']  = $invoice->id;
-                            $payment['customer_id'] = $request->customer_id;
-                            $payment['paid_status'] = $request->paid_status;
-                            $payment['payment_method'] = $request->payment_method;
-                            $payment['total_amount'] = $request->estimated_amount;
-                            $payment['date'] = date('Y-m-d',strtotime($request->date));
+                            $payment['invoice_id']      = $invoice->id;
+                            $payment['customer_id']     = $request->customer_id;
+                            $payment['paid_status']     = $request->paid_status;
+                            $payment['payment_method']  = $request->payment_method;
+                            $payment['total_amount']    = $request->estimated_amount;
+                            $payment['date']            = date('Y-m-d',strtotime($request->date));
 
                             if($request->paid_status=='full_paid'){
                                 $payment['paid_amount'] = $request->estimated_amount;
@@ -231,12 +232,14 @@ class InvoiceController extends Controller
     }
 
     public function invoicePdf($id){
-        $data['invoice'] = Invoice::with(['invoice_details','invoice_payment_details'])->find($id);
-        // dd($data['invoice']->toArray());
-        $data['owner'] = ReportHeading::first();
-        $pdf = PDF::loadView('backend.admin.invoice.pdf.invoice_print_pdf', $data);
-        $pdf->SetProtection(['copy', 'print'], '', 'pass');
-        return $pdf->stream('document.pdf');
+
+         $data['invoice'] = Invoice::with(['customer','invoice_details.product.sellPrice'])->find($id);
+
+        return view('backend.admin.invoice.pdf.invoice_print_pdf', $data);
+        // $data['owner'] = ReportHeading::first();
+        // $pdf           = PDF::loadView('backend.admin.invoice.pdf.invoice_print_pdf', $data);
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        // return $pdf->stream('document.pdf');
     }
 
     public function invoiceDetails($id){
@@ -249,33 +252,49 @@ class InvoiceController extends Controller
 
 
     public function invoiceEdit($id){
-
         $invoice = Invoice::whereId($id)->with(['invoice_details', 'invoice_payment',  'installment','customer'])->first();
         return view('backend.admin.invoice.invoice_edit', compact('invoice'));
     }
 
     public function invoiceUpdate(Request $request ,$id){
-        // dd($request->all());
-        $invoice_payment = InvoicePayment::where('invoice_id',$id)->first();
-    	if($invoice_payment->due_amount<$request->paid_amount){
+        $invoice = Invoice::whereId($id)->with('lastesInstallment')->first();
+    	if($invoice->due_amount > $request->new_paid_amount ){
             return redirect()->back()->with('error','Sorry! Paid price is Large then due price');
         }else{
-            $invoice = Invoice::find($id);
-            $invoice->status = '2';
-            $invoice->save();
-            $invoice_repayment = new InvoiceRepayment();
-            $invoice_repayment->invoice_id = $id;
-            $invoice_repayment->customer_id = $request->customer_id;
-            $invoice_repayment->due_paid_amount = $request->new_paid_amount;
-            $invoice_repayment->description = $request->description;
-            $invoice_repayment->date = date('Y-m-d',strtotime($request->date));
-            $invoice_repayment->payment_method = $request->payment_method;
-            $invoice_repayment->paid_status = $request->paid_status;
-            $invoice_repayment->paid_amount = $request->paid_amount;
-            $invoice_repayment->bank_name = $request->bank_name;
-            $invoice_repayment->cheque_no = $request->cheque_no;
-            $invoice_repayment->save();
+            DB::transaction(function() use($request, $invoice, $id){
+                $payment['invoice_id']      = $invoice->id;
+                $payment['customer_id']     = $request->customer_id;
+                $payment['paid_status']     = $request->paid_status;
+                $payment['payment_method']  = $request->payment_method;
+                $payment['date']            = date('Y-m-d');
 
+                if($request->paid_status=='full_paid'){
+                    $payment['paid_amount'] = $request->estimated_amount;
+                }elseif($request->paid_status=='full_due'){
+                    $payment['paid_amount'] = '0';
+                }elseif($request->paid_status=='partial_paid'){
+                    $payment['paid_amount'] = $request->paid_amount;
+                }
+
+                $invoicePayment = InvoicePayment::create($payment);
+
+                $invoice->lastesInstallment->update([
+                    'paid_amount'   => $request->paid_amount,
+                    'paid_date'     => date('Y-m-d'),
+                    'cross_days'    => $request->crossDays,
+                ]);
+
+                if (!empty($request->new_installAmount && $request->new_installmentDate)) {
+                    $v = $invoice->installment()->create([
+                        'payment_id'   =>  $invoicePayment->id,
+                        'customer_id'   => $request->customer_id,
+                        'amount'        => $request->new_installAmount,
+                        'interest'      => $request->new_installInterest,
+                        'date'          => date('Y-m-d',strtotime($request->new_installmentDate)),
+                    ]);
+                }
+
+            });
             return redirect()->route('invoices.invoice.due')->with('success','Invoice Successfully Updated');
         }
     }

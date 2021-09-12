@@ -1,239 +1,451 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<title>PDF Report</title>
-<style type="text/css">
+  <head>
+    <title>{{ optional($invoice->customer)->name.'-'.date('m-d-Y') ?? date('m-d-Y') }}</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-table {
-  border-collapse: collapse;
-}
-h2 h3{
-  margin:0;
-  padding:0;
-}
-.table {
-  width: 100%;
-  margin-bottom: 1rem;
-  background-color: transparent;
-}
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+  </head>
+  <style>
+    #invoice {
+      padding: 30px;
+    }
 
-.table th,
-.table td {
-  padding: 0.75rem;
-  vertical-align: top;
-  border-top: 1px solid #dee2e6;
-}
+    .invoice {
+      position: relative;
+      background-color: #fff;
+      min-height: 680px;
+      padding: 15px;
+    }
 
-.table thead th {
-  vertical-align: bottom;
-  border-bottom: 2px solid #dee2e6;
-}
+    .invoice header {
+      padding: 10px 0;
+      margin-bottom: 20px;
+      border-bottom: 3px double #3989c6;
+    }
 
-.table tbody + tbody {
-  border-top: 2px solid #dee2e6;
-}
+    .invoice .company-details {
+      text-align: right;
+    }
 
-.table .table {
-  background-color: #fff;
-}
+    .invoice .company-details .name {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
 
-.table-bordered {
-  border: 1px solid #dee2e6;
-}
+    .invoice .contacts {
+      margin-bottom: 20px;
+    }
 
-.table-bordered th,
-.table-bordered td {
-  border: 1px solid #dee2e6;
-}
+    .invoice .invoice-to {
+      text-align: left;
+    }
 
-.table-bordered thead th,
-.table-bordered thead td {
-  border-bottom-width: 2px;
-}
+    .invoice .invoice-to .to {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
 
-.text-center{
-  text-align: center;
-}
-.text-right{
-  text-align: right;
-}
-table tr td{
-  padding: 5px;
-}
+    .invoice .invoice-details {
+      text-align: right;
+    }
 
-.table-bordered thead th, .table-bordered td, .table-bordered th{
-   border: 1px solid black !important;
-}
+    .invoice .invoice-details .invoice-id {
+      margin-top: 0;
+      color: #3989c6;
+    }
 
-.table-bordered thead th{
-  background-color:  #cacaca; 
+    .invoice main {
+      padding-bottom: 50px;
+    }
 
+    .invoice main .thanks {
+      margin-top: -100px;
+      font-size: 2em;
+      margin-bottom: 50px;
+    }
 
-</style>
-<body>
-  <div class="container">
-    <div class="row">
-      <table style="width: 100%">
-        <tbody>
-          <tr>
-            <td style="width: 25%" class="text-center">Memo No: # {{$invoice->invoice_no}}</td>
-            <td class="text-center" style="width: 50%">
-              <img src="{{(!empty($owner->image)) ? url('public/backend/user_images/'.$owner->image) : url('public/backend/images/noimage.png')}}" style="height: 60px;width: 80px;">
-              <h3 style="font-weight: bold"><strong>{{$owner->name}}</strong></h3>
-              <h5><strong>{{$owner->address}}</strong></h5>
-              <h4><strong>{{$owner->mobile}}</strong></h4>
-            </td>
-            <td class="text-center" style="width: 25%">Date: {{date('d-m-Y',strtotime($invoice->date))}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    .invoice main .notices {
+      padding-left: 6px;
+      border-left: 6px solid #3989c6;
+    }
 
-    <div class="row">
-      <div class="col col-sm-12 text-center">
-        <h4 style="font-weight: bold">
-          <u>
-            INVOICE
-          </u>
-        </h4>
+    .invoice main .notices .notice {
+      font-size: 1.2em;
+    }
+
+    .invoice table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      margin-bottom: 20px;
+    }
+
+    .invoice table td,
+    .invoice table th {
+      padding: 10px;
+      /* background: #eee; */
+      border: 1px solid #3782bc;
+    }
+
+    .invoice table th {
+      white-space: nowrap;
+      /* font-weight: 400; */
+      font-size: 16px;
+    }
+
+    .invoice table td h3 {
+      margin: 0;
+      font-weight: 400;
+      color: #3989c6;
+      font-size: 1.2em;
+    }
+
+    .invoice table .qty,
+    .invoice table .total,
+    .invoice table .unit {
+      text-align: right;
+      font-size: 1.2em;
+    }
+
+    .invoice table .no {
+      /* color: #fff; */
+      /* font-size: 1.6em; */
+      /* background: #3989c6; */
+    }
+
+    .invoice table .unit {
+      /* background: #ddd; */
+    }
+
+    .invoice table .total {
+      /* background: #3989c6; */
+      /* color: #fff; */
+    }
+
+    .invoice table tbody tr:last-child td {
+      /* border: none; */
+    }
+
+    .invoice table tfoot td {
+      background: 0 0;
+      /* border-bottom: none; */
+      white-space: nowrap;
+      text-align: right;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      /* border-top: 1px solid #aaa; */
+    }
+
+    .invoice table tfoot tr:first-child td {
+      border-top: none;
+    }
+
+    .invoice table tfoot tr:last-child td {
+      /* color: #3989c6; */
+      /* font-size: 1.4em; */
+      /* border-top: 1px solid #3989c6; */
+    }
+
+    .invoice table tfoot tr td:first-child {
+      /* border: none; */
+    }
+
+    .invoice footer {
+      width: 100%;
+      text-align: center;
+      color: #777;
+      border-bottom: 1px solid #aaa;
+      padding: 8px 0;
+    }
+    .bg-voilet {
+      background-color: #0e6a91;
+    }
+    .bd-dotted {
+      border-bottom: 2px dotted gray !important;
+    }
+    .table-header {
+      background: green;
+      color: white;
+    }
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact;
+      }
+      .invoice {
+        font-size: 11px !important;
+        overflow: hidden !important;
+      }
+      .bg-voilet {
+        background-color: #0e6a91 !important;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .invoice footer {
+        position: absolute;
+        bottom: 10px;
+        /* page-break-after: always; */
+      }
+
+      .invoice > div:last-child {
+        page-break-before: always;
+      }
+      .hidden-print {
+        display: none !important;
+      }
+    }
+  </style>
+  <body>
+    <div id="invoice">
+      <div class="toolbar hidden-print">
+        <div class="text-right">
+          <button id="printInvoice" class="btn btn-info">
+            <i class="fa fa-print"></i> Print
+          </button>
+          <button class="btn btn-info">
+            <i class="fa fa-file-pdf-o"></i> Export as PDF
+          </button>
+        </div>
+        <hr />
+      </div>
+      <div class="invoice overflow-auto">
+        <div style="min-width: 600px">
+          <header>
+            <div class="row">
+              <div class="col-md-3">
+                <a target="_blank" href="https://lobianijs.com">
+                  <img
+                    width="300px"
+                    src="http://lobianijs.com/lobiadmin/version/1.0/ajax/img/logo/lobiadmin-logo-text-64.png"
+                    data-holder-rendered="true"
+                  />
+                </a>
+              </div>
+              <div class="col-md-6 company-details text-center">
+                <h2 class="name"><strong>Company Name</strong></h2>
+                <h4 class="name"><strong>Delar : Company Name</strong></h4>
+                <address>Address : {{ optional($invoice->customer)->address??' ' }}</address>
+              </div>
+              <div class="col-md-3" style="border:2px solid #3989c6">
+                <p>Buyer's</p>
+              </div>
+            </div>
+          </header>
+          <main>
+            <div class="row contacts">
+              <div class="col-md-1s">
+                <div class="text-gray-light text-left">L/C No : &nbsp;</div>
+              </div>
+              <div
+                class="col-md-3"
+                style="border-bottom: 2px dotted; width: 100%"
+              ></div>
+              <div class="col-md-2">
+                <div class="text-gray-light text-right">Customer Name :</div>
+              </div>
+              <div
+                class="col-md-2"
+                style="border-bottom: 2px dotted; width: 100%"
+              >{{ optional($invoice->customer)->name??' ' }}</div>
+              <div class="col-md-2">
+                <div class="text-gray-light text-right">Sales Invoice :</div>
+              </div>
+              <div
+                class="col-md-2"
+                style="border-bottom: 2px dotted; width: 100%"
+              ># {{ $invoice->invoice_no??'' }}</div>
+            </div>
+
+            <div class="row contacts">
+              <div class="col-md-2s">
+                <div class="text-gray-light text-left">B/E Name :  &nbsp;</div>
+              </div>
+              <div
+                class="col-md-2"
+                style="border-bottom: 2px dotted; width: 100%"
+              > # {{ $invoice->invoice_no??'' }}</div>
+              {{-- <div class="col-md-2">
+                <div class="text-gray-light text-left">B/E Name :</div>
+              </div>
+              <div
+                class="col-md-2"
+                style="border-bottom: 2px dotted; width: 100%"
+              ></div> --}}
+              <div class="col-md-2">
+                <div class="text-gray-light text-right">Date: </div>
+              </div>
+              <div
+                class="col-md-2"
+                style="border-bottom: 2px dotted; width: 100%"
+              >{{ $invoice->date??''  }}</div>
+            </div>
+
+            <table border="0" cellspacing="0" cellpadding="0">
+              <thead>
+
+                <tr>
+                  <th class="text-center table-header" style="width: 1%">
+                    Sl NO.
+                  </th>
+                  <th class="text-center table-header" style="width: 20%">
+                    Chassis No.
+                  </th>
+                  <th class="text-center table-header" style="width: 15%">
+                    Engine No.
+                  </th>
+                  <th class="text-center table-header" style="width: 10%">
+                    Key No.
+                  </th>
+                  <th class="text-center table-header" style="width: 5%">
+                    Color
+                  </th>
+
+                  <th class="text-center table-header" style="width: 20%">
+                    Size
+                  </th>
+                  <th class="text-center table-header">Qnty</th>
+                  <th class="text-center table-header">Unit Price</th>
+                  <th class="text-center table-header" style="width: 20%">
+                    Amount
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                @forelse ($invoice->invoice_details as $key=>$item)
+                    {{-- @dd($item); --}}
+                    <tr style="" aria-rowspan="">
+                        <td class="no">{{ $key+1 }}</td>
+                        <td class="text-left">{{ optional($item->product)->chasiss_no??'-' }}</td>
+                        <td class="unit">{{ optional($item->product)->engine_no?? '-'}}</td>
+                        <td class="total">{{ optional($item->product)->key_no??'-' }}</td>
+                        <td class="total">{{ optional($item->product)->colour??'-' }}</td>
+                        <td class="total">{{ optional($item->product)->size?? '-' }}</td>
+                        <td class="total">{{ $item->selling_qty ??'-' }}</td>
+                        <td class="total">{{ $item->selling_price??'-' }}</td>
+                        <td class="total">{{ $item->total_price??'-' }}</td>
+                    </tr>
+                @empty
+
+                @endforelse
+
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td style="border-right: 0; border-bottom: 0">
+                    <!-- Take In Word : -->
+                    <span class="text-left">Take In Word :</span>
+                  </td>
+                  <td
+                    style="border-left: 0; border-bottom: 2px dotted gray"
+                    colspan="6"
+                  > {{ numberTowords($inoive->total_amount??' ') }}</td>
+                  <td
+                    class="text-center"
+                    style="font-size: 16px; font-weight: 600"
+                  >
+                    Total Amount
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td
+                    style="border-top: 0; border-bottom: 2px dotted gray"
+                    colspan="7"
+                  ></td>
+                  <td
+                    class="text-center"
+                    style="font-size: 16px; font-weight: 600"
+                  >
+                    Less Advance
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td style="border-right: 0; border-top: 0" colspan="4"></td>
+                  <td style="border-left: 0; border-top: 0" colspan="3"></td>
+                  <td
+                    class="text-center"
+                    style="font-size: 16px; font-weight: 600"
+                  >
+                    Balance
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td colspan="7" class="text-left">Payment Reference :</td>
+                  <td colspan="2" style="border-top:0 ;border-bottom: 0;"> </td>
+                </tr>
+                <tr>
+                  <td colspan="4" class="text-left">M.R. No :</td>
+                  <td colspan="3" class="text-left">Dated : {{ date('d-m-Y') }}</td>
+                  <td colspan="2" style="border-top:0 ;border-bottom: 0;"> </td>
+                </tr>
+                <tr>
+                  <td colspan="7" class="text-left">For Taka :</td>
+                  <td colspan="2" style="border-top:0 ;border-bottom: 0;">
+                   </td>
+                </tr>
+
+                <tr>
+                  <td class="text-left" colspan="1" style="border-right: 0">In Cash/ by :</td>
+                  <td
+                    colspan="6"
+                    style="border-left: 0;"
+                  ></td>
+                  <td colspan="2" class="text-center" style="border-top:0;">
+                    <span style="border-top:2px dotted gray;">Sales Department</span>
+                  </td>
+                </tr>
+
+              </tfoot>
+            </table>
+
+          </main>
+
+        </div>
+        <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
+        <div></div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        @php
-          $invoice_payment = App\Model\InvoicePayment::where('invoice_id',$invoice->id)->first();
-        @endphp
-        <table class="table">
-          <tbody>
-            <tr>
-              <td width="100%">Customer Name : {{@$invoice['invoice_payment']['customer']['name']}}</td>
-            </tr>
-            <tr>
-              <td width="100%">Mobile No : {{@$invoice['invoice_payment']['customer']['mobile']}}</td>
-            </tr>
-            <tr>
-              <td width="100%">Address : {{@$invoice['invoice_payment']['customer']['address']}}</td>
-            </tr>
-            <tr>
-              <td width="100%">Description : {{@$invoice->description}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="col-sm-12">
-        <table class="table table-sm table-bordered">
-          <thead>
-            <tr>
-              <th colspan="3">Total Amount</th>
-              <th colspan="4">Paid Amount</th>
-              <th>Due Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colspan="3">{{$invoice_payment->total_amount}} TK</td>
-              <td colspan="4">{{$invoice_payment->paid_amount}} TK</td>
-              <td>{{$invoice_payment->due_amount}} TK</td>
-            </tr>
-            <tr>
-              <td colspan="8" class="text-center">Payment Summary</td>
-            </tr>
-            <tr>
-              <td>SL.</td>
-              <td colspan="2">Date</td>
-              <td>Bank Name</td>
-              <td>Cheque No</td>
-              <td colspan="2">Amount</td>
-              <td>Created By</td>
-            </tr>
-            @php
-              $total_paid_sum = 0;
-            @endphp
-            @foreach($invoice['invoice_payment_details'] as $key2 => $payment_details)
-            <tr>
-              <td>{{$key2+1}}</td>
-              <td colspan="2">{{date('d-m-Y',strtotime($payment_details->date))}}</td>
-              <td>{{$payment_details->bank_name}}</td>
-              <td>{{$payment_details->cheque_no}}</td>
-              <td colspan="2">{{$payment_details->current_paid_amount}}</td>
-              <td>{{@$payment_details['user']['name']}}</td>
-            </tr>
-            @php
-              $total_paid_sum += $payment_details->current_paid_amount;
-            @endphp
-            @endforeach
-            <tr>
-              <td class="text-right" colspan="5">Total Paid Amount</td>
-              <td colspan="3">{{$total_paid_sum}}</td>
-            </tr>
-            <tr>
-              <td colspan="8" class="text-center">Product List</td>
-            </tr>
-            <tr>
-              <td>SL.</td>
-              <td>Product Name</td>
-              <td>Serial No</td>
-              <td>Free Qty</td>
-              <td>Warranty</td>
-              <td>Quantity</td>
-              <td>Unit Price</td>
-              <td>Amount</td>
-            </tr>
-            @php
-              $product_sale_sum = 0;
-            @endphp
-            @foreach($invoice['invoice_details'] as $key => $details)
-            <tr>
-              <td>{{$key+1}}</td>
-              <td>{{@$details['product']['name']}}</td>
-              <td>{{$details->serial_no}}</td>
-              <td>{{$details->free_selling_qty}}</td>
-              <td>{{$details->warranty}}</td>
-              <td>{{$details->selling_qty}}</td>
-              <td>{{$details->selling_price}} TK</td>
-              @php
-                $total_amount = $details->selling_qty*$details->selling_price;
-              @endphp
-              <td>{{$total_amount}}</td>
-              @php
-                $product_sale_sum += $total_amount;
-              @endphp
-            </tr>
-            @endforeach
-            <tr>
-              <td class="text-right" colspan="7">Product Total Price</td>
-              <td>{{$product_sale_sum}} TK</td>
-            </tr>
-          </tbody>
-        </table>
-          @php
-            $dt = new DateTime('now', new DateTimezone('Asia/Dhaka'));
-          @endphp
-          <i style="font-size: 11px; float: right;">Printing Date: {{$dt->format('F j, Y, g:i a')}} </i>
-      </div><br/><br/>
-      <div class="col-md-12">
-        <hr style="margin-bottom: 0px;">
-        <table border="0" width="100%">
-          <tbody>
-            <tr>
-              <td style="width: 40%; ">
-                <p style="text-align: center;margin-left: : 20px;">Customer Signature</p> 
-              </td>
-              <td style="width: 20%"></td>
-              <td style="width: 40%; text-align: center;">
-                <p style="text-align: center;">{{@$invoice['user']['name']}}</p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
 
-  </div>
-  
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
 
-
-
-
-</body>
+    <script>
+      $("#printInvoice").click(function () {
+        Popup($(".invoice")[0].outerHTML);
+        function Popup(data) {
+          window.print();
+          return true;
+        }
+      });
+    </script>
+  </body>
 </html>

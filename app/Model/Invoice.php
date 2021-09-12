@@ -51,12 +51,16 @@ class Invoice extends Model
     }
 
     public function user(){
-        return $this->belongsTo(User::class,'created_by','id');
+        return $this->belongsTo(User::class,'created_by', 'id');
     }
 
     public function installment()
     {
-        return $this->hasOne(InvoiceInstallment::class, 'invoice_id', 'id');
+        return $this->hasMany(InvoiceInstallment::class, 'invoice_id', 'id');
+    }
+    public function lastesInstallment()
+    {
+        return $this->hasOne(InvoiceInstallment::class, 'invoice_id', 'id')->latest();
     }
 
      public function getDayCountAttribute()
@@ -65,7 +69,7 @@ class Invoice extends Model
             $date   = Carbon::parse($this->installment()->first()->date);
             $now    = Carbon::now();
             $diff   = $date->diffInDays($now);
-            return $diff+1;
+            return $diff;
         }
         return false;
     }

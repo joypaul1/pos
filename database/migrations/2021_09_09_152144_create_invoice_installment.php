@@ -29,6 +29,8 @@ class CreateInvoiceInstallment extends Migration
             $table->decimal('due_amount',8 , 2)->virtualAs('amount - paid_amount');
             $table->date('paid_date')->nullable();
             $table->tinyInteger('interest');
+            $table->integer('cross_days')->nullable();
+
             $table->timestamps();
         });
     }

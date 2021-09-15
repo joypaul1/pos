@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section('content')
 <div class="content-page">
-    
+
     <!-- Start content -->
     <div class="content">
         <div class="container-fluid">
@@ -18,7 +18,7 @@
                 </div>
             </div>
             <!-- end row -->
-            
+
             <div class="container fullbody">
 				<div class="col-md-12">
 					<div class="card">
@@ -50,8 +50,12 @@
 										<td>{{$product->name}}</td>
 										<td>{{$product->sheif_no}}</td>
 										<td>
-											<a class="btn btn-sm btn-info" title="Edit" href="{{route('products.product.edit',$product->id)}}"><i class="fa fa-edit"></i></a>
+											<a class="btn btn-sm btn-info" title="Edit"
+                                            href="{{route('products.product.edit',$product->id)}}">
+                                            <i class="fa fa-edit"></i></a>
+                                            <a target="_blank" class="btn btn-sm btn-success" title="Print" href="{{route('products.product.pdf',$product->id)}}"><i class="fa fa-print"></i></a>
 										</td>
+
 									</tr>
 									@endforeach
 								</tbody>

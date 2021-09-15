@@ -100,6 +100,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/product/add', 'Backend\Admin\ProductController@add')->name('products.product.add');
         Route::post('/product/store', 'Backend\Admin\ProductController@store')->name('products.product.store');
         Route::get('/product/edit/{id}', 'Backend\Admin\ProductController@edit')->name('products.product.edit');
+        Route::get('/product/pdf/{id}', 'Backend\Admin\ProductController@pdf')->name('products.product.pdf');
         Route::post('/product/update/{id}', 'Backend\Admin\ProductController@update')->name('products.product.update');
         Route::post('/product/delete', 'Backend\Admin\ProductController@destroy')->name('products.product.destroy');
     });

@@ -22,7 +22,7 @@ class AddAddtionalCloumnToProductsTable extends Migration
             $table->string('none_of_cylineder_with_cc')->nullable();
             $table->string('colour')->nullable();
             $table->string('size')->nullable();
-            $table->string('year_of_manufacture/assembel')->nullable();
+            $table->string('year_of_manufacture')->nullable();
             $table->string('hourse_power')->nullable();
             $table->string('laden_weight')->nullable();
             $table->string('wheel_base')->nullable();

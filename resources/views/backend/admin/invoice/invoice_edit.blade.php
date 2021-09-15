@@ -91,36 +91,38 @@
 						            	<td class="text-right">{{$details->selling_qty}} TK</td>
 						            	<td class="text-right">{{$details->selling_price}} TK</td>
 						            	<td class="text-right">{{$details->total_price}} TK</td>
-						            	@php
+						            	{{-- @php
 						            		$product_sale_sum += $details->total_price;
-						            	@endphp
+						            	@endphp --}}
 						            </tr>
 						            @endforeach
 						            <tr>
 						            	<td colspan="6" rowspan="7"></td>
 						            	<td  class="text-right"><p style="font-weight: bold;">Total</p></td>
-						            	<td  class="text-right"><p style="font-weight: bold;">{{ number_format($product_sale_sum, 2) }} TK</p></td>
+						            	<td  class="text-right"><p style="font-weight: bold;">
+                                            {{ number_format($invoice->total_amount, 2) }} TK</p></td>
 						            </tr>
 						            <tr>
 						            	{{-- <td colspan="6" rowspan="7"></td> --}}
 						            	<td  class="text-right"><p style="font-weight: bold;">Interest Amount</p></td>
 						            	<td  class="text-right"><p style="font-weight: bold;">
-                                        {{ number_format($invoice->interest_amount, 2) }} TK</p></td>
+                                        {{ number_format($invoice->intertest_amount, 2) }} TK</p></td>
 						            </tr>
 						            <tr>
 						            	{{-- <td colspan="6" rowspan="7"></td> --}}
 						            	<td  class="text-right"><p style="font-weight: bold;">Grand Total</p></td>
 						            	<td  class="text-right"><p style="font-weight: bold;">
-                                            {{ number_format($product_sale_sum + $invoice->interest_amount, 2) }} TK</p></td>
+                                            {{ number_format($invoice->grand_total, 2) }} TK</p></td>
 						            </tr>
 						            <tr>
 						            	<td  class="text-right"><p style="font-weight: bold;">Paid</p></td>
-						            	<td  class="text-right"><p style="font-weight: bold;">{{number_format($invoice->paid_amount, 2)}} TK</p></td>
+						            	<td  class="text-right"><p style="font-weight: bold;">
+                                            {{number_format($invoice->paid_amount, 2)}} TK</p></td>
 						            </tr>
 						            <tr>
 						            	<td  class="text-right"><p style="font-weight: bold;">Due</p></td>
 						            	<td  class="text-right">
-						            		<input type="hidden" name="new_paid_amount" value="{{$invoice->due_amount}}">
+						            		{{-- <input type="hidden" name="new_paid_amount" value="{{$invoice->due_amount}}"> --}}
 						            		<p style="font-weight: bold;">{{number_format($invoice->due_amount, 2)}} TK</p>
 						            	</td>
 						            </tr>
@@ -134,13 +136,14 @@
                                     </div>
                                   <div class="card-body installment-section ">
                                         @forelse ($invoice->installment as $installment)
+                                        {{-- @dd($installment) --}}
                                             <div class="form-row">
                                                 <div class="form-group col-sm-2">
                                                     <label class="control-label">Date</label>
                                                     <input type="text"  class="form-control form-control-sm"  value="{{ $installment->date }}" readonly required>
 
                                                 </div>
-                                                <div class="form-group col-sm-2" style="margin-right: 20px;">
+                                                <div class="form-group col-sm-2" >
                                                     <label class="control-label">Amount</label>
                                                     <input type="text" id="" class="form-control form-control-sm "
                                                     value="{{ $installment->amount }}"
@@ -148,7 +151,7 @@
                                                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                                 </div>
 
-                                                <div class="form-group col-sm-1" style="margin-right: 20px;">
+                                                <div class="form-group col-sm-1" >
                                                     <label class="control-label">Interest(%)</label>
                                                     <input type="text" id=""  class="form-control form-control-sm"
                                                     style="text-align: center;padding: 2px 0px 2px 0px;"
@@ -157,9 +160,9 @@
                                                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                                 </div>
                                                 @php
-                                                        $amount = $installment->amount?? 0;
-                                                        $interest = $installment->interest?? 0;
-                                                        $daycount = $installment->dayCount??0 ;
+                                                        $amount     = $installment->amount?? 0;
+                                                        $interest   = $installment->interest?? 0;
+                                                        $daycount   = $installment->dayCount??0 ;
                                                         if($daycount > 0 ){
                                                             $interestAmount = $daycount * ($amount * $interest)/100;
                                                             $totalAmount =  $interestAmount + $amount;
@@ -168,21 +171,35 @@
                                                             $totalAmount =  $amount ;
                                                         }
                                                     @endphp
-                                                <div class="form-group col-sm-1" style="margin-right: 20px;">
+                                                <div class="form-group col-sm-1" >
+                                                    <input type="hidden" name="interestamount" value="{{ $interestAmount }}">
                                                     <label class="control-label">Cross Days </label>
                                                     <input type="text" id="" name="crossDays" class="form-control form-control-sm"  style="text-align: center;padding: 2px 0px 2px 0px;"
                                                     required
                                                     value="{{ $daycount }}" readonly
                                                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                                 </div>
-                                                <div class="form-group col-sm-3" style="margin-right: 20px;">
+                                                <div class="form-group col-sm-3" >
                                                     <label class="control-label">Paid Amount </label>
                                                     <input type="text" id="" name="inspaidAmount" class="form-control form-control-sm"  style="text-align: center;padding: 2px 0px 2px 0px;"
                                                     required
-                                                    value="{{ $totalAmount }}" readonly
+                                                    value= "{{ $totalAmount }}"
+                                                    readonly
                                                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                                 </div>
-                                                <div class="form-group col-sm-1" style="margin-right: 20px;">
+                                                @if ($installment->paid_amount > 0)
+                                                    <div class="form-group col-sm-2" >
+                                                        <label class="control-label">Given Amount </label>
+                                                        <input type="text" id="" name="inspaidAmount" class="form-control form-control-sm"  style="text-align: center;padding: 2px 0px 2px 0px;"
+                                                        required
+                                                        value= "{{ $installment->paid_amount  }}"
+                                                        readonly
+                                                        onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                                    </div>
+                                                @else
+
+                                                @endif
+                                                <div class="form-group col-sm-1" >
                                                     <label class="control-label">Click </label>
                                                     <button type="button"  style="text-align: center;" class="btn btn-primary addMore btn-sm"> + Add </button>
                                                 </div>
@@ -274,14 +291,14 @@
                                                     <input type="date" name="new_installmentDate" id="" class="form-control form-control-sm" placeholder="YYYY-MM-DD"  required>
 
                                                 </div>
-                                                <div class="form-group col-sm-2" style="margin-right: 20px;">
+                                                <div class="form-group col-sm-2" >
                                                     <label class="control-label">Due Amount</label>
                                                     <input type="text" id="" class="form-control form-control-sm installAmount"
                                                     name="new_installAmount"  style="text-align: center;padding: 2px 0px 2px 0px;" readonly
                                                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                                 </div>
 
-                                                <div class="form-group col-sm-1" style="margin-right: 20px;">
+                                                <div class="form-group col-sm-1" >
                                                     <label class="control-label">Interest(%)</label>
                                                     <input type="text" id="" name="new_installInterest" class="form-control form-control-sm installInterest"  style="text-align: center;padding: 2px 0px 2px 0px;"
                                                     required

@@ -19,7 +19,7 @@ class ModifyInvoice extends Migration
         foreach($dropTable as $table){
             Schema::dropIfExists($table);
         }
-        
+
         Schema::create('invoices', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->bigIncrements('id');
@@ -28,8 +28,9 @@ class ModifyInvoice extends Migration
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->date('date')->nullable();
             $table->decimal('total_amount', 8 , 2);
+            $table->decimal('grand_total', 8 , 2);
             $table->decimal('paid_amount',8 , 2)->default('0');
-            $table->decimal('due_amount',8 , 2)->virtualAs('total_amount - paid_amount');
+            $table->decimal('due_amount',8 , 2)->virtualAs('grand_total - paid_amount');
             $table->decimal('discount_amount',8 , 2)->default('0');
             $table->tinyInteger('status')->default(false)->comment('0=Pending,1=Approved,2=Repayment Pending');
             $table->longText('description')->nullable();

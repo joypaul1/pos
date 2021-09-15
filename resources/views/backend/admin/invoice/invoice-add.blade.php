@@ -156,32 +156,8 @@
                                                 <input class="checkbox-inline no-margin" type="checkbox" id="pay-via-installments" name="payViaInstallment" value="1">
                                                 Reminder for Due Amount </h4>
                                         </div>
-                                      <div class="card-body installment-section hidden">
+                                        <div id="installment-section"></div>
 
-                                            <div class="form-row">
-                                                <div class="form-group col-sm-2">
-                                                    <label class="control-label">Date</label>
-                                                    <input type="text" name="installmentDate" id="date" class="form-control form-control-sm singledatepicker" placeholder="YYYY-MM-DD" readonly required>
-
-                                                </div>
-                                                <div class="form-group col-sm-1" style="margin-right: 20px;">
-                                                    <label class="control-label">Amount</label>
-                                                    <input type="text" id="" class="form-control form-control-sm installAmount"
-                                                    name="installAmount"  style="text-align: center;padding: 2px 0px 2px 0px;" readonly
-													onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-                                                </div>
-
-                                                <div class="form-group col-sm-1" style="margin-right: 20px;">
-                                                    <label class="control-label">Interest(%)</label>
-                                                    <input type="text" id="" name="installInterest" class="form-control form-control-sm installInterest"  style="text-align: center;padding: 2px 0px 2px 0px;"
-                                                    required
-                                                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-                                                </div>
-
-
-                                            </div>
-
-                                      </div>
 
                                     </div>
 
@@ -463,13 +439,42 @@
 
     $('#pay-via-installments').on('click', function () {
         let checked = $('#pay-via-installments:checked').val();
-        console.log(checked, 'checked')
+        let html = ` <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-sm-2">
+                    <label class="control-label">Date</label>
+                    <input type="date" name="installmentDate" id="date" class="form-control form-control-sm singledatepickers" placeholder="YYYY-MM-DD"  required>
+
+                </div>
+                <div class="form-group col-sm-1" style="margin-right: 20px;">
+                    <label class="control-label">Amount</label>
+                    <input type="text" id="" class="form-control form-control-sm installAmount"
+                    name="installAmount"  style="text-align: center;padding: 2px 0px 2px 0px;" readonly
+                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                </div>
+
+                <div class="form-group col-sm-1" style="margin-right: 20px;">
+                    <label class="control-label">Interest(%)</label>
+                    <input type="text" id="" name="installInterest" class="form-control form-control-sm installInterest"  style="text-align: center;padding: 2px 0px 2px 0px;"
+                    required
+                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                </div>
+                <div class="form-group col-sm-1" style="margin-right: 20px;">
+                    <label class="control-label">Remove</label>
+                    <button type="button" class="btn btn-sm btn-danger removeInstallment"> <i class="btn btn-danger fa fa-close removeeventmore"> </i> </button>
+                </div>
+
+
+            </div>
+
+            </div>`;
+        // console.log(checked, 'checked')
         switch(checked){
             case '1':
-                $('.installment-section').removeClass('hidden');
+                $('#installment-section').append(html);
                 break;
             default:
-                $('.installment-section').addClass('hidden');
+                $('#installment-section').empty();
                 break;
         }
     })
@@ -478,10 +483,10 @@
 
 
 
-    // $(document).on('focus keyup blur','.installInterest', function (e) {
-    //     purposeValues(e, this)
+    $(document).on('click','.removeInstallment', function (e) {
+        $(this).closest('.card-body').remove();
 
-    // });
+    });
 
 
     // function purposeValues(e, where)

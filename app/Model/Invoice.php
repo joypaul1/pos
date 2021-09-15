@@ -50,14 +50,16 @@ class Invoice extends Model
         return $this->hasMany(InvoicePaymentDetail::class,'invoice_id','id');
     }
 
-    public function user(){
-        return $this->belongsTo(User::class,'created_by', 'id');
-    }
-
     public function installment()
     {
         return $this->hasMany(InvoiceInstallment::class, 'invoice_id', 'id');
     }
+
+    public function user(){
+        return $this->belongsTo(User::class,'created_by', 'id');
+    }
+
+
     public function lastesInstallment()
     {
         return $this->hasOne(InvoiceInstallment::class, 'invoice_id', 'id')->latest();

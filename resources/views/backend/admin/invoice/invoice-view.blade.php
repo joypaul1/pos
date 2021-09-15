@@ -43,7 +43,7 @@
 									</tr>
 								</thead>
 								<tbody>
-                                    {{-- @dd($allData ); --}}
+
 									@foreach ($allData as $key => $value)
 									<tr class="{{$value->id}}">
 										<td>{{$key+1}}</td>
@@ -60,19 +60,20 @@
                                         </td>
 										<td>
 											@if($value->status=='0')
-											<span style="background: #FC463A;padding: 1px;">Pending</span>
+											    <span style="background: #FC463A;padding: 1px;">Pending</span>
 											@elseif($value->status=='2')
-											<span style="background: #FC463A;padding: 1px;">Pending</span>
+											    <span style="background: #FC463A;padding: 1px;">Pending</span>
 											@elseif($value->status=='1')
-											<span style="background: #1B9F5E;padding: 1px;">Approved</span>
+											    <span style="background: #1B9F5E;padding: 1px;">Approved</span>
 											@endif
 										</td>
 										<td>
 
-                                            <a class="btn btn-sm btn-warning" title="Approve" href="{{route('invoices.invoice.edit',$value->id)}}"><i class="fa fa-pencil"></i></a>
+                                            <a class="btn btn-sm btn-warning" title="Edit" href="{{route('invoices.invoice.edit',$value->id)}}"><i class="fa fa-pencil"></i></a>
 											@if($value->status=='0')
 											<a class="btn btn-sm btn-info" title="Approve" href="{{route('invoices.invoice.approve-get',$value->id)}}"><i class="fa fa-check-circle"></i></a>
-											<a title="Delete" href="{{ !empty($value->id) ? route('invoices.invoice.destroy') : ''}}"  class="delete btn btn-danger btn-sm deleteBtn"  data-token="{{ csrf_token() }}" data-id="{{ $value->id }}"><i class="fa fa-trash-o" aria-hidden="true"></i>
+											<a title="Delete" href="{{ !empty($value->id) ? route('invoices.invoice.destroy') : ''}}"  class="delete btn btn-danger btn-sm deleteBtn"  data-token="{{ csrf_token() }}"
+                                                data-id="{{ $value->id }}"><i class="fa fa-trash-o" aria-hidden="true"></i>
                                             </a>
                                             @endif
                                             @if($value->status=='2')

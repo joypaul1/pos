@@ -144,7 +144,7 @@
       /* border-bottom: none; */
       white-space: nowrap;
       text-align: right;
-      padding: 10px 20px;
+      /* padding: 10px 20px; */
       font-size: 1.2em;
       /* border-top: 1px solid #aaa; */
     }
@@ -358,20 +358,40 @@
                   >
                     Total Amount
                   </td>
-                  <td></td>
+                  <td class="text-right">{{ ($invoice->total_amount??'0' ) }}</td>
                 </tr>
                 <tr>
                   <td
                     style="border-top: 0; border-bottom: 2px dotted gray"
-                    colspan="7"
-                  ></td>
+                    colspan="7"></td>
+                  <td
+                    class="text-center"
+                    style="font-size: 16px; font-weight: 600">
+                    Interest Amount
+                  </td>
+                  <td class="text-right">{{ ($invoice->interest_amount??'0' ) }}</td>
+                </tr>
+                <tr>
+
+                    <td style="border-top: 0;border-bottom:0" colspan="7"></td>
+                    <td
+                      class="text-center"
+                      style="font-size: 16px; font-weight: 600"
+                    >
+                      Grand Amount
+                    </td>
+                    <td class="text-right">{{ ($invoice->grand_total??'0' ) }}</td>
+                  </tr>
+                <tr>
+                  <td style="border-right: 0; border-top: 0;border-bottom:0" colspan="7"></td>
+
                   <td
                     class="text-center"
                     style="font-size: 16px; font-weight: 600"
                   >
-                    Less Advance
+                    Paid Amount
                   </td>
-                  <td></td>
+                  <td class="text-right">{{ ($invoice->paid_amount??'0' ) }}</td>
                 </tr>
                 <tr>
                   <td style="border-right: 0; border-top: 0" colspan="4"></td>
@@ -380,10 +400,11 @@
                     class="text-center"
                     style="font-size: 16px; font-weight: 600"
                   >
-                    Balance
+                    Due Amount
                   </td>
-                  <td></td>
+                  <td class="text-right">{{ ($invoice->due_amount??'0' ) }}</td>
                 </tr>
+
                 <tr>
                   <td colspan="7" class="text-left">Payment Reference :</td>
                   <td colspan="2" style="border-top:0 ;border-bottom: 0;"> </td>
@@ -448,7 +469,7 @@
         }
       });
       $(document).ready(function(){
-            window.print();
+            // window.print();
       })
     </script>
   </body>

@@ -59,7 +59,6 @@ class InvoiceController extends Controller
 
     public function store(Request $request){
 
-        // dd($request->all(), $request->estimated_amount , $request->paid_amount);
         if($request->estimated_amount <= $request->paid_amount){
             return redirect()->back()->with('error','Sorry! Paid price is Large then total price');
         }else{
@@ -71,20 +70,24 @@ class InvoiceController extends Controller
                 $invoice_no = str_pad($invoice_data+1, 7, "0", STR_PAD_LEFT);
             }
 
+            $invoice['grand_total']   = $request->estimated_amount;
             $invoice['total_amount']  = $request->estimated_amount;
-            $invoice['paid_amount']   = $request->paid_amount;
             $invoice['invoice_no']    = $invoice_no;
             $invoice['date']          = date('Y-m-d',strtotime($request->date));
             $invoice['description']   = $request->description??' ';
             $invoice['customer_id']   = $request->customer_id;
+            if($request->paid_status == "full_paid"){
+                $invoice['paid_amount']   = $request->estimated_amount??0;
+            }else{
+                $invoice['paid_amount']   = $request->paid_amount??0;
 
+            }
+            // dd($invoice);
             try {
                 DB::transaction(function() use($request, $invoice){
 
                         $invoice = Invoice::create($invoice);
-
                         if($request->category_id !=null){
-
                             for ($i=0; $i < count($request->category_id) ; $i++) {
                                 $invoice_details['invoice_id']    = $invoice->id;
                                 $invoice_details['customer_id']   = $request->customer_id;
@@ -123,16 +126,14 @@ class InvoiceController extends Controller
 
                             if($request->paid_status=='full_paid'){
                                 $payment['paid_amount'] = $request->estimated_amount;
-                            }elseif($request->paid_status=='full_due'){
-                                $payment['paid_amount'] = '0';
-                            }elseif($request->paid_status=='partial_paid'){
-                                $payment['paid_amount'] = $request->paid_amount;
+                            }else{
+                                $payment['paid_amount'] = $request->paid_amount??0;
                             }
 
                             $invoicePayment = InvoicePayment::create($payment);
 
                             if (!empty($request->installmentDate && $request->installAmount)) {
-                                $v = $invoice->installment()->create([
+                                $invoice->installment()->create([
                                     'payment_id'   =>  $invoicePayment->id,
                                     'customer_id'   => $request->customer_id,
                                     'amount'        => $request->installAmount,
@@ -156,33 +157,40 @@ class InvoiceController extends Controller
 
     public function destroy(Request $request){
         $invoice = Invoice::find($request->id);
-        InvoiceDetail::where('invoice_id',$invoice->id)->delete();
-        InvoicePayment::where('invoice_id',$invoice->id)->delete();
-        InvoicePaymentDetail::where('invoice_id',$invoice->id)->delete();
-        InvoicePaymentDueLog::where('invoice_id',$invoice->id)->delete();
+        $invoice->installment()->delete();
+        $invoice->invoice_payment()->delete();
+        $invoice->invoice_details()->delete();
         $invoice->delete();
+
+        // InvoiceDetail::where('invoice_id',$invoice->id)->delete();
+        // InvoicePayment::where('invoice_id',$invoice->id)->delete();
+        // InvoicePaymentDetail::where('invoice_id',$invoice->id)->delete();
+        // InvoicePaymentDueLog::where('invoice_id',$invoice->id)->delete();
+        //
         return redirect()->route('invoices.invoice.view');
     }
 
     public function invoiceApprove($id){
 
-        $date = Carbon::parse('2016-09-17 11:00:00');
-        $now = Carbon::now();
-        $diff = $date->diffInDays($now);
-        $invoice = Invoice::with(['installment' => function($query){
-            $query->select('customer_id', 'invoice_id','status','amount','interest', 'date')->orderBy('date');
-        }])->find($id);
+        Invoice::whereId($id)->update(['status' => 1]);
+        return redirect()->route('invoices.invoice.view')->with('success','Invoice Successfully Approved');
+        // $date = Carbon::parse('2016-09-17 11:00:00');
+        // $now = Carbon::now();
+        // $diff = $date->diffInDays($now);
+        // $invoice = Invoice::with(['installment' => function($query){
+        //     $query->select('customer_id', 'invoice_id','status','amount','interest', 'date')->orderBy('date');
+        // }])->find($id);
 
-        if($invoice->status =='0'){
-            $cdate = date('Y-m-d');
-            return view('backend.admin.invoice.invoice_approve', compact('invoice','cdate'));
-        }elseif($invoice->status =='2'){
-            $invoice_repayment = InvoiceRepayment::where('invoice_id',$invoice->id)->first();
-            $invoice = Invoice::with(['invoice_details','invoice_payment_details'])->where('id',$invoice_repayment->invoice_id)->first();
+        // if($invoice->status =='0'){
+        //     $cdate = date('Y-m-d');
+        //     return view('backend.admin.invoice.invoice_approve', compact('invoice','cdate'));
+        // }elseif($invoice->status =='2'){
+        //     $invoice_repayment = InvoiceRepayment::where('invoice_id',$invoice->id)->first();
+        //     $invoice = Invoice::with(['invoice_details','invoice_payment_details'])->where('id',$invoice_repayment->invoice_id)->first();
 
-            $cdate = date('Y-m-d');
-            return view('backend.admin.invoice.invoice_update_approve', compact('invoice_repayment','cdate','invoice'));
-        }
+        //     $cdate = date('Y-m-d');
+        //     return view('backend.admin.invoice.invoice_update_approve', compact('invoice_repayment','cdate','invoice'));
+        // }
     }
 
     public function invoiceApproveStore(Request $request,$id){
@@ -223,17 +231,17 @@ class InvoiceController extends Controller
             $customer->save();
             $invoice->save();
         });
-        return redirect()->route('invoices.invoice.view')->with('success','Invoice Successfully Approved');
+        return redirect()->route('invoices.invoice.view')->with('success','Invoice Successfully Added');
     }
 
     public function dueList(){
-        $allData = InvoicePayment::whereIn('paid_status',['full_due','partial_paid'])->orderBy('id','desc')->get();
+        $allData = Invoice::where('due_amount' ,'>', 0)->get();
         return view('backend.admin.invoice.invoice_due_list', compact('allData'));
     }
 
     public function invoicePdf($id){
 
-         $data['invoice'] = Invoice::with(['customer','invoice_details.product.sellPrice'])->find($id);
+        $data['invoice'] = Invoice::with(['customer','invoice_details.product.sellPrice'])->find($id);
 
         return view('backend.admin.invoice.pdf.invoice_print_pdf', $data);
         // $data['owner'] = ReportHeading::first();
@@ -257,11 +265,21 @@ class InvoiceController extends Controller
     }
 
     public function invoiceUpdate(Request $request ,$id){
+
         $invoice = Invoice::whereId($id)->with('lastesInstallment')->first();
-    	if($invoice->due_amount > $request->new_paid_amount ){
+    	if($request->inspaidAmount < $request->paid_amount ){
             return redirect()->back()->with('error','Sorry! Paid price is Large then due price');
         }else{
             DB::transaction(function() use($request, $invoice, $id){
+
+                if($request->interestamount > 0 || $request->paid_amount){
+                    $invoice->update([
+                    'intertest_amount'  => $request->interestamount?? $invoice->interest_amount,
+                    'paid_amount'       => $invoice->paid_amount+=$request->paid_amount??0,
+                    'grand_total'       => $invoice->grand_total+=$request->interestamount
+                ]);
+                }
+
                 $payment['invoice_id']      = $invoice->id;
                 $payment['customer_id']     = $request->customer_id;
                 $payment['paid_status']     = $request->paid_status;
@@ -273,13 +291,13 @@ class InvoiceController extends Controller
                 }elseif($request->paid_status=='full_due'){
                     $payment['paid_amount'] = '0';
                 }elseif($request->paid_status=='partial_paid'){
-                    $payment['paid_amount'] = $request->paid_amount;
+                    $payment['paid_amount'] = $request->paid_amount??0;
                 }
 
                 $invoicePayment = InvoicePayment::create($payment);
 
                 $invoice->lastesInstallment->update([
-                    'paid_amount'   => $request->paid_amount,
+                    'paid_amount'   =>$request->paid_amount??0,
                     'paid_date'     => date('Y-m-d'),
                     'cross_days'    => $request->crossDays,
                 ]);

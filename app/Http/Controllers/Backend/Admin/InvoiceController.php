@@ -47,11 +47,10 @@ class InvoiceController extends Controller
         $data['cdate']      = date('Y-m-d');
         $invoice_data       = Invoice::orderBy('id','DESC')->first();
         if($invoice_data == null){
-            $firstReg = 0;
-            $data['invoice_no'] = $firstReg+1;
+            $data['invoice_no'] = str_pad(1, 7, "0", STR_PAD_LEFT);
         }else{
             $invoice_data = Invoice::orderBy('id','DESC')->first()->invoice_no;
-            $data['invoice_no'] = $invoice_data+1;
+            $data['invoice_no'] = str_pad($invoice_data+1, 7, "0", STR_PAD_LEFT);
         }
 
     	return view('backend.admin.invoice.invoice-add', $data);
@@ -242,7 +241,6 @@ class InvoiceController extends Controller
     public function invoicePdf($id){
 
         $data['invoice'] = Invoice::with(['customer','invoice_details.product.sellPrice'])->find($id);
-
         return view('backend.admin.invoice.pdf.invoice_print_pdf', $data);
         // $data['owner'] = ReportHeading::first();
         // $pdf           = PDF::loadView('backend.admin.invoice.pdf.invoice_print_pdf', $data);

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <title>PDF Report</title>
 <style type="text/css">
 
 table {
   border-collapse: collapse;
 }
+
 h2 h3{
   margin:0;
   padding:0;
@@ -66,17 +68,50 @@ table tr td{
 }
 
 .table-bordered thead th{
-  background-color:  #cacaca; 
-
+  background-color:  #cacaca;
+}
+.borderNone{
+    border: none !important
+}
+.table-header {
+    background: green !important;
+    color: white;
+}
+@media print {
+        body {
+            -webkit-print-color-adjust: exact;
+        }
+        .table-header {
+            background: green !important;
+            color: white;
+        }
+        .borderNone{
+            border: none !important
+        }
+        .hidden-print {
+            display: none !important;
+        }
+    }
 
 </style>
 <body>
-  <div class="container">
+  <div class="container" >
     <div class="row">
+        <div class="toolbar hidden-print">
+            <div class="text-right">
+              <button id="printInvoice" class="btn btn-info">
+                <i class="fa fa-print"></i> Print
+              </button>
+              <button class="btn btn-info">
+                <i class="fa fa-file-pdf-o"></i> Export as PDF
+              </button>
+            </div>
+            <hr />
+          </div>
       <table style="width: 100%">
         <tbody>
           <tr>
-            <td style="width: 25%" class="text-center">Memo No: # {{$purchase->purchase_no}}</td>
+            <td style="width: 25%" class="text-left">Memo No: # {{$purchase->purchase_no}}</td>
             <td class="text-center" style="width: 50%">
               <img src="{{(!empty($owner->image)) ? url('public/backend/user_images/'.$owner->image) : url('public/backend/images/noimage.png')}}" style="height: 60px;width: 80px;">
               <h3 style="font-weight: bold"><strong>{{$owner->name}}</strong></h3>
@@ -106,16 +141,16 @@ table tr td{
         <table class="table">
           <tbody>
             <tr>
-              <td width="100%">Supplier Name : {{$purchase_payment['supplier']['name']}}</td>
+              <td class="borderNone" width="100%">Supplier Name : {{$purchase_payment['supplier']['name']}}</td>
             </tr>
             <tr>
-              <td width="100%">Mobile No : {{$purchase_payment['supplier']['mobile']}}</td>
+              <td class="borderNone" width="100%">Mobile No : {{$purchase_payment['supplier']['mobile']}}</td>
             </tr>
             <tr>
-              <td width="100%">Address : {{$purchase_payment['supplier']['address']}}</td>
+              <td class="borderNone" width="100%">Address : {{$purchase_payment['supplier']['address']}}</td>
             </tr>
             <tr>
-              <td width="100%">Description : {{$purchase->description}}</td>
+              <td class="borderNone" width="100%">Description : {{$purchase->description}}</td>
             </tr>
           </tbody>
         </table>
@@ -124,39 +159,73 @@ table tr td{
         <table class="table table-sm table-bordered">
           <thead>
             <tr>
-              <th colspan="3">Total Amount</th>
-              <th colspan="3">Paid Amount</th>
-              <th>Due Amount</th>
+
+                <th class="text-center table-header" >SL.</th>
+                <th class="text-center table-header" >Product Name</th>
+                <th class="text-center table-header" >Sell Price</th>
+                <th class="text-center table-header" >Free Qty</th>
+                <th class="text-center table-header" >Quantity</th>
+                <th class="text-center table-header" >Unit Price</th>
+                <th class="text-center table-header" >Amount</th>
+
             </tr>
           </thead>
           <tbody>
+
+              @php
+                $product_sale_sum = 0;
+              @endphp
+              @foreach($purchase['purchase_details'] as $key => $details)
+              <tr>
+                <td class="text-center" >{{$key+1}}</td>
+                <td class="text-center" >{{@$details['product']['name']}}</td>
+                <td class="text-center" >{{$details->selling_price}} TK</td>
+                <td class="text-center" >{{$details->free_quantity}}</td>
+                <td class="text-center" >{{$details->buying_qty}}</td>
+                <td class="text-center" >{{$details->unit_price}} TK</td>
+                <td class="text-center" >{{$details->buying_price}} TK</td>
+                @php
+                  $product_sale_sum += $details->buying_price;
+                @endphp
+              </tr>
+              @endforeach
+              <tr>
+                <td class="text-right" colspan="6">Product Total Price</td>
+                <td>{{$product_sale_sum}} TK</td>
+              </tr>
             <tr>
-              <td colspan="3">{{$purchase_payment->total_amount}} TK</td>
-              <td colspan="3">{{$purchase_payment->paid_amount}} TK</td>
-              <td>{{$purchase_payment->due_amount}} TK</td>
+                <th class="text-center" colspan="3">Total Amount</th>
+                <th class="text-center" colspan="3">Paid Amount</th>
+                <th class="text-center">Due Amount</th>
+            </tr>
+
+            <tr>
+              <td class="text-center"  colspan="3">{{$purchase_payment->total_amount}} TK</td>
+              <td class="text-center"  colspan="3">{{$purchase_payment->paid_amount}} TK</td>
+              <td class="text-center" >{{$purchase_payment->due_amount}} TK</td>
             </tr>
             <tr>
               <td colspan="7" class="text-center">Payment Summary</td>
             </tr>
             <tr>
-              <td>SL.</td>
-              <td colspan="2">Date</td>
-              <td>Bank Name</td>
-              <td>Cheque No</td>
-              <td>Amount</td>
-              <td>Created By</td>
+              <td class="text-center">SL.</td>
+              <td class="text-center" colspan="2">Date</td>
+              <td class="text-center">Bank Name</td>
+              <td class="text-center">Cheque No</td>
+              <td class="text-center">Created By</td>
+              <td class="text-center" >Amount</td>
             </tr>
             @php
               $total_paid_sum = 0;
             @endphp
             @foreach($purchase['purchase_payment_details'] as $key2 => $payment_details)
             <tr>
-              <td>{{$key2+1}}</td>
-              <td colspan="2">{{date('d-m-Y',strtotime($payment_details->date))}}</td>
-              <td>{{$payment_details->bank_name}}</td>
-              <td>{{$payment_details->cheque_no}}</td>
-              <td>{{$payment_details->current_paid_amount}}</td>
-              <td>{{@$payment_details['user']['name']}}</td>
+              <td class="text-center" >{{$key2+1}}</td>
+              <td class="text-center"  colspan="2">{{date('d-m-Y',strtotime($payment_details->date))}}</td>
+              <td class="text-center" >{{$payment_details->bank_name}}</td>
+              <td class="text-center" >{{$payment_details->cheque_no}}</td>
+              <td class="text-center" >{{@$payment_details['user']['name']}}</td>
+              <td class="text-right" >{{$payment_details->current_paid_amount}}</td>
             </tr>
             @php
               $total_paid_sum += $payment_details->current_paid_amount;
@@ -164,41 +233,9 @@ table tr td{
             @endforeach
             <tr>
               <td class="text-right" colspan="5">Total Paid Amount</td>
-              <td colspan="2">{{$total_paid_sum}}</td>
+              <td  class="text-right" colspan="2">{{$total_paid_sum}}</td>
             </tr>
-            <tr>
-              <td colspan="7" class="text-center">Product List</td>
-            </tr>
-            <tr>
-              <td>SL.</td>
-              <td>Product Name</td>
-              <td>Sell Price</td>
-              <td>Free Qty</td>
-              <td>Quantity</td>
-              <td>Unit Price</td>
-              <td>Amount</td>
-            </tr>
-            @php
-              $product_sale_sum = 0;
-            @endphp
-            @foreach($purchase['purchase_details'] as $key => $details)
-            <tr>
-              <td>{{$key+1}}</td>
-              <td>{{@$details['product']['name']}}</td>
-              <td>{{$details->selling_price}} TK</td>
-              <td>{{$details->free_quantity}}</td>
-              <td>{{$details->buying_qty}}</td>
-              <td>{{$details->unit_price}} TK</td>
-              <td>{{$details->buying_price}} TK</td>
-              @php
-                $product_sale_sum += $details->buying_price;
-              @endphp
-            </tr>
-            @endforeach
-            <tr>
-              <td class="text-right" colspan="6">Product Total Price</td>
-              <td>{{$product_sale_sum}} TK</td>
-            </tr>
+
           </tbody>
         </table>
           @php
@@ -223,5 +260,23 @@ table tr td{
       </div>
     </div>
   </div>
+
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $("#printInvoice").click(function () {
+    //   Popup($(".invoice")[0].outerHTML);
+    //   function Popup(data) {
+    //     window.print();
+    //     return true;
+    //   }
+    window.print();
+    });
+    $(document).ready(function(){
+        // alert(2343);
+          window.print();
+    })
+  </script>
+
+
 </html>

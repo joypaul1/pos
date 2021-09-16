@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section('content')
 <div class="content-page">
-    
+
     <!-- Start content -->
     <div class="content">
         <div class="container-fluid">
@@ -18,7 +18,7 @@
                 </div>
             </div>
             <!-- end row -->
-            
+
             <div class="container fullbody">
 				<div class="col-md-12">
 					<div class="card">
@@ -52,7 +52,7 @@
 											@if($value['invoice']['status']=='1')
 											<a class="btn btn-sm btn-info" title="Edit" href="{{route('invoices.invoice.edit',$value->invoice_id)}}"><i class="fa fa-edit"></i></a>
 											@endif
-											<a class="btn btn-sm btn-success" target="_blank" title="detils" href="{{route('invoices.invoice.details',$value->invoice_id)}}"><i class="fa fa-eye"></i></a>
+											{{-- <a class="btn btn-sm btn-success" target="_blank" title="detils" href="{{route('invoices.invoice.details',$value->invoice_id)}}"><i class="fa fa-eye"></i></a> --}}
 										</td>
 									</tr>
 									@endforeach

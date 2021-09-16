@@ -18,7 +18,7 @@ use App\Model\PurchasePaymentDetail;
 use App\Model\PurchaseRepayment;
 use Session;
 use PDF;
-date_default_timezone_set("Asia/Dhaka");
+
 
 class PurchaseController extends Controller
 {
@@ -28,6 +28,13 @@ class PurchaseController extends Controller
     }
 
     public function add(){
+        $purchase = Purchase::orderBy('id','DESC')->first();
+        if($purchase){
+            $data['invoice_no'] = str_pad($purchase->purchase_no+1, 7 , "0", STR_PAD_LEFT);
+        }else{
+            $data['invoice_no'] = str_pad(1, 7 , "0", STR_PAD_LEFT);
+        }
+
         $data['suppliers'] = Supplier::all();
         $data['cdate'] = date("Y-m-d");
     	return view('backend.admin.purchase.purchase-add', $data);
@@ -51,7 +58,7 @@ class PurchaseController extends Controller
                     if($purchase->save()){
                         if($request->category_id !=null){
                             $count_category = count($request->category_id);
-                            for ($i=0; $i <$count_category ; $i++) { 
+                            for ($i=0; $i <$count_category ; $i++) {
                                 $purchase_details = new PurchaseDetail();
                                 $purchase_details->purchase_id = $purchase->id;
                                 $purchase_details->date = date('Y-m-d',strtotime($request->date));
@@ -246,9 +253,10 @@ class PurchaseController extends Controller
     public function purchasePdf($id){
         $data['purchase'] = Purchase::with(['purchase_details','purchase_payment_details'])->find($id);
         $data['owner'] = ReportHeading::first();
-        $pdf = PDF::loadView('backend.admin.purchase.pdf.purchase_print_pdf', $data);
-        $pdf->SetProtection(['copy', 'print'], '', 'pass');
-        return $pdf->stream('document.pdf');
+        return view('backend.admin.purchase.pdf.purchase_print_pdf', $data);
+        // $pdf = PDF::loadView('backend.admin.purchase.pdf.purchase_print_pdf', $data);
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        // $pdf->stream('document.pdf');
     }
 
     public function purchaseDetails($purchase_id)

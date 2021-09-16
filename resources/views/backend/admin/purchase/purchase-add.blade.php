@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section('content')
 <div class="content-page">
-    
+
     <!-- Start content -->
     <div class="content">
         <div class="container-fluid">
@@ -18,7 +18,7 @@
                 </div>
             </div>
             <!-- end row -->
-            
+
             <div class="container fullbody">
 				<div class="col-md-12">
 					<div class="card">
@@ -37,7 +37,8 @@
 									</div>
 									<div class="form-group col-md-4">
 										<label class="control-label">Invoice No <span style="color: red;">*</span></label>
-										<input type="text" name="purchase_no" id="purchase_no" class="form-control form-control-sm" value="{{@$editData->purchase_no}}" placeholder="Write Invoice No">
+										<input type="text" name="purchase_no" id="purchase_no" class="form-control form-control-sm" readonly
+                                        value="#{{@$editData->purchase_no ?? @$invoice_no}}" placeholder="Write Invoice No">
 									</div>
 									<div class="form-group col-md-4">
 										<label class="control-label">Supplier Name <span style="color: red;">*</span></label>
@@ -183,7 +184,7 @@
 		</td>
 		<td>
 			<input type="number" min="1" class="form-control form-control-sm text-right buying_qty" name="buying_qty[]"  value="1">
-		</td>	
+		</td>
 		<td>
 			<input type="number" class="form-control form-control-sm text-right unit_price" name="unit_price[]"  value="">
 		</td>
@@ -251,7 +252,7 @@
 
 		$(document).on("click", ".removeeventmore", function (event) {
 			$(this).closest(".delete_add_more_item").remove();
-			totalAmountPrice();     
+			totalAmountPrice();
 		});
 
 		$(document).on('keyup click','.unit_price,.buying_qty',function(){
@@ -261,15 +262,15 @@
 			$(this).closest("tr").find("input.buying_price").val(total);
 			totalAmountPrice();
 		});
-		
+
 
 		//calculate sum of amount in invoice
 		function totalAmountPrice(){
 			var sum=0;
 			$(".buying_price").each(function(){
-				var value = $(this).val();			    		
+				var value = $(this).val();
 				if(!isNaN(value) && value.length != 0) {
-					sum += parseFloat(value);			        
+					sum += parseFloat(value);
 				}
 			});
 			$('#estimated_amount').val(sum);

@@ -55,7 +55,10 @@ class Invoice extends Model
         return $this->hasMany(InvoiceInstallment::class, 'invoice_id', 'id');
     }
 
-    public function user(){
+    public function createdUser(){
+        return $this->belongsTo(User::class,'created_by', 'id');
+    }
+    public function updatedUser(){
         return $this->belongsTo(User::class,'created_by', 'id');
     }
 

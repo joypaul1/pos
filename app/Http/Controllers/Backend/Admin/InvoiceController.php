@@ -375,11 +375,14 @@ class InvoiceController extends Controller
     }
 
     public function dailyInvoice(Request $request){
+
         $data['customers'] = Customer::all();
         return view('backend.admin.invoice.daily_invoice_report', $data);
     }
 
     public function dailyInvoiceHandlebar(Request $request){
+
+
         $customer_id = $request->customer_id;
         if($customer_id !=''){
             $where[] = ['customer_id',$customer_id];
@@ -430,20 +433,43 @@ class InvoiceController extends Controller
     }
 
     public function dailyInvoicePdf(Request $request){
-        $customer_id = $request->customer_id;
-        if($customer_id !=''){
-            $where[] = ['customer_id',$customer_id];
-        }
-        $where[] = ['status','1'];
-        $start_date = date('Y-m-d',strtotime($request->start_date));
-        $end_date = date('Y-m-d',strtotime($request->end_date));
         $data['start_date'] = date('Y-m-d',strtotime($request->start_date));
-        $data['end_date'] = date('Y-m-d',strtotime($request->end_date));
-        $data['allInvoice'] = InvoiceDetail::whereBetween('date',[$start_date, $end_date])->where($where)->get();
-        $data['owner'] = ReportHeading::first();
-        $pdf = PDF::loadView('backend.admin.invoice.pdf.daily_invoice_report_pdf', $data);
+        $data['end_date']   = date('Y-m-d',strtotime($request->end_date));
+        $data['invoice']  =  Invoice::whereBetween('date',[$data['start_date'], $data['end_date']])
+                                ->withCount([
+                                    'invoice_details AS selling_qty' => function ($query) {
+                                                $query->select(DB::raw("SUM(selling_qty)"));
+                                            }
+                                        ])
+                                ->withCount([
+                                    'invoice_details AS product_qty' => function ($query) {
+                                                $query->select(DB::raw("COUNT(product_id)"));
+                                            }
+                                        ])
+                                ->withCount([
+                                    'invoice_details AS total_price' => function ($query) {
+                                                $query->select(DB::raw("SUM(total_price)"));
+                                            }
+                                        ])
+                                ->get();
+
+        // return view('backend.admin.invoice.pdf.daily_invoice_report_pdf',[ 'data' =>  $data]);
+        $pdf = PDF::loadView('backend.admin.invoice.pdf.daily_invoice_report_pdf',[ 'data' =>  $data]);
         $pdf->SetProtection(['copy', 'print'], '', 'pass');
         return $pdf->stream('document.pdf');
+        // $customer_id = $request->customer_id;
+        // if($customer_id !=''){
+        //     $where[] = ['customer_id',$customer_id];
+        // }
+        // $where[] = ['status','1'];
+
+        // $data['start_date'] = date('Y-m-d',strtotime($request->start_date));
+        // $data['end_date'] = date('Y-m-d',strtotime($request->end_date));
+        // $data['allInvoice'] = InvoiceDetail::whereBetween('date',[$start_date, $end_date])->where($where)->get();
+        // $data['owner'] = ReportHeading::first();
+        // $pdf = PDF::loadView;
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        // return $pdf->stream('document.pdf');
     }
 
 }

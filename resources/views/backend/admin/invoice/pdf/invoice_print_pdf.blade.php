@@ -275,7 +275,7 @@
               <div
                 class="col-md-2"
                 style="border-bottom: 2px dotted; width: 100%"
-              > # {{ $invoice->invoice_no??'' }}</div>
+              > # </div>
               {{-- <div class="col-md-2">
                 <div class="text-gray-light text-left">B/E Name :</div>
               </div>
@@ -369,7 +369,8 @@
                     style="font-size: 16px; font-weight: 600">
                     Interest Amount
                   </td>
-                  <td class="text-right">{{ ($invoice->interest_amount??'0' ) }}</td>
+
+                  <td class="text-right">{{ ($invoice->intertest_amount??'0' ) }}</td>
                 </tr>
                 <tr>
 
@@ -425,7 +426,8 @@
                   <td
                     colspan="6"
                     style="border-left: 0;"
-                  ></td>
+                    {{-- {{ $invoice->updatedUser->name??' ' }} --}}
+                    ></td>
                   <td colspan="2" class="text-center" style="border-top:0;">
                     <span style="border-top:2px dotted gray;">Sales Department</span>
                   </td>

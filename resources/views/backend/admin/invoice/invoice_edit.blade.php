@@ -46,19 +46,19 @@
 						        				<p style="font-size: 16px;font-weight: bold;">Customer Info:</p>
 						        			</td>
 						        			<td width="25%">
-						        				<p style="font-size: 14px;border-bottom: 1px dotted #000;width: 100%">Name : {{$invoice['customer']['name']}}</p>
+						        				<p style="font-size: 14px;border-bottom: 1px dotted #000;width: 100%">Name : {{$invoice['customer']['name']??' '}}</p>
 						        			</td>
 						        			<td width="30%">
-						        				<p style="font-size: 14px;border-bottom: 1px dotted #000;width: 100%">Mobile : {{$invoice['customer']['mobile']}}</p>
+						        				<p style="font-size: 14px;border-bottom: 1px dotted #000;width: 100%">Mobile : {{$invoice['customer']['mobile']?? ''}}</p>
 						        			</td>
 						        			<td width="30%">
-						        				<p style="font-size: 14px;border-bottom: 1px dotted #000;width: 100%">Address : {{$invoice['customer']['address']}}</p>
+						        				<p style="font-size: 14px;border-bottom: 1px dotted #000;width: 100%">Address : {{$invoice['customer']['address']?? ' '}}</p>
 						        			</td>
 						        		</tr>
 						        		<tr>
 						        			<td width="15%"></td>
 						        			<td width="85%" colspan="2">
-						        				<p>Description: {{$invoice['invoice']['description']}}</p>
+						        				<p>Description: {{$invoice['invoice']['description'] ?? ' '}}</p>
 						        			</td>
 						        		</tr>
 						        	</tbody>

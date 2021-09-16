@@ -66,9 +66,9 @@ table tr td{
 }
 
 .table-bordered thead th{
-  background-color:  #cacaca; 
+  background-color:  #cacaca;
 
-
+}
 </style>
 <body>
   <div class="container">
@@ -78,22 +78,22 @@ table tr td{
           <tr>
             <td style="width: 25%"></td>
             <td class="text-center" style="width: 50%">
-              <img src="{{(!empty($owner->image)) ? url('public/backend/user_images/'.$owner->image) : url('public/backend/images/noimage.png')}}" style="height: 60px;width: 80px;">
+              {{-- <img src="{{(!empty($owner->image)) ? url('public/backend/user_images/'.$owner->image) : url('public/backend/images/noimage.png')}}" style="height: 60px;width: 80px;">
               <h3 style="font-weight: bold"><strong>{{$owner->name}}</strong></h3>
               <h5><strong>{{$owner->address}}</strong></h5>
-              <h4><strong>{{$owner->mobile}}</strong></h4>
+              <h4><strong>{{$owner->mobile}}</strong></h4> --}}
             </td>
             <td style="width: 25%"></td>
           </tr>
         </tbody>
       </table>
     </div>
-
+    {{-- @dd($data) --}}
     <div class="row">
       <div class="col col-sm-12 text-center">
         <h4 style="font-weight: bold">
           <u>
-            INVOICE REPORT ({{date('d-m-Y',strtotime($start_date))}} - {{date('d-m-Y',strtotime($end_date))}})
+            INVOICE REPORT ({{date('d-m-Y',strtotime($data['start_date']))}} - {{date('d-m-Y',strtotime($data['end_date']))}})
           </u>
         </h4>
       </div>
@@ -109,40 +109,34 @@ table tr td{
               <th>Customer Ino</th>
               <th>Product</th>
               <th>Qty</th>
-              <th>Unit Price</th>
               <th>Amount</th>
             </tr>
 
           </thead>
           <tbody>
-            @php
-                 $total_sum = 0;
-              @endphp
-              @foreach ($allInvoice as $key => $value)
+            {{--  --}}
+              @foreach ($data['invoice'] as $key => $value)
               <tr>
                 <td>{{$key+1}}</td>
                 <td>{{date('d-m-Y',strtotime($value->date))}}</td>
-                <td># {{$value['invoice']['invoice_no']}}</td>
+                <td># {{$value['invoice_no']}}</td>
                 <td>
                   {{@$value['customer']['name']}},
                   {{@$value['customer']['mobile']}} -
                   ({{@$value['customer']['address']}})
                 </td>
-                <td>{{$value['product']['name']}}</td>
-                <td>{{$value->selling_qty}}</td>
-                <td>{{$value->selling_price}}</td>
-                @php
-                  $total_amount = $value->selling_qty*$value->selling_price;
-                @endphp
-                <td>{{$total_amount}}</td>
-                @php
-                  $total_sum += $total_amount;
-                @endphp
+                <td class="text-center">{{$value['product_qty']}}</td>
+                <td class="text-center">{{$value->selling_qty}}</td>
+                <td class="text-right">{{number_format($value->total_amount, 2)}}</td>
+                    @php
+                        $total_sum = 0;
+                        $total_sum += $value->total_amount;
+                    @endphp
               </tr>
               @endforeach
               <tr>
-                <td colspan="7" class="text-right"><strong>Grand Total</strong></td>
-                <td><strong>{{$total_sum}} TK</strong></td>
+                <td colspan="6" class="text-right"><strong>Grand Total</strong></td>
+                <td  class="text-right"><strong>{{ number_format($total_sum, 2)}} TK</strong></td>
               </tr>
           </tbody>
         </table>
@@ -167,7 +161,7 @@ table tr td{
         </table>
       </div>
     </div>
-  
+
   </div>
 
 </body>

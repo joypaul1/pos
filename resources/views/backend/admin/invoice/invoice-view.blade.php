@@ -80,6 +80,7 @@
                                             <a class="btn btn-sm btn-info" title="Approve" href="{{route('invoices.invoice.approve-get',$value->id)}}"><i class="fa fa-check-circle"></i></a>
                                             @endif
                                             <a target="_blank" class="btn btn-sm btn-success" title="Print" href="{{route('invoices.invoice.pdf',$value->id)}}"><i class="fa fa-print"></i></a>
+                                            <a target="_blank" class="btn btn-sm btn-success" title="others print" href="{{route('invoices.invoice.othersPdf',$value->id)}}"><i class="fa fa-print"></i></a>
 										</td>
 									</tr>
 									@endforeach

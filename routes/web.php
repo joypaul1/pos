@@ -137,6 +137,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/update-reject', 'Backend\Admin\InvoiceController@updateReject')->name('invoices.invoice.update-reject');
         Route::post('/delete', 'Backend\Admin\InvoiceController@destroy')->name('invoices.invoice.destroy');
         Route::get('/pdf/{id}', 'Backend\Admin\InvoiceController@invoicePdf')->name('invoices.invoice.pdf');
+        Route::get('/othersPdf/{id}', 'Backend\Admin\InvoiceController@othersPdf')->name('invoices.invoice.othersPdf');
         Route::get('/details/{id}', 'Backend\Admin\InvoiceController@invoiceDetails')->name('invoices.invoice.details');
         Route::get('/daily/invoice', 'Backend\Admin\InvoiceController@dailyInvoice')->name('invoices.invoice.date.wise');
         Route::post('/daily/invoice/pdf', 'Backend\Admin\InvoiceController@dailyInvoicePdf')->name('invoices.invoice.date.wise.pdf');

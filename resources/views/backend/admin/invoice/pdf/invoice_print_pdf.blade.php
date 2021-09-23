@@ -90,7 +90,7 @@
       width: 100%;
       border-collapse: collapse;
       border-spacing: 0;
-      margin-bottom: 20px;
+      /* margin-bottom: 20px; */
     }
 
     .invoice table td,
@@ -120,24 +120,7 @@
       font-size: 1.2em;
     }
 
-    .invoice table .no {
-      /* color: #fff; */
-      /* font-size: 1.6em; */
-      /* background: #3989c6; */
-    }
 
-    .invoice table .unit {
-      /* background: #ddd; */
-    }
-
-    .invoice table .total {
-      /* background: #3989c6; */
-      /* color: #fff; */
-    }
-
-    .invoice table tbody tr:last-child td {
-      /* border: none; */
-    }
 
     .invoice table tfoot td {
       background: 0 0;
@@ -168,7 +151,7 @@
       text-align: center;
       color: #777;
       border-bottom: 1px solid #aaa;
-      padding: 8px 0;
+      /* padding: 8px 0; */
     }
     .bg-voilet {
       background-color: #0e6a91;
@@ -181,26 +164,30 @@
       color: white;
     }
     @media print {
-      body {
-        -webkit-print-color-adjust: exact;
-      }
-      .invoice {
-        font-size: 11px !important;
-        overflow: hidden !important;
-      }
-      .bg-voilet {
-        background-color: #0e6a91 !important;
-        -webkit-print-color-adjust: exact;
-      }
+        @page{
+            size: A4 landscape;
+            margin: 0;
+        }
+        body {
+            -webkit-print-color-adjust: exact;
+        }
+        .invoice {
+            font-size: 11px !important;
+            overflow: hidden !important;
+        }
+        .bg-voilet {
+            background-color: #0e6a91 !important;
+            -webkit-print-color-adjust: exact;
+        }
 
       .invoice footer {
         position: absolute;
-        bottom: 10px;
+        /* bottom: 10px; */
         /* page-break-after: always; */
       }
 
       .invoice > div:last-child {
-        page-break-before: always;
+        /* page-break-before: always; */
       }
       .hidden-print {
         display: none !important;
@@ -213,9 +200,6 @@
         <div class="text-right">
           <button id="printInvoice" class="btn btn-info">
             <i class="fa fa-print"></i> Print
-          </button>
-          <button class="btn btn-info">
-            <i class="fa fa-file-pdf-o"></i> Export as PDF
           </button>
         </div>
         <hr />

@@ -247,6 +247,15 @@ class InvoiceController extends Controller
         // $pdf->SetProtection(['copy', 'print'], '', 'pass');
         // return $pdf->stream('document.pdf');
     }
+    public function othersPdf($id){
+
+        $data['invoice'] = Invoice::with(['customer','invoice_details.product.sellPrice'])->find($id);
+        return view('backend.admin.invoice.pdf.invoice_print_othersPdf', $data);
+        // $data['owner'] = ReportHeading::first();
+        // $pdf           = PDF::loadView('backend.admin.invoice.pdf.invoice_print_pdf', $data);
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        // return $pdf->stream('document.pdf');
+    }
 
     public function invoiceDetails($id){
         $data['invoice'] = Invoice::with(['invoice_details','invoice_payment_details'])->find($id);
@@ -433,6 +442,7 @@ class InvoiceController extends Controller
     }
 
     public function dailyInvoicePdf(Request $request){
+
         $data['start_date'] = date('Y-m-d',strtotime($request->start_date));
         $data['end_date']   = date('Y-m-d',strtotime($request->end_date));
         $data['invoice']  =  Invoice::whereBetween('date',[$data['start_date'], $data['end_date']])

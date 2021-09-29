@@ -9,17 +9,17 @@
 		<meta name="author" content="Pike Web Development - https://www.pikephp.com">
 
 		<!-- Favicon -->
-		<link rel="shortcut icon" href="{{asset('public/fontend/favicon.ico')}}" type="image/x-icon" >
+		<link rel="shortcut icon" href="{{asset('fontend/favicon.ico')}}" type="image/x-icon" >
 
 		<!-- Bootstrap CSS -->
-		<link href="{{asset('public/backend')}}/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<link href="{{asset('backend')}}/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
 		<!-- Font Awesome CSS -->
-		<link href="{{asset('public/backend')}}/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+		<link href="{{asset('backend')}}/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
 		<!-- Custom CSS -->
-		<link href="{{asset('public/backend')}}/css/style.css" rel="stylesheet" type="text/css" />
-        <link href="{{asset('public/backend')}}/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+		<link href="{{asset('backend')}}/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="{{asset('backend')}}/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 
 		<style type="text/css">
             .warning{
@@ -59,17 +59,17 @@
 		       box-shadow:0 0 1px #333;
 		    }
 		</style>
-		<script src="{{asset('public/backend')}}/js/jquery.min.js"></script>
+		<script src="{{asset('backend')}}/js/jquery.min.js"></script>
 		<!-- sweet-alert -->
-		<script src="{{asset('public/backend')}}/sweetalert/sweetalert.js"></script>
-		<link href="{{asset('public/backend')}}/sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />
-        <link href="{{asset('public/backend/plugins/datetimepicker/css/daterangepicker.css')}}" rel="stylesheet" />
+		<script src="{{asset('backend')}}/sweetalert/sweetalert.js"></script>
+		<link href="{{asset('backend')}}/sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />
+        <link href="{{asset('backend/plugins/datetimepicker/css/daterangepicker.css')}}" rel="stylesheet" />
         <!-- select2 -->
-        <link rel="stylesheet" href="{{asset('public/backend/select2/select2.min.css')}}">
+        <link rel="stylesheet" href="{{asset('backend/select2/select2.min.css')}}">
         <!-- BEGIN CSS for this page -->
-        <link href="{{asset('public/backend')}}/plugins/jquery.filer/css/jquery.filer.css" rel="stylesheet" />
-        <link href="{{asset('public/backend')}}/plugins/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
-        <script src="{{asset('public/backend/js/handlebars-v4.0.12.js')}}"></script>
+        <link href="{{asset('backend')}}/plugins/jquery.filer/css/jquery.filer.css" rel="stylesheet" />
+        <link href="{{asset('backend')}}/plugins/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+        <script src="{{asset('backend/js/handlebars-v4.0.12.js')}}"></script>
         <!--Year and month Picker-->
         <link href="{{asset('public')}}/dist/css/datepicker.min.css" rel="stylesheet" type="text/css">
         <script src="{{asset('public')}}/dist/js/datepicker.min.js"></script>
@@ -98,7 +98,7 @@
 
                         <li class="list-inline-item dropdown notif">
                             <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="{{(!empty(Auth::user()->image)) ? url('public/backend/user_images/'.Auth::user()->image):asset('public/backend/images/avatars/admin.png')}}" alt="Profile image" class="avatar-rounded">
+                                <img src="{{(!empty(Auth::user()->image)) ? url('backend/user_images/'.Auth::user()->image):asset('backend/images/avatars/admin.png')}}" alt="Profile image" class="avatar-rounded">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                                 <!-- item-->
@@ -163,39 +163,39 @@
     @endphp
 </div>
 <!-- END main -->
-<script src="{{asset('public/backend')}}/js/modernizr.min.js"></script>
-<script src="{{asset('public/backend')}}/js/moment.min.js"></script>
+<script src="{{asset('backend')}}/js/modernizr.min.js"></script>
+<script src="{{asset('backend')}}/js/moment.min.js"></script>
 
-<script src="{{asset('public/backend')}}/js/popper.min.js"></script>
-<script src="{{asset('public/backend')}}/js/bootstrap.min.js"></script>
+<script src="{{asset('backend')}}/js/popper.min.js"></script>
+<script src="{{asset('backend')}}/js/bootstrap.min.js"></script>
 <!--Validate-->
-<script src="{{asset('public/backend')}}/validate/jquery.validate.min.js"></script>
+<script src="{{asset('backend')}}/validate/jquery.validate.min.js"></script>
 <!--Notify JS-->
-<script src="{{asset('public/backend')}}/notify/notify.js"></script>
-<script src="{{asset('public/backend')}}/js/detect.js"></script>
-<script src="{{asset('public/backend')}}/js/fastclick.js"></script>
-<script src="{{asset('public/backend')}}/js/jquery.blockUI.js"></script>
-<script src="{{asset('public/backend')}}/js/jquery.nicescroll.js"></script>
+<script src="{{asset('backend')}}/notify/notify.js"></script>
+<script src="{{asset('backend')}}/js/detect.js"></script>
+<script src="{{asset('backend')}}/js/fastclick.js"></script>
+<script src="{{asset('backend')}}/js/jquery.blockUI.js"></script>
+<script src="{{asset('backend')}}/js/jquery.nicescroll.js"></script>
 
 <!-- App js -->
-<script src="{{asset('public/backend')}}/js/pikeadmin.js"></script>
+<script src="{{asset('backend')}}/js/pikeadmin.js"></script>
 
 <!-- BEGIN Java Script for this page -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-<script src="{{asset('public/backend')}}/datatable/jquery.dataTables.min.js"></script>
-<script src="{{asset('public/backend')}}/datatable/dataTables.bootstrap4.min.js"></script>
-<script src="{{asset('public/backend/plugins/datetimepicker/js/moment.min.js')}}"></script>
-<script src="{{asset('public/backend/plugins/datetimepicker/js/daterangepicker.js')}}"></script>
+<script src="{{asset('backend')}}/datatable/jquery.dataTables.min.js"></script>
+<script src="{{asset('backend')}}/datatable/dataTables.bootstrap4.min.js"></script>
+<script src="{{asset('backend/plugins/datetimepicker/js/moment.min.js')}}"></script>
+<script src="{{asset('backend/plugins/datetimepicker/js/daterangepicker.js')}}"></script>
 <!-- select2 -->
-<script type="text/javascript" src="{{ asset('public/backend/select2/select2.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('backend/select2/select2.min.js') }}"></script>
 
-<script type="text/javascript" src="{{ asset('public/backend/ckeditor/ckeditor.js') }}"></script>
-<script type="text/javascript" src="{{ asset('public/backend/ckfinder/ckfinder.js') }}"></script>
+<script type="text/javascript" src="{{ asset('backend/ckeditor/ckeditor.js') }}"></script>
+<script type="text/javascript" src="{{ asset('backend/ckfinder/ckfinder.js') }}"></script>
 
 <!-- Counter-Up-->
-<script src="{{asset('public/backend')}}/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
-<script src="{{asset('public/backend')}}/plugins/counterup/jquery.counterup.min.js"></script>
-<script src="{{asset('public/backend')}}/plugins/jquery.filer/js/jquery.filer.min.js"></script>
+<script src="{{asset('backend')}}/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
+<script src="{{asset('backend')}}/plugins/counterup/jquery.counterup.min.js"></script>
+<script src="{{asset('backend')}}/plugins/jquery.filer/js/jquery.filer.min.js"></script>
 @stack('js')
 <script>
     $(document).ready(function () {

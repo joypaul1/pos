@@ -14,9 +14,8 @@ class AddInterestAmountToInvoicesTable extends Migration
      */
     public function up()
     {
-\
         Schema::table('invoices', function (Blueprint $table) {
-            $table->decimal('intertest_amount')->default(0.00)->after('discount_amount');
+            $table->decimal('intertest_amount')->default(0)->after('discount_amount');
         });
 
     }

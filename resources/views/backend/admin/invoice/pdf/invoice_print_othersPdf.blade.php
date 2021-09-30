@@ -256,7 +256,7 @@
               <div class="col invoice-details">
                 <div class="date">
                   Date:
-                  <span style="border-bottom: 2px dotted">30/10/2018</span>
+                  <span style="border-bottom: 2px dotted">{{ $invoice->date }}</span>
                 </div>
               </div>
               <!-- <div class="col-md-12"> -->
@@ -283,64 +283,69 @@
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Buyer Name :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%; padding-left:2px ">
+                        {{ optional($invoice->customer)->name??' ' }}
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Father's Name :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                    {{ optional($invoice->customer)->father_name??' ' }}
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Mother's Name :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                    {{ optional($invoice->customer)->mother_name??' ' }}
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Village Name :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                    {{ optional($invoice->customer)->village??' ' }}
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Post Office :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                    {{ optional($invoice->customer)->post_office??' ' }}
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">District Name :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                    {{ optional($invoice->customer)->district??' ' }}
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Mobile No :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                    {{ optional($invoice->customer)->mobile??' ' }}
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Additional :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+
                     </td>
                   </tr>
                 </table>
@@ -354,76 +359,76 @@
                     border-bottom: 2px dotted red;
                     font-weight: 600;
                   "
-                  s
                 >
                   Seller Introduction :
                 </p>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Seller Name :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Father's Name :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Mother's Name :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Village Name :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Post Office :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">District Name :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Mobile No :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Additional :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                     
                     </td>
                   </tr>
                 </table>
               </div>
             </section>
+
             <section class="row">
               <div class="col-md-6">
                 <p
@@ -441,64 +446,71 @@
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Model Name :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                      {{ optional(optional($invoice->invoice_detail)->product)->model_Of_vehicle??' ' }}
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Chassis No :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                        {{ optional(optional($invoice->invoice_detail)->product)->chasiss_no??' ' }}
+
                     </td>
                   </tr>
                 </table>
+
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Engine No :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                    {{ optional(optional($invoice->invoice_detail)->product)->engine_no??' ' }}
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Color Name :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                    {{ optional(optional($invoice->invoice_detail)->product)->colour??' ' }}
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Weight :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                    {{ optional(optional($invoice->invoice_detail)->product)->laden_weight }}
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">CC :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                    {{ optional(optional($invoice->invoice_detail)->product)->none_of_cylineder_with_cc??' ' }}
+
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
-                    <td class="col-md-3 bg-desing">Color Name :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td class="col-md-3 bg-desing">Seating Capacity :</td>
+                    <td style="width: 100%;  padding-left:2px ">
+                    {{ optional(optional($invoice->invoice_detail)->product)->seating_capacity??' ' }}
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Manufacturer :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                    {{ optional(optional($invoice->invoice_detail)->product)->year_of_manufacture??' ' }}
+
                     </td>
                   </tr>
                 </table>
@@ -519,40 +531,40 @@
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Sell's Amount :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                      {{ $invoice->total_amount??' ' }}
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
-                    <td class="col-md-3 bg-desing">Service Charge :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td class="col-md-3 bg-desing">Intertest Amount :</td>
+                    <td style="width: 100%;  padding-left:2px ">
+                    {{ $invoice->intertest_amount??' ' }}
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Total Amount :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                        {{ $invoice->grand_total??' ' }}
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Paid Amount :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                    {{ $invoice->paid_amount??' ' }}
                     </td>
                   </tr>
                 </table>
                 <table cellspacing="0" cellpadding="0">
                   <tr>
                     <td class="col-md-3 bg-desing">Due Amount :</td>
-                    <td style="width: 100%; color: white">
-                      ....................................................................................................................................
+                    <td style="width: 100%;  padding-left:2px ">
+                    {{ $invoice->due_amount??' ' }}
                     </td>
                   </tr>
                 </table>
@@ -562,39 +574,24 @@
                 >
                   Installment Amount & Date :
                 </p>
-                <table cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td class="col-md-3 bg-desing">1st Installment :</td>
-                    <td style="width: 50%; color: white">
-                      ...............................................................
-                    </td>
-                    <td style="width: 50%; color: white">
-                      ...............................................................
-                    </td>
-                  </tr>
-                </table>
-                <table cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td class="col-md-3 bg-desing">2nd Installment :</td>
-                    <td style="width: 50%; color: white">
-                      ...............................................................
-                    </td>
-                    <td style="width: 50%; color: white">
-                      ...............................................................
-                    </td>
-                  </tr>
-                </table>
-                <table cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td class="col-md-3 bg-desing">3rd Installment :</td>
-                    <td style="width: 50%; color: white">
-                      ...............................................................
-                    </td>
-                    <td style="width: 50%; color: white">
-                      ...............................................................
-                    </td>
-                  </tr>
-                </table>
+                @forelse ($invoice->installment as $key=> $installment)
+                    <table cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="col-md-3 bg-desing">{{ $key+1 }} Installment :</td>
+                        <td style="width: 50%;  padding-left:2px ">
+                            Date : {{ $installment->date }} Interest: {{ $installment->interest }}
+                        </td>
+                        <td style="width: 50%;  padding-left:2px ">
+                        {{ $installment->amount }} Tk
+                        </td>
+                    </tr>
+                    </table>
+                @empty
+
+                @endforelse
+
+
+
               </div>
             </section>
           </main>

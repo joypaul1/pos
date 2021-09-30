@@ -249,7 +249,7 @@ class InvoiceController extends Controller
     }
     public function othersPdf($id){
 
-        $data['invoice'] = Invoice::with(['customer','invoice_details.product.sellPrice'])->find($id);
+        $data['invoice'] = Invoice::with(['customer','installment','invoice_detail.product.sellPrice'])->find($id);
         return view('backend.admin.invoice.pdf.invoice_print_othersPdf', $data);
         // $data['owner'] = ReportHeading::first();
         // $pdf           = PDF::loadView('backend.admin.invoice.pdf.invoice_print_pdf', $data);

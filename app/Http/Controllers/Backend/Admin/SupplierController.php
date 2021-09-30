@@ -51,7 +51,6 @@ class SupplierController extends Controller
     }
 
     public function details($id){
-        // dd('ok');
         $purchase = PurchasePayment::select('purchase_id')->where('supplier_id',$id)->groupBy('purchase_id')->get()->toArray();
         $data['supplier_info'] = Supplier::where('id',$id)->first();
         $data['puchase_details'] = PurchasePaymentDetail::where('purchase_id',$purchase)->get();
@@ -123,5 +122,5 @@ class SupplierController extends Controller
                 ->update(['status' => 0]);
         return redirect()->route('suppliers.supplier.view');
     }
-    
+
 }

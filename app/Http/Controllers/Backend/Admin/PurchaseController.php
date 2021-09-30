@@ -86,7 +86,7 @@ class PurchaseController extends Controller
                             $payment->paid_status = $request->paid_status;
                             $payment->payment_method = $request->payment_method;
                             $payment->total_amount = $request->estimated_amount;
-                            $payment->date = date('Y-m-d',strtotime($request->date));
+                            // $payment->date = date('Y-m-d',strtotime($request->date));
                             if($request->paid_status=='full_paid'){
                                 $payment->paid_amount = $request->estimated_amount;
                                 $payment->due_amount = '0';

@@ -114,23 +114,25 @@ table tr td{
 
           </thead>
           <tbody>
-            {{--  --}}
+                @php
+                    $total_sum = 0;
+                @endphp
               @foreach ($data['invoice'] as $key => $value)
               <tr>
                 <td>{{$key+1}}</td>
                 <td>{{date('d-m-Y',strtotime($value->date))}}</td>
-                <td># {{$value['invoice_no']}}</td>
+                <td># {{ $value['invoice_no']??' ' }}</td>
                 <td>
-                  {{@$value['customer']['name']}},
-                  {{@$value['customer']['mobile']}} -
-                  ({{@$value['customer']['address']}})
+                  {{@$value['customer']['name'] ??' '}},
+                  {{@$value['customer']['mobile'] ??' '}} -
+                  ({{@$value['customer']['address'] ??' '}})
                 </td>
-                <td class="text-center">{{$value['product_qty']}}</td>
-                <td class="text-center">{{$value->selling_qty}}</td>
-                <td class="text-right">{{number_format($value->total_amount, 2)}}</td>
+                <td class="text-center">{{$value['product_qty']?? ' '}}</td>
+                <td class="text-center">{{$value->selling_qty?? ' '}}</td>
+                <td class="text-right">{{number_format($value->total_amount, 2)??0.00}}</td>
                     @php
-                        $total_sum = 0;
-                        $total_sum += $value->total_amount;
+
+                        $total_sum += $value->total_amount??0.00;
                     @endphp
               </tr>
               @endforeach

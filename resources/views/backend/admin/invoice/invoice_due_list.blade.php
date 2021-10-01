@@ -37,24 +37,23 @@
 										<th>Amount</th>
 										<th width="15%">Action</th>
 									</tr>
-								</thead>
-								<tbody>
-									@foreach ($allData as $key => $value)
-									<tr class="{{$value->id}}">
-										<td>{{$key+1}}</td>
-										<td>
-											{{@$value['customer']['name']}} - {{@$value['customer']['mobile']}} ({{@$value['customer']['address']}})
-										</td>
-										<td> # {{@$value['invoice']['invoice_no']}}</td>
-										<td>{{date('d-m-Y',strtotime($value['invoice']['date']))}}</td>
-										<td>{{round($value->due_amount, 2)}} TK</td>
-										<td>
-											@if($value['invoice']['status']=='1')
-											<a class="btn btn-sm btn-info" title="Edit" href="{{route('invoices.invoice.edit',$value->invoice_id)}}"><i class="fa fa-edit"></i></a>
-											@endif
-											{{-- <a class="btn btn-sm btn-success" target="_blank" title="detils" href="{{route('invoices.invoice.details',$value->invoice_id)}}"><i class="fa fa-eye"></i></a> --}}
-										</td>
-									</tr>
+									@foreach($allData as $key =>  $value))
+										<tr class="{{$value->id}}">
+											<td>{{$key+1}}</td>
+
+											<td>
+												{{@$value['customer']['name']}} - {{@$value['customer']['mobile']}} ({{@$value['customer']['address']}})
+											</td>
+											<td> # {{@$value['invoice_no']}}</td>
+											<td>{{date('d-m-Y',strtotime($value['date']))}}</td>
+											<td>{{round($value->due_amount, 2)}} TK</td>
+											<td>
+
+
+
+
+											</td>
+										</tr>
 									@endforeach
 								</tbody>
 							</table>

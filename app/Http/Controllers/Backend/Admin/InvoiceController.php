@@ -234,6 +234,7 @@ class InvoiceController extends Controller
     }
 
     public function dueList(){
+
         $allData = Invoice::where('due_amount' ,'>', 0)->get();
         return view('backend.admin.invoice.invoice_due_list', compact('allData'));
     }

@@ -16,7 +16,7 @@ class CreateStockOutDetailsTable extends Migration
         Schema::create('stock_out_details', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('stock_out_id')->nullable();
-            $table->integer('project_id')->nullable();
+            $table->integer('reason_id')->nullable();
             $table->integer('supplier_id')->nullable();
             $table->integer('category_id')->nullable();
             $table->integer('sub_category_id')->nullable();

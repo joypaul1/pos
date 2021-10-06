@@ -131,7 +131,6 @@ table tr td{
                 <td class="text-center">{{$value->selling_qty?? ' '}}</td>
                 <td class="text-right">{{number_format($value->total_amount, 2)??0.00}}</td>
                     @php
-
                         $total_sum += $value->total_amount??0.00;
                     @endphp
               </tr>

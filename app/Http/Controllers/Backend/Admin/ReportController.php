@@ -69,16 +69,18 @@ class ReportController extends Controller
 
     public function reportPdf(Request $request)
     {
+
+        // $data['sales'] = InvoicePaymentDetail::whereBetween('date',[$start_date, $end_date])->sum('current_paid_amount');
         $start_date = date('Y-m-d',strtotime($request->start_date));
         $end_date = date('Y-m-d',strtotime($request->end_date));
-        $data['sales'] = InvoicePaymentDetail::whereBetween('date',[$start_date, $end_date])->sum('current_paid_amount');
+        $data['sales'] = Invoice::whereBetween('date',[$start_date, $end_date])->sum('paid_amount');
         $data['purchase'] = PurchasePaymentDetail::whereBetween('date',[$start_date, $end_date])->sum('current_paid_amount');
         $data['expanse'] = Expanse::whereBetween('date',[$start_date, $end_date])->sum('amount');
         $data['cost'] = $data['purchase']+$data['expanse'];
         $data['profit'] = $data['sales']-$data['cost'];
         $data['start_date'] = date('d-m-Y',strtotime($request->start_date));
         $data['end_date'] = date('d-m-Y',strtotime($request->end_date));
-        $data['allInvoice'] = InvoicePaymentDetail::whereBetween('date',[$start_date, $end_date])->get();
+        $data['allInvoice'] = Invoice::whereBetween('date',[$start_date, $end_date])->get();
         $data['allPurchase'] = PurchasePaymentDetail::whereBetween('date',[$start_date, $end_date])->get();
         $data['allExpanse'] = Expanse::whereBetween('date',[$start_date, $end_date])->get();
         $data['owner'] = ReportHeading::first();

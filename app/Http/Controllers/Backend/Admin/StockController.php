@@ -57,7 +57,7 @@ class StockController extends Controller
         if($request->category_id == null){
             return redirect()->back()->with('error','Sorry! Category is empty');
         }else{
-            // dd($request->all());
+
             $invoice = new StockOut();
             $invoice->stock_invoice_no = $request->stock_invoice_no;
             $invoice->date = date('Y-m-d',strtotime($request->date));
@@ -68,16 +68,16 @@ class StockController extends Controller
                 if($invoice->save()){
                     if($request->category_id !=null){
                         $count_category = count($request->category_id);
-                        for ($i=0; $i <$count_category ; $i++) { 
+                        for ($i=0; $i < $count_category ; $i++) {
                             $invoice_details = new StockOutDetail();
-                            $invoice_details->stock_out_id = $invoice->id;
-                            $invoice_details->reason_id = $request->reason_id[$i];
-                            $invoice_details->supplier_id = $request->supplier_id[$i];
-                            $invoice_details->category_id = $request->category_id[$i];
-                            $invoice_details->product_id = $request->product_id[$i];
-                            $invoice_details->quantity = $request->quantity[$i];
-                            $invoice_details->created_by = Auth::user()->id;
-                            $invoice_details->status = '0';
+                            $invoice_details->stock_out_id  = $invoice->id;
+                            $invoice_details->reason_id     = $request->reason_id[$i];
+                            $invoice_details->supplier_id   = $request->supplier_id[$i];
+                            $invoice_details->category_id   = $request->category_id[$i];
+                            $invoice_details->product_id    = $request->product_id[$i];
+                            $invoice_details->quantity      = $request->quantity[$i];
+                            $invoice_details->created_by    = Auth::user()->id;
+                            $invoice_details->status        = '0';
                             $invoice_details->save();
                         }
                     }else{

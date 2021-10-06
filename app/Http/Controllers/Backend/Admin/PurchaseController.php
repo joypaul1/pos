@@ -30,7 +30,7 @@ class PurchaseController extends Controller
     public function add(){
         $purchase = Purchase::orderBy('id','DESC')->first();
         if($purchase){
-            $data['invoice_no'] = str_pad($purchase->purchase_no+1, 7 , "0", STR_PAD_LEFT);
+            $data['invoice_no'] = str_pad($purchase->purchase_no, 7 , "0", STR_PAD_LEFT);
         }else{
             $data['invoice_no'] = str_pad(1, 7 , "0", STR_PAD_LEFT);
         }

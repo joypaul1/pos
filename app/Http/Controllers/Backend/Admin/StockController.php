@@ -124,7 +124,7 @@ class StockController extends Controller
         $data['stock_invoice'] = StockOut::with(['stock_out_details'])->find($id);
         $data['owner'] = ReportHeading::first();
         $pdf = PDF::loadView('backend.admin.stock.pdf.stock_report_pdf', $data);
-        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
         return $pdf->stream('document.pdf');
     }
 
@@ -209,7 +209,7 @@ class StockController extends Controller
         $data['allData'] = Product::orderBy('supplier_id')->where($where)->get();
         $data['owner'] = ReportHeading::first();
         $pdf = PDF::loadView('backend.admin.stock.pdf.daily_stock_report_pdf', $data);
-        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
         return $pdf->stream('document.pdf');
     }
 }

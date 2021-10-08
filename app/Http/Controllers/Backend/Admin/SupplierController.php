@@ -56,7 +56,7 @@ class SupplierController extends Controller
         $data['puchase_details'] = PurchasePaymentDetail::where('purchase_id',$purchase)->get();
         $data['owner'] = ReportHeading::first();
         $pdf = PDF::loadView('backend.admin.supplier.pdf.supplier_details_pdf', $data);
-        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
         return $pdf->stream('document.pdf');
     }
 
@@ -111,7 +111,7 @@ class SupplierController extends Controller
         $data['suppliers'] = Supplier::where($where)->get();
         $data['owner'] = ReportHeading::first();
         $pdf = PDF::loadView('backend.admin.supplier.pdf.supplier_report_pdf', $data);
-        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
         return $pdf->stream('document.pdf');
     }
 

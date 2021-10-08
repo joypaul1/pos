@@ -264,7 +264,7 @@ class PurchaseController extends Controller
         $data['purchase'] = PurchasePayment::where('purchase_id',$purchase_id)->first();
         $data['owner'] = ReportHeading::first();
         $pdf = PDF::loadView('backend.admin.purchase.pdf.purchase_details_pdf', $data);
-        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
         return $pdf->stream('document.pdf');
     }
 
@@ -274,14 +274,16 @@ class PurchaseController extends Controller
     }
 
     public function dailyPurchaseHandlebar(Request $request){
+
         $supplier_id = $request->supplier_id;
         if($supplier_id !=''){
             $where[] = ['supplier_id',$supplier_id];
         }
-        $where[] = ['status','1'];
-        $start_date = date('Y-m-d',strtotime($request->start_date));
-        $end_date = date('Y-m-d',strtotime($request->end_date));
-        $allPurchases = PurchaseDetail::whereBetween('date',[$start_date, $end_date])->orderBy('supplier_id')->where($where)->get();
+        $where[]        = ['status','1'];
+        $start_date     = date('Y-m-d',strtotime($request->start_date));
+        $end_date       = date('Y-m-d',strtotime($request->end_date));
+        $allPurchases   = PurchaseDetail::whereBetween('date',[$start_date, $end_date])
+                            ->orderBy('supplier_id')->where($where)->get();
 
         $html['tdsource']  = '';
         $total_sum = 0;
@@ -321,32 +323,23 @@ class PurchaseController extends Controller
     }
 
     public function dailyPurchasePdf(Request $request){
-        // return PurchaseDetail::get();
+
         $supplier_id = $request->supplier_id;
         if($supplier_id !=''){
             $where= ['supplier_id', $supplier_id];
         }
-        $where[] = ['status','1'];
-        // array_push($where, 'status','1');
-        // dd();
-        $start_date = date('Y-m-d',strtotime($request->start_date));
-        $end_date = date('Y-m-d',strtotime($request->end_date));
+        $where[]            = ['status','1'];
+        $start_date         = date('Y-m-d',strtotime($request->start_date));
+        $end_date           = date('Y-m-d',strtotime($request->end_date));
         $data['start_date'] = date('Y-m-d',strtotime($request->start_date));
-        $data['end_date'] = date('Y-m-d',strtotime($request->end_date));
+        $data['end_date']   = date('Y-m-d',strtotime($request->end_date));
 
          $data['allPurchases'] = PurchaseDetail::whereBetween('date',[$start_date, $end_date])->orderBy('supplier_id')
         ->where([$where], ['status','1'])
-        // ->where('status','1')
         ->get();
         $data['owner'] = ReportHeading::first();
-        // dd( $data);
-        $pdf = PDf::loadView('backend.admin.purchase.pdf.daily-purchase-report-pdf', $data);
-        // $pdf = PDf::loadHTML('backend.admin.purchase.pdf.daily-purchase-report-pdf', $data);
 
-        // download PDF file with download method
-        // return $pdf->download('pdf_file.pdf');
-        // $pdf = PDF::loadView('backend.admin.purchase.pdf.daily-purchase-report-pdf', $data);
-        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        $pdf = PDf::loadView('backend.admin.purchase.pdf.daily-purchase-report-pdf', $data);
         return $pdf->stream("Daily-purchase-report->" .date('d-m-Y'));
     }
 }

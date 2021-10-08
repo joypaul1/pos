@@ -57,11 +57,13 @@ class CustomerController extends Controller
     public function details(Request $request){
         $invoice = InvoicePayment::select('invoice_id')->where('customer_id',$request->customer_id)->groupBy('invoice_id')->get()->toArray();
         $data['customer_info'] = Customer::where('id',$request->customer_id)->first();
-        $data['payment_details'] = InvoicePaymentDetail::whereIn('invoice_id',$invoice)->get();
+        // $data['payment_details'] = InvoicePaymentDetail::whereIn('invoice_id',$invoice)->get();
         // dd($data['payment_details']->toArray());
+        $data['payment_details'] =[];
         $data['owner'] = ReportHeading::first();
+        // return view('backend.admin.customer.pdf.customer_details_pdf', $data);
         $pdf = PDF::loadView('backend.admin.customer.pdf.customer_details_pdf', $data);
-        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
         return $pdf->stream('document.pdf');
     }
 
@@ -117,7 +119,7 @@ class CustomerController extends Controller
         $data['allData'] = Customer::where($where)->get();
         $data['owner'] = ReportHeading::first();
         $pdf = PDF::loadView('backend.admin.customer.pdf.customer_report_pdf', $data);
-        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
         return $pdf->stream('document.pdf');
     }
 

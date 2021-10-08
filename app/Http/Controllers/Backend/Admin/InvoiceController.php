@@ -169,8 +169,14 @@ class InvoiceController extends Controller
     public function destroy(Request $request){
         $invoice = Invoice::find($request->id);
         $invoice->installment()->delete();
-        $invoice->invoice_payment()->delete();
+        $invoice->invoice_payment_details()->delete();
         $invoice->invoice_details()->delete();
+        $customer = Customer::whereId($invoice->customer_id)->first();
+        $customer->update([
+            'total_amount' =>  $customer->total_amount-$invoice->grand_total,
+            'due' =>  $customer->due-$request->due_amount??0,
+            'payment' =>  $customer->payment-$customer->paid_amount,
+        ]);
         $invoice->delete();
 
         // InvoiceDetail::where('invoice_id',$invoice->id)->delete();
@@ -274,7 +280,7 @@ class InvoiceController extends Controller
         $data['invoice'] = Invoice::with(['invoice_details','invoice_payment_details'])->find($id);
         $data['owner'] = ReportHeading::first();
         $pdf = PDF::loadView('backend.admin.invoice.pdf.invoice_details_pdf', $data);
-        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
         return $pdf->stream('document.pdf');
     }
 
@@ -422,8 +428,24 @@ class InvoiceController extends Controller
         $where[] = ['status','1'];
         $start_date = date('Y-m-d',strtotime($request->start_date));
         $end_date = date('Y-m-d',strtotime($request->end_date));
-       return $allInvoice = InvoiceDetail::whereBetween('date',[$start_date, $end_date])->where($where)->get();
-
+        // $allInvoice = Invoice::whereBetween('date',[$start_date, $end_date])->where($where)->get();
+        $allInvoice = Invoice::whereBetween('date',[$start_date, $end_date])
+                                ->withCount([
+                                    'invoice_details AS selling_qty' => function ($query) {
+                                                $query->select(DB::raw("SUM(selling_qty)"));
+                                            }
+                                        ])
+                                ->withCount([
+                                    'invoice_details AS product_qty' => function ($query) {
+                                                $query->select(DB::raw("COUNT(product_id)"));
+                                            }
+                                        ])
+                                ->withCount([
+                                    'invoice_details AS total_price' => function ($query) {
+                                                $query->select(DB::raw("SUM(total_price)"));
+                                            }
+                                        ])
+                                ->get();
         $html['tdsource']  = '';
         $total_sum = 0;
         $paid_sum = 0;
@@ -447,7 +469,7 @@ class InvoiceController extends Controller
             $html['tdsource'] .= '<tr>';
             $html['tdsource'] .= '<td>'.($key+1).'</td>';
             $html['tdsource'] .= '<td>'.date('d-m-Y',strtotime(@$v->date)).'</td>';
-            $html['tdsource'] .= '<td>'.'#' .@$v['invoice']['invoice_no'].'</td>';
+            $html['tdsource'] .= '<td>'.'#' .@$v['invoice_no'].'</td>';
             $html['tdsource'] .= '<td>'.@$v['customer']['name'].','.@$v['customer']['mobile'].','.@$v['customer']['address'].'</td>';
             $html['tdsource'] .= '<td>'.@$v['product']['name'].'</td>';
             $html['tdsource'] .= '<td>'.@$v->selling_qty.'</td>';
@@ -486,7 +508,7 @@ class InvoiceController extends Controller
                                         ])
                                 ->get();
 
-        // return view('backend.admin.invoice.pdf.daily_invoice_report_pdf',[ 'data' =>  $data]);
+        return view('backend.admin.invoice.pdf.daily_invoice_report_pdf',[ 'data' =>  $data]);
         $pdf = PDF::loadView('backend.admin.invoice.pdf.daily_invoice_report_pdf',[ 'data' =>  $data]);
         // $pdf->SetProtection(['copy', 'print'], '', 'pass');
         return $pdf->stream("Daily-invoice-report->" .date('d-m-Y'));

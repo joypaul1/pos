@@ -6,11 +6,20 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'f209d7c8e69123aa11416010bf24d51482a061ff',
+    'reference' => '261d88aeaa641eb895b2cbcdd3cda52c0096f03e',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
   array (
+    'barryvdh/laravel-dompdf' => 
+    array (
+      'pretty_version' => 'v0.9.0',
+      'version' => '0.9.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5b99e1f94157d74e450f4c97e8444fcaffa2144b',
+    ),
     'bumbummen99/shoppingcart' => 
     array (
       'pretty_version' => '2.10.0',
@@ -60,6 +69,15 @@
       array (
       ),
       'reference' => 'e864bbf5904cb8f5bb334f99209b48018522f042',
+    ),
+    'dompdf/dompdf' => 
+    array (
+      'pretty_version' => 'v1.0.2',
+      'version' => '1.0.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '8768448244967a46d6e67b891d30878e0e15d25c',
     ),
     'dragonmantank/cron-expression' => 
     array (
@@ -126,12 +144,12 @@
     ),
     'fzaninotto/faker' => 
     array (
-      'pretty_version' => 'v1.9.2',
-      'version' => '1.9.2.0',
+      'pretty_version' => 'v1.5.0',
+      'version' => '1.5.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '848d8125239d7dbf8ab25cb7f054f1a630e68c2e',
+      'reference' => 'd0190b156bcca848d401fb80f31f504f37141c8d',
     ),
     'guzzlehttp/psr7' => 
     array (
@@ -402,7 +420,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'f209d7c8e69123aa11416010bf24d51482a061ff',
+      'reference' => '261d88aeaa641eb895b2cbcdd3cda52c0096f03e',
     ),
     'laravel/tinker' => 
     array (
@@ -458,15 +476,6 @@
       ),
       'reference' => '71312564759a7db5b789296369c1a264efc43aad',
     ),
-    'mpdf/mpdf' => 
-    array (
-      'pretty_version' => 'v8.0.13',
-      'version' => '8.0.13.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '42f145615cfe830fd432474da1d2e1f927efe402',
-    ),
     'myclabs/deep-copy' => 
     array (
       'pretty_version' => '1.10.2',
@@ -497,15 +506,6 @@
       array (
       ),
       'reference' => '6608f01670c3cc5079e18c1dab1104e002579143',
-    ),
-    'niklasravnsborg/laravel-pdf' => 
-    array (
-      'pretty_version' => 'v4.1.0',
-      'version' => '4.1.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'a5f5c22dd5e10d8f536102cec01c21282e18ebae',
     ),
     'nunomaduro/collision' => 
     array (
@@ -551,6 +551,24 @@
       array (
       ),
       'reference' => 'bae7c545bef187884426f042434e561ab1ddb182',
+    ),
+    'phenx/php-font-lib' => 
+    array (
+      'pretty_version' => '0.5.2',
+      'version' => '0.5.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'ca6ad461f032145fff5971b5985e5af9e7fa88d8',
+    ),
+    'phenx/php-svg-lib' => 
+    array (
+      'pretty_version' => 'v0.3.3',
+      'version' => '0.3.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5fa61b65e612ce1ae15f69b3d223cb14ecc60e32',
     ),
     'php-parallel-lint/php-console-color' => 
     array (
@@ -777,6 +795,15 @@
         0 => '3.9.4',
       ),
     ),
+    'sabberworm/php-css-parser' => 
+    array (
+      'pretty_version' => '8.3.1',
+      'version' => '8.3.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd217848e1396ef962fb1997cf3e2421acba7f796',
+    ),
     'scrivo/highlight.php' => 
     array (
       'pretty_version' => 'v9.18.1.7',
@@ -893,15 +920,6 @@
       array (
       ),
       'reference' => '99732be0ddb3361e16ad77b68ba41efc8e979019',
-    ),
-    'setasign/fpdi' => 
-    array (
-      'pretty_version' => 'v2.3.6',
-      'version' => '2.3.6.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '6231e315f73e4f62d72b73f3d6d78ff0eed93c31',
     ),
     'spatie/laravel-cookie-consent' => 
     array (

@@ -37,12 +37,12 @@ class ReportController extends Controller
 
     public function reportHandlebar(Request $request){
         $start_date = date('Y-m-d',strtotime($request->start_date));
-        $end_date = date('Y-m-d',strtotime($request->end_date));
-        $sales = InvoicePaymentDetail::whereBetween('date',[$start_date, $end_date])->sum('current_paid_amount');
-        $purchase = PurchasePaymentDetail::whereBetween('date',[$start_date, $end_date])->sum('current_paid_amount');
-        $expanse = Expanse::whereBetween('date',[$start_date, $end_date])->sum('amount');
-        $cost = $purchase+$expanse;
-        $profit = $sales-$cost;
+        $end_date   = date('Y-m-d',strtotime($request->end_date));
+        $sales      = Invoice::whereBetween('date',[$start_date, $end_date])->sum('grand_total');
+        $purchase   = PurchasePaymentDetail::whereBetween('date',[$start_date, $end_date])->sum('current_paid_amount');
+        $expanse    = Expanse::whereBetween('date',[$start_date, $end_date])->sum('amount');
+        $cost       = $purchase+$expanse;
+        $profit     = $sales-$cost;
 
         $html['tdsource']  = '';
         $html['tdsource'] .= '<tr>';
@@ -73,7 +73,7 @@ class ReportController extends Controller
         // $data['sales'] = InvoicePaymentDetail::whereBetween('date',[$start_date, $end_date])->sum('current_paid_amount');
         $start_date = date('Y-m-d',strtotime($request->start_date));
         $end_date = date('Y-m-d',strtotime($request->end_date));
-        $data['sales'] = Invoice::whereBetween('date',[$start_date, $end_date])->sum('paid_amount');
+        $data['sales'] = Invoice::whereBetween('date',[$start_date, $end_date])->sum('grand_total');
         $data['purchase'] = PurchasePaymentDetail::whereBetween('date',[$start_date, $end_date])->sum('current_paid_amount');
         $data['expanse'] = Expanse::whereBetween('date',[$start_date, $end_date])->sum('amount');
         $data['cost'] = $data['purchase']+$data['expanse'];
@@ -84,8 +84,9 @@ class ReportController extends Controller
         $data['allPurchase'] = PurchasePaymentDetail::whereBetween('date',[$start_date, $end_date])->get();
         $data['allExpanse'] = Expanse::whereBetween('date',[$start_date, $end_date])->get();
         $data['owner'] = ReportHeading::first();
+        // return view('backend.admin.profit.pdf.profit_pdf', $data);
         $pdf = PDF::loadView('backend.admin.profit.pdf.profit_pdf', $data);
-        $pdf->SetProtection(['copy', 'print'], '', 'pass');
-        return $pdf->stream('document.pdf');
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        return $pdf->stream('profit_pdf'. date('d-m-Y'));
     }
 }

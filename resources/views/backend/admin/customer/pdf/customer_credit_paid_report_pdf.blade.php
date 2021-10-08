@@ -66,7 +66,7 @@ table tr td{
 }
 
 .table-bordered thead th{
-  background-color:  #cacaca; 
+  background-color:  #cacaca;
 
 
 </style>
@@ -94,8 +94,8 @@ table tr td{
         <h4 style="font-weight: bold">
           <u>
             @if($report_status=='credit_customer')
-              CUSTOMER CREDIT REPORT 
-              @if($start_date && $end_date)  ({{date('d-m-Y',strtotime($start_date))}} - {{date('d-m-Y',strtotime($end_date))}}) 
+              CUSTOMER CREDIT REPORT
+              @if($start_date && $end_date)  ({{date('d-m-Y',strtotime($start_date))}} - {{date('d-m-Y',strtotime($end_date))}})
               @endif
             @elseif($report_status=='paid_customer')
               CUSTOMER PAID REPORT
@@ -130,7 +130,7 @@ table tr td{
             <tr>
               <td>{{$key+1}}</td>
               <td>{{@$value['customer']['name']}},{{@$value['customer']['mobile']}} ({{@$value['customer']['address']}})</td>
-              <td># {{@$value['invoice']['invoice_no']}}</td>
+              <td># {{@$value['invoice_no']}}</td>
               <td>{{$value->total_amount}}</td>
               <td>{{$value->paid_amount}}</td>
               <td>{{$value->due_amount}}</td>

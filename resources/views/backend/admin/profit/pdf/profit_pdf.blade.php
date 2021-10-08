@@ -66,7 +66,7 @@ table tr td{
 }
 
 .table-bordered thead th{
-  background-color:  #cacaca; 
+  background-color:  #cacaca;
 
 
 </style>
@@ -126,7 +126,6 @@ table tr td{
               <td>Invoice No</td>
               <td>Date</td>
               <td>Amount</td>
-              <td>Bank & Cheque No</td>
             </tr>
             @php
               $total_sales_sum = 0;
@@ -134,13 +133,12 @@ table tr td{
             @foreach($allInvoice as $key => $value)
             <tr>
               <td>{{$key+1}}</td>
-              <td># {{@$value['invoice']['invoice_no']}}</td>
+              <td># {{@$value['invoice_no']}}</td>
               <td>{{date('d-m-Y',strtotime($value->date))}}</td>
-              <td>{{$value->current_paid_amount}}</td>
-              <td>{{$value->bank_name}},{{$value->cheque_no}}</td>
+              <td>{{$value->grand_total}}</td>
             </tr>
             @php
-              $total_sales_sum += $value->current_paid_amount;
+              $total_sales_sum += $value->grand_total;
             @endphp
             @endforeach
             <tr>
@@ -155,7 +153,7 @@ table tr td{
               <td>purchase No</td>
               <td>Date</td>
               <td>Amount</td>
-              <td>Bank & Cheque No</td>
+
             </tr>
             @php
               $total_purchase_sum = 0;
@@ -166,7 +164,6 @@ table tr td{
               <td># {{@$value['purchase']['purchase_no']}}</td>
               <td>{{date('d-m-Y',strtotime($value->date))}}</td>
               <td>{{$value->current_paid_amount}}</td>
-              <td>{{$value->bank_name}},{{$value->cheque_no}}</td>
             </tr>
             @php
               $total_purchase_sum += $value->current_paid_amount;
@@ -218,7 +215,7 @@ table tr td{
           <tbody>
             <tr>
               <td style="width: 40%; ">
-                <p style="text-align: center;margin-left: : 20px;">Customer Signature</p> 
+                <p style="text-align: center;margin-left: : 20px;">Customer Signature</p>
               </td>
               <td style="width: 20%"></td>
               <td style="width: 40%; text-align: center;">

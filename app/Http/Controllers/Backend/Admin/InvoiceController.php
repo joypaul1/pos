@@ -85,6 +85,9 @@ class InvoiceController extends Controller
             try {
                 DB::transaction(function() use($request, $invoice){
 
+                        $customer = Customer::whereId($request->customer_id)->first();
+
+
                         $invoice = Invoice::create($invoice);
                         if($request->category_id !=null){
                             for ($i=0; $i < count($request->category_id) ; $i++) {
@@ -125,8 +128,17 @@ class InvoiceController extends Controller
 
                             if($request->paid_status=='full_paid'){
                                 $payment['paid_amount'] = $request->estimated_amount;
+                                $customer->update([
+                                    'total_amount' =>  $customer->total_amount+=$request->estimated_amount,
+                                    'payment' =>  $customer->payment+=$request->paid_amount,
+                                ]);
                             }else{
                                 $payment['paid_amount'] = $request->paid_amount??0;
+                                $customer->update([
+                                    'total_amount' =>  $customer->total_amount+=$request->estimated_amount,
+                                    'due' =>  $customer->due+=($request->estimated_amount- $request->paid_amount),
+                                    'payment' =>  $customer->payment+=$request->paid_amount,
+                                ]);
                             }
 
                             $invoicePayment = InvoicePayment::create($payment);
@@ -235,7 +247,7 @@ class InvoiceController extends Controller
 
     public function dueList(){
 
-        $allData = Invoice::where('due_amount' ,'>', 0)->get();
+         $allData = Invoice::where('due_amount' ,'>', 0)->get();
         return view('backend.admin.invoice.invoice_due_list', compact('allData'));
     }
 
@@ -279,13 +291,19 @@ class InvoiceController extends Controller
             return redirect()->back()->with('error','Sorry! Paid price is Large then due price');
         }else{
             DB::transaction(function() use($request, $invoice, $id){
+                $customer = Customer::whereId($request->customer_id)->first();
+                $customer->update([
+                    'total_amount' =>  $customer->total_amount+=$request->interestamount,
+                    'due' =>  $customer->due+$request->interestamount-$request->paid_amount??0,
+                    'payment' =>  $customer->payment+=$request->paid_amount,
+                ]);
 
                 if($request->interestamount > 0 || $request->paid_amount){
                     $invoice->update([
                     'intertest_amount'  => $request->interestamount?? $invoice->interest_amount,
                     'paid_amount'       => $invoice->paid_amount+=$request->paid_amount??0,
                     'grand_total'       => $invoice->grand_total+=$request->interestamount
-                ]);
+                    ]);
                 }
 
                 $payment['invoice_id']      = $invoice->id;
@@ -296,11 +314,15 @@ class InvoiceController extends Controller
 
                 if($request->paid_status=='full_paid'){
                     $payment['paid_amount'] = $request->estimated_amount;
+
                 }elseif($request->paid_status=='full_due'){
                     $payment['paid_amount'] = '0';
+
                 }elseif($request->paid_status=='partial_paid'){
                     $payment['paid_amount'] = $request->paid_amount??0;
+
                 }
+
 
                 $invoicePayment = InvoicePayment::create($payment);
 
@@ -400,7 +422,7 @@ class InvoiceController extends Controller
         $where[] = ['status','1'];
         $start_date = date('Y-m-d',strtotime($request->start_date));
         $end_date = date('Y-m-d',strtotime($request->end_date));
-        $allInvoice = InvoiceDetail::whereBetween('date',[$start_date, $end_date])->where($where)->get();
+       return $allInvoice = InvoiceDetail::whereBetween('date',[$start_date, $end_date])->where($where)->get();
 
         $html['tdsource']  = '';
         $total_sum = 0;
@@ -466,8 +488,8 @@ class InvoiceController extends Controller
 
         // return view('backend.admin.invoice.pdf.daily_invoice_report_pdf',[ 'data' =>  $data]);
         $pdf = PDF::loadView('backend.admin.invoice.pdf.daily_invoice_report_pdf',[ 'data' =>  $data]);
-        $pdf->SetProtection(['copy', 'print'], '', 'pass');
-        return $pdf->stream('document.pdf');
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        return $pdf->stream("Daily-invoice-report->" .date('d-m-Y'));
         // $customer_id = $request->customer_id;
         // if($customer_id !=''){
         //     $where[] = ['customer_id',$customer_id];

@@ -136,9 +136,11 @@ class CustomerController extends Controller
         $end_date = date('Y-m-d',strtotime($request->end_date));
         $report_status = $request->report_status;
         if($start_date !='' && $end_date !='' && $request->report_status == 'credit_customer'){
-           $allInvoice = InvoicePayment::whereBetween('date',[$start_date, $end_date])->whereIn('paid_status',['full_due','partial_paid'])->where($where)->get();
+            $allInvoice = Invoice::whereBetween('date',[$start_date, $end_date])
+            ->where($where)->where('grand_total', '>', 'paid_amount')->get();
         }if($start_date !='' && $end_date !='' && $request->report_status == 'paid_customer') {
-           $allInvoice = InvoicePayment::whereBetween('date',[$start_date, $end_date])->where('paid_status','!=','full_due')->where($where)->get();
+            $allInvoice = Invoice::whereBetween('date',[$start_date, $end_date])
+            ->where($where)->where('grand_total', '=', 'paid_amount')->get();
         }
 
         $html['tdsource']  = '';
@@ -169,7 +171,7 @@ class CustomerController extends Controller
         foreach ($allInvoice as $key => $v) {
             $html['tdsource'] .= '<tr>';
             $html['tdsource'] .= '<td>'.($key+1).'</td>';
-            $html['tdsource'] .= '<td>'.'#'.@$v['invoice']['invoice_no'].'</td>';
+            $html['tdsource'] .= '<td>'.'#'.@$v['invoice_no'].'</td>';
             $html['tdsource'] .= '<td>'.@$v['customer']['name'].','.@$v['customer']['mobile'].','.@$v['customer']['address'].'</td>';
             $html['tdsource'] .= '<td>'.@$v->total_amount.'</td>';
             $html['tdsource'] .= '<td>'.@$v->paid_amount.'</td>';
@@ -201,14 +203,20 @@ class CustomerController extends Controller
         $data['end_date'] = date('Y-m-d',strtotime($request->end_date));
         $data['report_status'] = $request->report_status;
         if($start_date !='' && $end_date !='' && $request->report_status == 'credit_customer'){
-           $data['allInvoice'] = InvoicePayment::whereBetween('date',[$start_date, $end_date])->whereIn('paid_status',['full_due','partial_paid'])->where($where)->get();
+        //    $data['allInvoice'] = InvoicePayment::whereBetween('date',[$start_date, $end_date])->whereIn('paid_status',['full_due','partial_paid'])->where($where)->get();
+        $data['allInvoice'] = Invoice::whereBetween('date',[$start_date, $end_date])
+        ->where($where)->where('grand_total', '>', 'paid_amount')->get();
         }if($start_date !='' && $end_date !='' && $request->report_status == 'paid_customer') {
-           $data['allInvoice'] = InvoicePayment::whereBetween('date',[$start_date, $end_date])->where('paid_status','!=','full_due')->where($where)->get();
+        //    $data['allInvoice'] = InvoicePayment::whereBetween('date',[$start_date, $end_date])->where('paid_status','!=','full_due')->where($where)->get();
+        $data['allInvoice'] = Invoice::whereBetween('date',[$start_date, $end_date])
+        ->where($where)->where('grand_total', '=', 'paid_amount')->get();
         }
         $data['owner'] = ReportHeading::first();
+
+
         $pdf = PDF::loadView('backend.admin.customer.pdf.customer_credit_paid_report_pdf', $data);
-        $pdf->SetProtection(['copy', 'print'], '', 'pass');
-        return $pdf->stream('document.pdf');
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        return $pdf->stream("Customer-credit/paid-report->" .date('d-m-Y'));
     }
 
     public function destroy(Request $request){

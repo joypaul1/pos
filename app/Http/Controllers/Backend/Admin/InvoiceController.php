@@ -130,7 +130,7 @@ class InvoiceController extends Controller
                                 $payment['paid_amount'] = $request->estimated_amount;
                                 $customer->update([
                                     'total_amount' =>  $customer->total_amount+=$request->estimated_amount,
-                                    'payment' =>  $customer->payment+=$request->paid_amount,
+                                    'payment' =>  $customer->payment+=$request->estimated_amount,
                                 ]);
                             }else{
                                 $payment['paid_amount'] = $request->paid_amount??0;
@@ -300,7 +300,7 @@ class InvoiceController extends Controller
                 $customer = Customer::whereId($request->customer_id)->first();
                 $customer->update([
                     'total_amount' =>  $customer->total_amount+=$request->interestamount,
-                    'due' =>  $customer->due+$request->interestamount-$request->paid_amount??0,
+                    'due' =>  $customer->due-$request->paid_amount??0,
                     'payment' =>  $customer->payment+=$request->paid_amount,
                 ]);
 

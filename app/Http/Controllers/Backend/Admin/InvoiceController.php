@@ -36,7 +36,7 @@ class InvoiceController extends Controller
     public function customerDueBalance(Request $request){
         $customer_id = $request->customer_id;
         $dues = Customer::where('id',$customer_id)->first();
-        $total_due = $dues->due;
+        $total_due = $dues->due??0;
         return response()->json($total_due);
     }
 
@@ -129,15 +129,15 @@ class InvoiceController extends Controller
                             if($request->paid_status=='full_paid'){
                                 $payment['paid_amount'] = $request->estimated_amount;
                                 $customer->update([
-                                    'total_amount' =>  $customer->total_amount+=$request->estimated_amount,
-                                    'payment' =>  $customer->payment+=$request->estimated_amount,
+                                    'total_amount' =>  $customer->total_amount+$request->estimated_amount,
+                                    'payment' =>  $customer->payment+$request->estimated_amount,
                                 ]);
                             }else{
                                 $payment['paid_amount'] = $request->paid_amount??0;
                                 $customer->update([
-                                    'total_amount' =>  $customer->total_amount+=$request->estimated_amount,
+                                    'total_amount' =>  $customer->total_amount+$request->estimated_amount,
                                     'due' =>  $customer->due+=($request->estimated_amount- $request->paid_amount),
-                                    'payment' =>  $customer->payment+=$request->paid_amount,
+                                    'payment' =>  $customer->payment+$request->paid_amount,
                                 ]);
                             }
 
@@ -211,49 +211,49 @@ class InvoiceController extends Controller
     }
 
     public function invoiceApproveStore(Request $request,$id){
-        if($request->free_selling_qty !=null){
-            foreach ($request->free_selling_qty as $key => $val) {
-                $invoice_details = InvoiceDetail::where('id',$key)->first();
-                $product_name = Product::where('id',$invoice_details->product_id)->first();
-                if($product_name->free_quantity < $request->free_selling_qty[$key]){
-                    return redirect()->back()->with('error','Sorry! You approve maximum value');
-                }
-            }
-        }
-        foreach ($request->selling_qty as $key => $val) {
-            $invoice_details = InvoiceDetail::where('id',$key)->first();
-            $product_name = Product::where('id',$invoice_details->product_id)->first();
-            if($product_name->quantity < $request->selling_qty[$key]){
-                return redirect()->back()->with('error','Sorry! You approve maximum value');
-            }
-        }
-        $invoice = Invoice::find($id);
-        $invoice->approved_by = Auth::user()->id;
-        $invoice->status = '1';
-        DB::transaction(function() use($request,$invoice,$id){
-            foreach ($request->selling_qty as $key => $val) {
-                $invoice_details = InvoiceDetail::where('id',$key)->first();
-                $invoice_details->status = '1';
-                $invoice_details->save();
-                $product_name = Product::where('id',$invoice_details->product_id)->first();
-                $product_name->free_quantity = ((float)$product_name->free_quantity)-((float)$request->free_selling_qty[$key]);
-                $product_name->quantity = ((float)$product_name->quantity)-((float)$request->selling_qty[$key]);
-                $product_name->save();
-            }
+        // if($request->free_selling_qty !=null){
+        //     foreach ($request->free_selling_qty as $key => $val) {
+        //         $invoice_details = InvoiceDetail::where('id',$key)->first();
+        //         $product_name = Product::where('id',$invoice_details->product_id)->first();
+        //         if($product_name->free_quantity < $request->free_selling_qty[$key]){
+        //             return redirect()->back()->with('error','Sorry! You approve maximum value');
+        //         }
+        //     }
+        // }
+        // foreach ($request->selling_qty as $key => $val) {
+        //     $invoice_details = InvoiceDetail::where('id',$key)->first();
+        //     $product_name = Product::where('id',$invoice_details->product_id)->first();
+        //     if($product_name->quantity < $request->selling_qty[$key]){
+        //         return redirect()->back()->with('error','Sorry! You approve maximum value');
+        //     }
+        // }
+        // $invoice = Invoice::find($id);
+        // $invoice->approved_by = Auth::user()->id;
+        // $invoice->status = '1';
+        // DB::transaction(function() use($request,$invoice,$id){
+        //     foreach ($request->selling_qty as $key => $val) {
+        //         $invoice_details = InvoiceDetail::where('id',$key)->first();
+        //         $invoice_details->status = '1';
+        //         $invoice_details->save();
+        //         $product_name = Product::where('id',$invoice_details->product_id)->first();
+        //         $product_name->free_quantity = ((float)$product_name->free_quantity)-((float)$request->free_selling_qty[$key]);
+        //         $product_name->quantity = ((float)$product_name->quantity)-((float)$request->selling_qty[$key]);
+        //         $product_name->save();
+        //     }
 
-            $customer = Customer::where('id',$request->customer_id)->first();
-            $customer->total_amount = ((float)($customer->total_amount))+((float)($request->customer_total_amount));
-            $customer->payment = ((float)($customer->payment))+((float)($request->customer_paid_amount));
-            $customer->due = ((float)($customer->due))+((float)($request->customer_due_amount));
-            $customer->save();
-            $invoice->save();
-        });
+        //     $customer = Customer::where('id',$request->customer_id)->first();
+        //     $customer->total_amount = ((float)($customer->total_amount))+((float)($request->customer_total_amount));
+        //     $customer->payment = ((float)($customer->payment))+((float)($request->customer_paid_amount));
+        //     $customer->due = ((float)($customer->due))+((float)($request->customer_due_amount));
+        //     $customer->save();
+        //     $invoice->save();
+        // });
         return redirect()->route('invoices.invoice.view')->with('success','Invoice Successfully Added');
     }
 
     public function dueList(){
 
-         $allData = Invoice::where('due_amount' ,'>', 0)->get();
+        $allData = Invoice::where('due_amount' ,'>', 0)->get();
         return view('backend.admin.invoice.invoice_due_list', compact('allData'));
     }
 
@@ -296,59 +296,65 @@ class InvoiceController extends Controller
     	if($request->inspaidAmount < $request->paid_amount ){
             return redirect()->back()->with('error','Sorry! Paid price is Large then due price');
         }else{
-            DB::transaction(function() use($request, $invoice, $id){
-                $customer = Customer::whereId($request->customer_id)->first();
-                $customer->update([
-                    'total_amount' =>  $customer->total_amount+=$request->interestamount,
-                    'due' =>  $customer->due-$request->paid_amount??0,
-                    'payment' =>  $customer->payment+=$request->paid_amount,
-                ]);
+            // dd(23434, $request->all());
+            try {
+                DB::transaction(function() use($request, $invoice, $id){
+                    $customer = Customer::whereId($request->customer_id)->first();
 
-                if($request->interestamount > 0 || $request->paid_amount){
-                    $invoice->update([
-                    'intertest_amount'  => $request->interestamount?? $invoice->interest_amount,
-                    'paid_amount'       => $invoice->paid_amount+=$request->paid_amount??0,
-                    'grand_total'       => $invoice->grand_total+=$request->interestamount
+                    $payment['invoice_id']      = $invoice->id;
+                    $payment['customer_id']     = $request->customer_id;
+                    $payment['paid_status']     = $request->paid_status;
+                    $payment['payment_method']  = $request->payment_method;
+                    $payment['date']            = date('Y-m-d');
+
+                    if($request->paid_status=='full_paid'){
+
+                        $invoice->update([
+                            'intertest_amount'  => $request->interestamount+$invoice->interest_amount,
+                            'paid_amount'       => $invoice->paid_amount+$request->inspaidAmount??0,
+                            'grand_total'       => $invoice->grand_total+$request->interestamount
+                            ]);
+
+                        $payment['paid_amount'] = $request->estimated_amount;
+                        $customer->update([
+                            'total_amount' =>  $customer->total_amount+$request->interestamount,
+                            'due' =>  $customer->due-$request->due??0,
+                            'payment' =>  $customer->payment+$request->inspaidAmount,
+                        ]);
+
+                    }elseif($request->paid_status=='partial_paid'){
+                        $payment['paid_amount'] = $request->paid_amount??0;
+                        $customer->update([
+                            'total_amount' =>  $customer->total_amount+$request->interestamount,
+                            'due' =>  $customer->due+$request->interestamount-$request->paid_amount??0,
+                            'payment' =>  $customer->payment+$request->paid_amount,
+                        ]);
+
+                    }
+
+
+                    $invoicePayment = InvoicePayment::create($payment);
+
+                    $invoice->lastesInstallment->update([
+                        'paid_amount'   =>$request->paid_amount??0,
+                        'paid_date'     => date('Y-m-d'),
+                        'cross_days'    => $request->crossDays,
                     ]);
-                }
 
-                $payment['invoice_id']      = $invoice->id;
-                $payment['customer_id']     = $request->customer_id;
-                $payment['paid_status']     = $request->paid_status;
-                $payment['payment_method']  = $request->payment_method;
-                $payment['date']            = date('Y-m-d');
+                    if (!empty($request->new_installAmount && $request->new_installmentDate)) {
+                        $invoice->installment()->create([
+                            'payment_id'   =>  $invoicePayment->id,
+                            'customer_id'   => $request->customer_id,
+                            'amount'        => $request->new_installAmount,
+                            'interest'      => $request->new_installInterest,
+                            'date'          => date('Y-m-d',strtotime($request->new_installmentDate)),
+                        ]);
+                    }
 
-                if($request->paid_status=='full_paid'){
-                    $payment['paid_amount'] = $request->estimated_amount;
-
-                }elseif($request->paid_status=='full_due'){
-                    $payment['paid_amount'] = '0';
-
-                }elseif($request->paid_status=='partial_paid'){
-                    $payment['paid_amount'] = $request->paid_amount??0;
-
-                }
-
-
-                $invoicePayment = InvoicePayment::create($payment);
-
-                $invoice->lastesInstallment->update([
-                    'paid_amount'   =>$request->paid_amount??0,
-                    'paid_date'     => date('Y-m-d'),
-                    'cross_days'    => $request->crossDays,
-                ]);
-
-                if (!empty($request->new_installAmount && $request->new_installmentDate)) {
-                    $invoice->installment()->create([
-                        'payment_id'   =>  $invoicePayment->id,
-                        'customer_id'   => $request->customer_id,
-                        'amount'        => $request->new_installAmount,
-                        'interest'      => $request->new_installInterest,
-                        'date'          => date('Y-m-d',strtotime($request->new_installmentDate)),
-                    ]);
-                }
-
-            });
+                });
+            } catch (\Exception $ex) {
+                dd($ex->getMessage(), $ex->getLine());
+            }
             return redirect()->route('invoices.invoice.due')->with('success','Invoice Successfully Updated');
         }
     }

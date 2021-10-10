@@ -17,10 +17,14 @@ class InvoiceInstallment extends Model
 
     public function getDayCountAttribute()
     {
-        $date   = Carbon::parse($this->date);
-        $now    = Carbon::now();
-        $diff   = $date->diffInDays($now);
-        return $diff;
+        $date = Carbon::parse($this->date);;
+        $now = Carbon::now()->format('Y-m-d');
+        if($now > $date){
+            $diff = $date->diffInDays($now);
+            return $diff;
+        }
+        return 0;
+
 
     }
 

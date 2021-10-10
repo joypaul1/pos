@@ -76,6 +76,8 @@ class Invoice extends Model
         if($this->installment()->first()){
             $date   = Carbon::parse($this->installment()->first()->date);
             $now    = Carbon::now();
+            // dd(324);
+            // $diff   = $now->diffInDays($date);
             $diff   = $date->diffInDays($now);
             return $diff;
         }

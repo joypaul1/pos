@@ -37,7 +37,7 @@
 										<th>Amount</th>
 										<th width="15%">Action</th>
 									</tr>
-									@foreach($allData as $key =>  $value))
+									@foreach($allData as $key =>  $value)
 										<tr class="{{$value->id}}">
 											<td>{{$key+1}}</td>
 
@@ -48,10 +48,6 @@
 											<td>{{date('d-m-Y',strtotime($value['date']))}}</td>
 											<td>{{round($value->due_amount, 2)}} TK</td>
 											<td>
-
-
-
-
 											</td>
 										</tr>
 									@endforeach

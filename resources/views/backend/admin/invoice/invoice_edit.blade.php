@@ -136,7 +136,7 @@
                                     </div>
                                   <div class="card-body installment-section ">
                                         @forelse ($invoice->installment as $installment)
-                                        {{-- @dd($installment) --}}
+
                                             <div class="form-row">
                                                 <div class="form-group col-sm-2">
                                                     <label class="control-label">Date</label>
@@ -146,6 +146,7 @@
                                                 <div class="form-group col-sm-2" >
                                                     <label class="control-label">Amount</label>
                                                     <input type="text" id="" class="form-control form-control-sm "
+                                                    name="due"
                                                     value="{{ $installment->amount }}"
                                                       style="text-align: center;padding: 2px 0px 2px 0px;" readonly
                                                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
@@ -160,9 +161,11 @@
                                                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                                 </div>
                                                 @php
+
                                                         $amount     = $installment->amount?? 0;
                                                         $interest   = $installment->interest?? 0;
                                                         $daycount   = $installment->dayCount??0 ;
+                                                       
                                                         if($daycount > 0 ){
                                                             $interestAmount = $daycount * ($amount * $interest)/100;
                                                             $totalAmount =  $interestAmount + $amount;
@@ -310,7 +313,7 @@
         })
         $(document).on('keyup click', '.paid_amount', function(){
             let installAmount = $('input[name=inspaidAmount]').val();
-            console.log(installAmount, 'installAmount')
+
             $('.installAmount').val(parseFloat(installAmount) - parseFloat($(this).val()??0) )
         })
 

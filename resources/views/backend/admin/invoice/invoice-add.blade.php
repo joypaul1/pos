@@ -350,7 +350,8 @@
 				type:"GET",
 				data:{'customer_id':customer_id},
 				success:function(data){
-	                $('#stock_amount').val(data);
+                    console.log(data, 'data');
+	                $('#stock_amount').val(data??0);
 				}
 			});
 		});

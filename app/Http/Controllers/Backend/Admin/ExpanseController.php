@@ -180,7 +180,7 @@ class ExpanseController extends Controller
         $data['allExpanse'] = Expanse::whereBetween('date',[$start_date, $end_date])->where($where)->get();
         $data['owner'] = ReportHeading::first();
         $pdf = PDF::loadView('backend.admin.expanse.daily-expanse-report-pdf', $data);
-        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
         return $pdf->stream('document.pdf');
     }
 }

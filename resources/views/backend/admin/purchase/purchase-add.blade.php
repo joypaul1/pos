@@ -38,7 +38,7 @@
 									<div class="form-group col-md-4">
 										<label class="control-label">Invoice No <span style="color: red;">*</span></label>
 										<input type="text" name="purchase_no" id="purchase_no" class="form-control form-control-sm" readonly
-                                        value="#{{@$editData->purchase_no ?? @$invoice_no}}" placeholder="Write Invoice No">
+                                        value="{{@$editData->purchase_no ?? @$invoice_no}}" placeholder="Write Invoice No">
 									</div>
 									<div class="form-group col-md-4">
 										<label class="control-label">Supplier Name <span style="color: red;">*</span></label>

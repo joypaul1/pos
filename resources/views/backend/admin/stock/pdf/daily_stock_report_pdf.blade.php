@@ -129,7 +129,7 @@ table tr td{
                     $selling_free_qty = App\Model\InvoiceDetail::where('category_id',$v->category_id)->where('product_id',$v->id)->where('status','1')->sum('free_selling_qty');
                     $stock_out_qty = App\Model\StockOutDetail::where('category_id',$v->category_id)->where('product_id',$v->id)->where('status','1')->sum('quantity');
                     $total_out_qty = $selling_qty+$selling_free_qty+$stock_out_qty;
-                    $stock = $total_in_qty+$stock_out_qty;
+                    $stock = $total_in_qty-$total_out_qty;
                   @endphp
                   <td>{{$key+1}}</td>
                   <td>{{$v['supplier']['name']}}</td>

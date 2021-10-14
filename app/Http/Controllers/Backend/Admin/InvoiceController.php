@@ -329,6 +329,13 @@ class InvoiceController extends Controller
                             'due' =>  $customer->due+$request->interestamount-$request->paid_amount??0,
                             'payment' =>  $customer->payment+$request->paid_amount,
                         ]);
+                        // dd($request->all());
+                        $invoice->update([
+                            'intertest_amount'  => $request->interestamount+$invoice->interest_amount,
+                            'paid_amount'       => $invoice->paid_amount+$request->paid_amount??0,
+                            'grand_total'       => $invoice->grand_total+$request->interestamount
+                        ]);
+                        // dd($invoice);
 
                     }
 
@@ -465,9 +472,7 @@ class InvoiceController extends Controller
         $html['tdsource'] .= '<td>'.'Date'.'</td>';
         $html['tdsource'] .= '<td>'.'Memo No'.'</td>';
         $html['tdsource'] .= '<td>'.'Customer Info'.'</td>';
-        $html['tdsource'] .= '<td>'.'Product'.'</td>';
         $html['tdsource'] .= '<td>'.'Qty'.'</td>';
-        $html['tdsource'] .= '<td>'.'Unit Price'.'</td>';
         $html['tdsource'] .= '<td>'.'Amount'.'</td>';
         $html['tdsource'] .= '</tr>';
 
@@ -477,16 +482,14 @@ class InvoiceController extends Controller
             $html['tdsource'] .= '<td>'.date('d-m-Y',strtotime(@$v->date)).'</td>';
             $html['tdsource'] .= '<td>'.'#' .@$v['invoice_no'].'</td>';
             $html['tdsource'] .= '<td>'.@$v['customer']['name'].','.@$v['customer']['mobile'].','.@$v['customer']['address'].'</td>';
-            $html['tdsource'] .= '<td>'.@$v['product']['name'].'</td>';
             $html['tdsource'] .= '<td>'.@$v->selling_qty.'</td>';
-            $html['tdsource'] .= '<td>'.@$v->selling_price.'</td>';
-            $total_amount = ($v->selling_qty*$v->selling_price);
-            $html['tdsource'] .= '<td>'.@$total_amount.'</td>';
+
+            $html['tdsource'] .= '<td>'.@$v->total_amount.'</td>';
             $html['tdsource'] .= '</tr>';
-            $total_sum += $total_amount;
+            $total_sum += $v->total_amount;
         }
         $html['tdsource'] .= '<tr>';
-        $html['tdsource'] .= '<td colspan="7" class="text-right">'.'Grand Total'.'</td>';
+        $html['tdsource'] .= '<td colspan="5" class="text-right">'.'Grand Total'.'</td>';
         $html['tdsource'] .= '<td>'.@$total_sum.'TK'.'</td>';
         $html['tdsource'] .= '</tr>';
         return response()->json(@$html);

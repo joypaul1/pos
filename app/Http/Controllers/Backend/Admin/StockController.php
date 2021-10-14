@@ -168,7 +168,7 @@ class StockController extends Controller
             $selling_free_qty = InvoiceDetail::where('category_id',$v->category_id)->where('product_id',$v->id)->where('status','1')->sum('free_selling_qty');
             $stock_out_qty = StockOutDetail::where('category_id',$v->category_id)->where('product_id',$v->id)->where('status','1')->sum('quantity');
             $total_out_qty = $selling_qty+$selling_free_qty+$stock_out_qty;
-            $stock = $total_in_qty+$stock_out_qty;
+            $stock = $total_in_qty-$total_out_qty;
 
             $html['tdsource'] .= '<tr>';
             $html['tdsource'] .= '<td>'.($key+1).'</td>';

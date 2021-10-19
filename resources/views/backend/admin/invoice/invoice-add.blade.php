@@ -128,7 +128,7 @@
 												<option value="">Select Status</option>
 												<option value="partial_paid">Partial Paid</option>
 												<option value="full_paid">Full Paid</option>
-												<option value="full_due">Full Due</option>
+												<!-- <option value="full_due">Full Due</option> -->
 											</select>
 										</div>
 										<div class="col-md-2" style="padding-top: 30px;">

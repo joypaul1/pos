@@ -16,7 +16,9 @@ use App\Model\Invoice;
 use App\Model\Floor;
 use App\Model\Contactor;
 use App\Model\ContactorInvoice;
+use App\Model\InvoiceDetail;
 use App\Model\PurchaseDetail;
+use App\Model\StockOutDetail;
 
 class DefaultController extends Controller
 {
@@ -43,8 +45,17 @@ class DefaultController extends Controller
 
     public function getProductStock(Request $request){
         $product_id = $request->product_id;
-        $qty = Product::where('id',$product_id)->first();
-        $stock = $qty->quantity;
+        // $qty = Product::where('id',$product_id)->first();
+        // $stock = $qty->quantity;
+        $buying_qty = PurchaseDetail::where('product_id', $product_id)->where('status','1')->sum('buying_qty');
+        $buying_free_qty = PurchaseDetail::where('product_id',$product_id)->where('status','1')->sum('free_quantity');
+        $total_in_qty = $buying_qty+$buying_free_qty;
+        $selling_qty = InvoiceDetail::where('product_id',$product_id)->where('status','1')->sum('selling_qty');
+        $selling_free_qty = InvoiceDetail::where('product_id',$product_id)->where('status','1')->sum('free_selling_qty');
+        $stock_out_qty = StockOutDetail::where('product_id',$product_id)->where('status','1')->sum('quantity');
+        $total_out_qty = $selling_qty+$selling_free_qty+$stock_out_qty;
+        $stock = $total_in_qty-$total_out_qty;
+
         return response()->json($stock);
     }
 

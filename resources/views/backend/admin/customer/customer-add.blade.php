@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section('content')
 <div class="content-page">
-    
+
     <!-- Start content -->
     <div class="content">
         <div class="container-fluid">
@@ -18,7 +18,7 @@
                 </div>
             </div>
             <!-- end row -->
-            
+
             <div class="container fullbody">
 				<div class="col-md-12">
 					<div class="card">
@@ -43,6 +43,28 @@
 						                <label>Customer Email</label>
 						                <input type="email" name="email" class="form-control" value="{{@$editData->email}}" placeholder="Write Email">
 					              	</div>
+
+					              	<div class="form-group col-md-6">
+						                <label>Father Name</label>
+						                <input type="text" name="father_name" class="form-control" value="{{@$editData->father_name}}" placeholder="Write Email">
+					              	</div>
+                                    <div class="form-group col-md-6">
+						                <label>Mother Name</label>
+						                <input type="text" name="mother_name" class="form-control" value="{{@$editData->mother_name}}" placeholder="Write mother_name">
+					              	</div>
+                                    <div class="form-group col-md-6">
+						                <label>District Name</label>
+						                <input type="text" name="district" class="form-control" value="{{@$editData->district}}" placeholder="Write district">
+					              	</div>
+                                    <div class="form-group col-md-6">
+						                <label>Post office Name</label>
+						                <input type="text" name="post_office" class="form-control" value="{{@$editData->post_office}}" placeholder="Write post_office">
+					              	</div>
+                                    <div class="form-group col-md-6">
+						                <label>Village Name</label>
+						                <input type="text" name="village" class="form-control" value="{{@$editData->village}}" placeholder="Write village">
+					              	</div>
+
 					              	<div class="form-group col-md-6">
 						                <label>Address</label>
 						                <input type="text" name="address" class="form-control" value="{{@$editData->address}}" placeholder="Write Address">
@@ -84,7 +106,7 @@
 	            }
 	        },
 	        messages : {
-	        	
+
 	        }
 	    });
     });

@@ -68,8 +68,9 @@
 											@endif
 										</td>
 										<td>
-
+                                            @if($value->due_amount > 0 )
                                             <a class="btn btn-sm btn-warning" title="Edit" href="{{route('invoices.invoice.edit',$value->id)}}"><i class="fa fa-pencil"></i></a>
+                                            @endif
 											@if($value->status=='0')
 											<a class="btn btn-sm btn-info" title="Approve" href="{{route('invoices.invoice.approve-get',$value->id)}}"><i class="fa fa-check-circle"></i></a>
 											<a title="Delete" href="{{ !empty($value->id) ? route('invoices.invoice.destroy') : ''}}"  class="delete btn btn-danger btn-sm deleteBtn"  data-token="{{ csrf_token() }}"

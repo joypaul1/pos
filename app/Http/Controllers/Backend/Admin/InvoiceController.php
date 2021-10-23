@@ -29,7 +29,7 @@ date_default_timezone_set("Asia/Dhaka");
 class InvoiceController extends Controller
 {
     public function index(){
-    	$allData = Invoice::orderBy('date','desc')->orderBy('id','desc')->get();
+    	  $allData = Invoice::orderBy('date','desc')->orderBy('id','desc')->get();
     	return view('backend.admin.invoice.invoice-view', compact('allData'));
     }
 

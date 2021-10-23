@@ -178,7 +178,8 @@
 									</div>
 									<br>
 									<div class="form-group">
-										<button type="submit" class="btn btn-sm btn-primary" id="storeButton">Invoice Store</button>
+										<button type="submit" class="btn btn-sm btn-primary"
+                                        id="storeButton" disabled> Invoice Store</button>
 									</div>
 								</div>
 							</form>
@@ -298,9 +299,7 @@
 			$('#estimated_amount').val(sum);
 		}
 	});
-</script>
 
-<script type="text/javascript">
 	$(function(){
 		$(document).on('change','#category_id',function(){
 			var category_id = $(this).val();
@@ -322,9 +321,7 @@
 			});
 		});
 	});
-</script>
 
-<script type="text/javascript">
 	$(function(){
 		$(document).on('change','#product_id',function(){
 			var category_id = $('#category_id').val();
@@ -339,9 +336,7 @@
 			});
 		});
 	});
-</script>
 
-<script type="text/javascript">
 	$(function(){
 		$(document).on('change','.customer_id',function(){
 			var customer_id = $('#customer_id').val();
@@ -356,10 +351,9 @@
 			});
 		});
 	});
-</script>
 
-{{-- Extra Others Field --}}
-<script type="text/javascript">
+
+
     $(document).ready(function(){
 
     	//Customer name
@@ -389,8 +383,16 @@
 				$('.due_amount').val(grandTotal - paidAmount);
 				$('.installAmount').val(grandTotal - paidAmount);
 			}
-		});
+            let  installAmount = $(".installAmount").val();
+            let  due_amount  = $(".due_amount").val();
+            if(Number(installAmount) == Number(due_amount)){
+                $("#storeButton").removeAttr("disabled");
+                    return true;
+            }
+            $("#storeButton").attr("disabled", true);
 
+
+		});
 
         //Pament Method
         $(document).on('change','.payment_method',function(){
@@ -402,9 +404,7 @@
             }
         });
     });
-</script>
 
-<script type="text/javascript">
 	$(document).ready(function(){
 		$('#myForm').validate({
 			ignore:[],
@@ -435,11 +435,22 @@
 	});
 </script>
 
-<script>
-
+<script type="text/javascript">
 
     $('#pay-via-installments').on('click', function () {
         let checked = $('#pay-via-installments:checked').val();
+        switch(checked){
+            case '1':
+                $('#installment-section').append(html());
+                break;
+            default:
+                $('#installment-section').empty();
+                break;
+        }
+    });
+
+
+    function html(){
         let html = ` <div class="card-body">
             <div class="form-row">
                 <div class="form-group col-sm-2">
@@ -469,20 +480,17 @@
             </div>
 
             </div>`;
-        // console.log(checked, 'checked')
-        switch(checked){
-            case '1':
-                $('#installment-section').append(html);
-                break;
-            default:
-                $('#installment-section').empty();
-                break;
-        }
-    })
+        return html;
+    }
 
+    function buttonValidation(){
+        let  installAmount = $(".installAmount").val(), due_amount  = $(".due_amount").val();
+           if(Number(installAmount) == Number(due_amount)){
+            $("#storeButton").removeAttr("disabled");
+                return true;
+           }
 
-
-
+    }
 
     $(document).on('click','.removeInstallment', function (e) {
         $(this).closest('.card-body').remove();
@@ -490,16 +498,26 @@
     });
 
 
-    // function purposeValues(e, where)
-    // {
-    //     let amount = 0, amounts = 0, interest = $(where).val(),
-    //     inputdata = $('input[name=installAmount]').val();
-    //     amount = parseFloat(inputdata) + parseFloat(inputdata*interest)/100;
-    //     return true;
-
-    // }
 
 
-</script>
+$(function(){
+    $(document).on('change', '#paid_status', function(e){
+        let paidStatus =  $(this).val();
+        if(paidStatus == "full_paid"){
+            $('#installment-section').empty();
+            $('#pay-via-installments').removeAttr('checked');
+            $("#storeButton").removeAttr("disabled");
+            return true;
+        }else{
+            $('#installment-section').append(html());
+            $('#pay-via-installments').attr('checked', true );
+            $.notify("Please Add Installment Process.", {globalPosition: 'top right',className: 'error'});
+            buttonValidation();
+            $("#storeButton").attr("disabled", true);
+        }
+    });
+});
+</script>attr
+
 
 @endsection

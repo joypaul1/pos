@@ -91,18 +91,20 @@ class StockController extends Controller
     }
 
     public function approveStkOut($id){
+
         $data['stock_invoice'] = StockOut::with(['stock_out_details'])->find($id);
+
         return view('backend.admin.stock.stock_out_approve', $data);
     }
 
     public function approveStore(Request $request, $id){
-        foreach ($request->quantity as $key => $val) {
-            $stock_out_details = StockOutDetail::where('id',$key)->first();
-            $product_name = Product::where('id',$stock_out_details->product_id)->first();
-            if($product_name->quantity < $request->quantity[$key]){
-                return redirect()->back()->with('error','Sorry! You approve maximum value');
-            }
-        }
+        // foreach ($request->quantity as $key => $val) {
+        //     $stock_out_details = StockOutDetail::where('id',$key)->first();
+        //     $product_name = Product::where('id',$stock_out_details->product_id)->first();
+        //     if($product_name->quantity < $request->quantity[$key]){
+        //         return redirect()->back()->with('error','Sorry! You approve maximum value');
+        //     }
+        // }
         $invoice = StockOut::find($id);
         $invoice->approved_by = Auth::user()->id;
         $invoice->status = '1';

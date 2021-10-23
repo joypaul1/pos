@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section('content')
 <div class="content-page">
-    
+
     <!-- Start content -->
     <div class="content">
         <div class="container-fluid">
@@ -18,7 +18,7 @@
                 </div>
             </div>
             <!-- end row -->
-            
+
             <div class="container fullbody">
 				<div class="col-md-12">
 					<div class="card">
@@ -90,6 +90,7 @@
 											<tr>
 												<th>Reason</th>
 												<th>Product Name</th>
+												<th>Current Stock</th>
 												<th width="10%">Qty</th>
 												<th>Action</th>
 											</tr>
@@ -135,9 +136,14 @@
 			<input type="hidden" name="product_id[]" value="@{{product_id}}">
 			@{{product_name}}
 		</td>
+		<td>
+			<input type="hidden" name="current_stock[]" id='c_stock' value="@{{current_stock}}">
+			@{{current_stock}}
+		</td>
 
 		<td>
-			<input type="number" min="1" class="form-control form-control-sm text-right quantity" name="quantity[]"  value="1">
+			<input type="number" min="1" class="form-control form-control-sm text-right quantity"
+            name="quantity[]"  value="1" onchange="SetDefault($(this));" onpaste="this.onchange();" onkeyup="this.onchange();">
 		</td>
 		<td><i class="btn btn-danger fa fa-close removeeventmore"> </i></td>
 
@@ -154,6 +160,7 @@
 			var product_id  = $('#product_id').val();
 			var product_name  = $('#product_id').find('option:selected').text();
 			var quantity  = $('#quantity').val();
+			var current_stock  = $('#current_stock').val();
 			var date  = $('#date').val();
 			var stock_invoice_no  = $('#stock_invoice_no').val();
 			var reason_id  = $('#reason_id').val();
@@ -183,10 +190,14 @@
 				$.notify("Product is required", {globalPosition: 'top right',className: 'error'});
 				return false;
 			}
+			if(current_stock==''){
+				$.notify("current stock is required", {globalPosition: 'top right',className: 'error'});
+				return false;
+			}
 
 			var source = $("#document-template").html();
 			var template = Handlebars.compile(source);
-			var data= {stock_invoice_no:stock_invoice_no,reason_id:reason_id,supplier_id:supplier_id,category_id:category_id,reason_name:reason_name,product_id:product_id,product_name:product_name,supplier_name:supplier_name,quantity:quantity,date:date};
+			var data= {stock_invoice_no:stock_invoice_no,reason_id:reason_id,supplier_id:supplier_id,category_id:category_id,reason_name:reason_name,product_id:product_id,product_name:product_name,supplier_name:supplier_name,quantity:quantity,date:date, current_stock:current_stock};
 			var html = template(data);
 			$("#addRow").append(html);
 		});
@@ -233,6 +244,7 @@
 	});
 </script>
 
+
 <script type="text/javascript">
 	$(function(){
 		$(document).on('change','#product_id',function(){
@@ -247,6 +259,18 @@
 			});
 		});
 	});
+</script>
+<script type="text/javascript">
+function SetDefault(where){
+    var currrent_stock = where.closest('tr').find("input[name='current_stock[]']").val();
+    var out_stock = where.val();
+    console.log(Number(out_stock) > Number(currrent_stock), Number(out_stock) ,  Number(currrent_stock));
+    if(Number(out_stock) > Number(currrent_stock)){
+		where.val(currrent_stock);
+        $.notify("Not Valid Out OF Stock", {globalPosition: 'top right',className: 'error'});
+        // alert('333');
+    }
+}
 </script>
 
 @endsection

@@ -9,7 +9,7 @@
 	}
 </style>
 <div class="content-page">
-    
+
     <!-- Start content -->
     <div class="content">
         <div class="container-fluid">
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <!-- end row -->
-            
+
             <div class="container fullbody">
 				<div class="col-md-12">
 					<div class="card">
@@ -54,6 +54,18 @@
 						          		$product_sale_sum = 0;
 						          	@endphp
 						          	@foreach($stock_invoice['stock_out_details'] as $key => $details)
+
+                                    @php
+                                        $buying_qty =  App\Model\PurchaseDetail::where('product_id',$details->product_id)->where('status','1')->sum('buying_qty');
+                                        $buying_free_qty =  App\Model\PurchaseDetail::where('product_id',$details->product_id)->where('status','1')->sum('free_quantity');
+                                        $total_in_qty = $buying_qty+$buying_free_qty;
+                                        $selling_qty = App\Model\InvoiceDetail::where('product_id',$details->product_id)->where('status','1')->sum('selling_qty');
+                                        $selling_free_qty = App\Model\InvoiceDetail::where('product_id',$details->product_id)->where('status','1')->sum('free_selling_qty');
+                                        $stock_out_qty = App\Model\StockOutDetail::where('product_id',$details->product_id)->where('status','1')->sum('quantity');
+                                        $total_out_qty = $selling_qty+$selling_free_qty+$stock_out_qty;
+                                        $stock = $total_in_qty-$total_out_qty;
+
+                                    @endphp
 						            <tr>
 						            	<input type="hidden" name="reason_id[]" value="{{$details->reason_id}}">
 						            	<input type="hidden" name="category_id[]" value="{{$details->category_id}}">
@@ -64,7 +76,7 @@
 						            	<td>{{@$details['category']['name']}}</td>
 						            	<td>{{@$details['product']['name']}}</td>
 						            	<td class="text-center" style="background: #1B9F5E;padding: 1px; color: #fff;">
-						            		{{@$details['product']['quantity']}}
+						            		{{@$stock}}
 						            	</td>
 						            	<td>{{$details->quantity}}</td>
 						            </tr>

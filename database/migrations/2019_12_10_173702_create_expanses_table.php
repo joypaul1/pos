@@ -15,7 +15,6 @@ class CreateExpansesTable extends Migration
     {
         Schema::create('expanses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('expanse_type_id');
             $table->text('description')->nullable();
             $table->integer('amount');
             $table->date('date');

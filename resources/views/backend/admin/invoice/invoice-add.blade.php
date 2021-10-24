@@ -150,16 +150,8 @@
 									</div>
 
                                     {{-- Installment --}}
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4 class="card-title text-center">
-                                                <input class="checkbox-inline no-margin" type="checkbox" id="pay-via-installments" name="payViaInstallment" value="1">
-                                                Reminder for Due Amount </h4>
-                                        </div>
-                                        <div id="installment-section"></div>
+                                    <div id="installment-section"></div>
 
-
-                                    </div>
 
 									<div class="form-row">
 										<div class="col-md-10">
@@ -377,20 +369,25 @@
             }
         });
 		$(document).on('focus keyup blur', '.paid_amount', function(){
-			let paidAmount = parseFloat($(this).val())
-			if (!isNaN(paidAmount) &&  paidAmount > 0 ) {
-				let grandTotal = parseFloat($('.estimated_amount').val());
-				$('.due_amount').val(grandTotal - paidAmount);
-				$('.installAmount').val(grandTotal - paidAmount);
-			}
-            let  installAmount = $(".installAmount").val();
-            let  due_amount  = $(".due_amount").val();
+			let paidAmount = parseFloat($(this).val())||0,
+                grandTotal = parseFloat($('.estimated_amount').val()),
+                installAmount = $(".installAmount").val();
+                due_amount = $(".due_amount").val();
+
+			if (paidAmount < grandTotal) {
+                $('.due_amount').val(grandTotal - paidAmount);
+                $('.installAmount').val(grandTotal - paidAmount);
+			}else{
+                $('.due_amount').val(0);
+                $('.installAmount').val(0);
+            }
+
             if(Number(installAmount) == Number(due_amount)){
                 $("#storeButton").removeAttr("disabled");
                     return true;
+            }else{
+                $("#storeButton").attr("disabled", true);
             }
-            $("#storeButton").attr("disabled", true);
-
 
 		});
 
@@ -433,9 +430,6 @@
 			}
 		});
 	});
-</script>
-
-<script type="text/javascript">
 
     $('#pay-via-installments').on('click', function () {
         let checked = $('#pay-via-installments:checked').val();
@@ -451,35 +445,39 @@
 
 
     function html(){
-        let html = ` <div class="card-body">
-            <div class="form-row">
-                <div class="form-group col-sm-2">
-                    <label class="control-label">Date</label>
-                    <input type="date" name="installmentDate" id="date" class="form-control form-control-sm singledatepickers" placeholder="YYYY-MM-DD"  required>
+        let html = `<div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title text-center">
+                                <input class="checkbox-inline no-margin" type="checkbox" id="pay-via-installments" name="payViaInstallment" value="1">
+                                Reminder for Due Amount </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label">Date</label>
+                                    <input type="date" name="installmentDate" id="date" class="form-control form-control-sm singledatepickers" placeholder="YYYY-MM-DD"  required>
 
-                </div>
-                <div class="form-group col-sm-1" style="margin-right: 20px;">
-                    <label class="control-label">Amount</label>
-                    <input type="text" id="" class="form-control form-control-sm installAmount"
-                    name="installAmount"  style="text-align: center;padding: 2px 0px 2px 0px;" readonly
-                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-                </div>
+                                </div>
+                                <div class="form-group col-sm-1" style="margin-right: 20px;">
+                                    <label class="control-label">Amount</label>
+                                    <input type="text" id="" class="form-control form-control-sm installAmount"
+                                    name="installAmount"  style="text-align: center;padding: 2px 0px 2px 0px;" readonly
+                                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                </div>
 
-                <div class="form-group col-sm-1" style="margin-right: 20px;">
-                    <label class="control-label">Interest(%)</label>
-                    <input type="text" id="" name="installInterest" class="form-control form-control-sm installInterest"  style="text-align: center;padding: 2px 0px 2px 0px;"
-                    required
-                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-                </div>
-                <div class="form-group col-sm-1" style="margin-right: 20px;">
-                    <label class="control-label">Remove</label>
-                    <button type="button" class="btn btn-sm btn-danger removeInstallment"> <i class="btn btn-danger fa fa-close removeeventmore"> </i> </button>
-                </div>
+                                <div class="form-group col-sm-1" style="margin-right: 20px;">
+                                    <label class="control-label">Interest(%)</label>
+                                    <input type="text" id="" name="installInterest" class="form-control form-control-sm installInterest"  style="text-align: center;padding: 2px 0px 2px 0px;"
+                                    required
+                                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                </div>
 
 
-            </div>
 
-            </div>`;
+                            </div>
+
+                        </div>
+                    </div>`;
         return html;
     }
 
@@ -517,7 +515,7 @@ $(function(){
         }
     });
 });
-</script>attr
+</script>
 
 
 @endsection

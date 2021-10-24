@@ -134,6 +134,7 @@
                                             <input class="checkbox-inline no-margin" type="checkbox" id="pay-via-installments" name="payViaInstallment" value="1">
                                             Reminder for Due Amount </h4>
                                     </div>
+
                                   <div class="card-body installment-section ">
                                         @forelse ($invoice->installment as $installment)
 
@@ -157,7 +158,8 @@
                                                     <input type="text" id=""  class="form-control form-control-sm"
                                                     style="text-align: center;padding: 2px 0px 2px 0px;"
                                                     required
-                                                    value="{{ $installment->interest }}"
+                                                    readonly
+                                                    value="{{ $installment->interest??0 }}"
                                                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                                 </div>
                                                 @php
@@ -165,7 +167,7 @@
                                                         $amount     = $installment->amount?? 0;
                                                         $interest   = $installment->interest?? 0;
                                                         $daycount   = $installment->dayCount??0 ;
-                                                       
+
                                                         if($daycount > 0 ){
                                                             $interestAmount = $daycount * ($amount * $interest)/100;
                                                             $totalAmount =  $interestAmount + $amount;
@@ -273,6 +275,7 @@
         $(document).on('change','.paid_status',function(){
             var paid_status = $(this).val();
             if(paid_status == 'partial_paid'){
+                $('#addMoreHtml').append(html());
                 $('.paid_amount').show();
             }else{
                 $('.paid_amount').hide();
@@ -287,40 +290,55 @@
                 $('.bank_info').hide();
             }
         });
+        function html(){
+            return `<div class="form-row">
+                        <div class="form-group col-sm-2">
+                            <label class="control-label">Date</label>
+                            <input type="date" name="new_installmentDate" id="" class="form-control form-control-sm" placeholder="YYYY-MM-DD"  required>
+
+                        </div>
+                        <div class="form-group col-sm-2" >
+                            <label class="control-label">Due Amount</label>
+                            <input type="text" id="" class="form-control form-control-sm installAmount"
+                            name="new_installAmount"  style="text-align: center;padding: 2px 0px 2px 0px;" readonly
+                            onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                        </div>
+
+                        <div class="form-group col-sm-1" >
+                            <label class="control-label">Interest(%)</label>
+                            <input type="text" id="" name="new_installInterest" class="form-control form-control-sm installInterest"  style="text-align: center;padding: 2px 0px 2px 0px;"
+                            required
+                            onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                        </div>
+                        <div class="form-group col-sm-1" style="margin-right: 20px;">
+                            <label class="control-label">Remove</label>
+                            <button type="button" class="btn btn-sm btn-danger removeInstallment"> <i class="btn btn-danger fa fa-close removeeventmore"> </i> </button>
+                        </div>
+
+                </div>`;
+        }
         $(document).on('click', '.addMore', function(){
-            let Html =`<div class="form-row">
-                                                <div class="form-group col-sm-2">
-                                                    <label class="control-label">Date</label>
-                                                    <input type="date" name="new_installmentDate" id="" class="form-control form-control-sm" placeholder="YYYY-MM-DD"  required>
-
-                                                </div>
-                                                <div class="form-group col-sm-2" >
-                                                    <label class="control-label">Due Amount</label>
-                                                    <input type="text" id="" class="form-control form-control-sm installAmount"
-                                                    name="new_installAmount"  style="text-align: center;padding: 2px 0px 2px 0px;" readonly
-                                                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-                                                </div>
-
-                                                <div class="form-group col-sm-1" >
-                                                    <label class="control-label">Interest(%)</label>
-                                                    <input type="text" id="" name="new_installInterest" class="form-control form-control-sm installInterest"  style="text-align: center;padding: 2px 0px 2px 0px;"
-                                                    required
-                                                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-                                                </div>
-
-                                            </div>`;
-            $('#addMoreHtml').append(Html);
+                $('#addMoreHtml').append(html());
         })
-        $(document).on('keyup click', '.paid_amount', function(){
-            let installAmount = $('input[name=inspaidAmount]').val();
 
-            $('.installAmount').val(parseFloat(installAmount) - parseFloat($(this).val()??0) )
+
+
+        $(document).on('click','.removeInstallment', function (e) {
+            $(this).closest('.form-row').remove();
+
+        });
+        $(document).on('focus keyup click', '.paid_amount', function(){
+            let installAmount = $('input[name=inspaidAmount]').last().val(),
+
+            current_due = parseFloat(installAmount) - parseFloat($(this).val());
+            if(current_due > installAmount || current_due < 0  ){
+                current_due = 0
+            }
+            $('.installAmount').val(current_due||0)
         })
 
     });
-</script>
 
-<script type="text/javascript">
 	$(document).ready(function(){
 		$('#myForm').validate({
 			errorClass:'text-danger',

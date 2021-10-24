@@ -29,7 +29,7 @@ date_default_timezone_set("Asia/Dhaka");
 class InvoiceController extends Controller
 {
     public function index(){
-    	  $allData = Invoice::orderBy('date','desc')->orderBy('id','desc')->get();
+    	$allData = Invoice::orderBy('date','desc')->orderBy('id','desc')->get();
     	return view('backend.admin.invoice.invoice-view', compact('allData'));
     }
 
@@ -41,7 +41,6 @@ class InvoiceController extends Controller
     }
 
     public function add(){
-
     	$data['categories'] = Category::all();
         $data['customers']  = Customer::all();
         $data['cdate']      = date('Y-m-d');
@@ -167,23 +166,19 @@ class InvoiceController extends Controller
     }
 
     public function destroy(Request $request){
+
         $invoice = Invoice::find($request->id);
         $invoice->installment()->delete();
-        $invoice->invoice_payment_details()->delete();
+        $invoice->invoice_payment()->delete();
         $invoice->invoice_details()->delete();
         $customer = Customer::whereId($invoice->customer_id)->first();
         $customer->update([
-            'total_amount' =>  $customer->total_amount-$invoice->grand_total,
-            'due' =>  $customer->due-$request->due_amount??0,
-            'payment' =>  $customer->payment-$customer->paid_amount,
+            'total_amount'  =>  $customer->total_amount-$invoice->grand_total,
+            'due'           =>  $customer->due-$invoice->due_amount??0,
+            'payment'       =>  $customer->payment-$invoice->paid_amount,
         ]);
         $invoice->delete();
 
-        // InvoiceDetail::where('invoice_id',$invoice->id)->delete();
-        // InvoicePayment::where('invoice_id',$invoice->id)->delete();
-        // InvoicePaymentDetail::where('invoice_id',$invoice->id)->delete();
-        // InvoicePaymentDueLog::where('invoice_id',$invoice->id)->delete();
-        //
         return redirect()->route('invoices.invoice.view');
     }
 
@@ -191,23 +186,7 @@ class InvoiceController extends Controller
 
         Invoice::whereId($id)->update(['status' => 1]);
         return redirect()->route('invoices.invoice.view')->with('success','Invoice Successfully Approved');
-        // $date = Carbon::parse('2016-09-17 11:00:00');
-        // $now = Carbon::now();
-        // $diff = $date->diffInDays($now);
-        // $invoice = Invoice::with(['installment' => function($query){
-        //     $query->select('customer_id', 'invoice_id','status','amount','interest', 'date')->orderBy('date');
-        // }])->find($id);
 
-        // if($invoice->status =='0'){
-        //     $cdate = date('Y-m-d');
-        //     return view('backend.admin.invoice.invoice_approve', compact('invoice','cdate'));
-        // }elseif($invoice->status =='2'){
-        //     $invoice_repayment = InvoiceRepayment::where('invoice_id',$invoice->id)->first();
-        //     $invoice = Invoice::with(['invoice_details','invoice_payment_details'])->where('id',$invoice_repayment->invoice_id)->first();
-
-        //     $cdate = date('Y-m-d');
-        //     return view('backend.admin.invoice.invoice_update_approve', compact('invoice_repayment','cdate','invoice'));
-        // }
     }
 
     public function invoiceApproveStore(Request $request,$id){
@@ -261,26 +240,20 @@ class InvoiceController extends Controller
 
         $data['invoice'] = Invoice::with(['customer','invoice_details.product.sellPrice'])->find($id);
         return view('backend.admin.invoice.pdf.invoice_print_pdf', $data);
-        // $data['owner'] = ReportHeading::first();
-        // $pdf           = PDF::loadView('backend.admin.invoice.pdf.invoice_print_pdf', $data);
-        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
-        // return $pdf->stream('document.pdf');
+
     }
     public function othersPdf($id){
 
         $data['invoice'] = Invoice::with(['customer','installment','invoice_detail.product.sellPrice'])->find($id);
         return view('backend.admin.invoice.pdf.invoice_print_othersPdf', $data);
-        // $data['owner'] = ReportHeading::first();
-        // $pdf           = PDF::loadView('backend.admin.invoice.pdf.invoice_print_pdf', $data);
-        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
-        // return $pdf->stream('document.pdf');
+
     }
 
     public function invoiceDetails($id){
-        $data['invoice'] = Invoice::with(['invoice_details','invoice_payment_details'])->find($id);
+         $data['invoice'] = Invoice::with(['invoice_details','invoice_payment_details'])->find($id);
         $data['owner'] = ReportHeading::first();
         $pdf = PDF::loadView('backend.admin.invoice.pdf.invoice_details_pdf', $data);
-        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
+
         return $pdf->stream('document.pdf');
     }
 
@@ -296,7 +269,6 @@ class InvoiceController extends Controller
     	if($request->inspaidAmount < $request->paid_amount ){
             return redirect()->back()->with('error','Sorry! Paid price is Large then due price');
         }else{
-            // dd(23434, $request->all());
             try {
                 DB::transaction(function() use($request, $invoice, $id){
                     $customer = Customer::whereId($request->customer_id)->first();
@@ -329,13 +301,12 @@ class InvoiceController extends Controller
                             'due' =>  $customer->due+$request->interestamount-$request->paid_amount??0,
                             'payment' =>  $customer->payment+$request->paid_amount,
                         ]);
-                        // dd($request->all());
+
                         $invoice->update([
                             'intertest_amount'  => $request->interestamount+$invoice->interest_amount,
                             'paid_amount'       => $invoice->paid_amount+$request->paid_amount??0,
                             'grand_total'       => $invoice->grand_total+$request->interestamount
                         ]);
-                        // dd($invoice);
 
                     }
 

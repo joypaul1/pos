@@ -107,9 +107,11 @@ table tr td{
               <th>Date</th>
               <th>Memo No</th>
               <th>Customer Ino</th>
-              <th>Product</th>
+              <th>Unit Price/1</th>
               <th>Qty</th>
               <th>Amount</th>
+              <th>Intertest</th>
+              <th>Grand Total</th>
             </tr>
 
           </thead>
@@ -127,11 +129,13 @@ table tr td{
                   {{@$value['customer']['mobile'] ??' '}} -
                   ({{@$value['customer']['address'] ??' '}})
                 </td>
-                <td class="text-center">{{$value['product_qty']?? ' '}}</td>
-                <td class="text-center">{{$value->selling_qty?? ' '}}</td>
+                <td class="text-center">{{$value['unit_price']?? '-'}}</td>
+                <td class="text-center">{{$value->selling_qty?? '-'}}</td>
                 <td class="text-right">{{number_format($value->total_amount, 2)??0.00}}</td>
+                <td class="text-right">{{number_format($value->intertest_amount, 2)??0.00}}</td>
+                <td class="text-right">{{number_format($value->grand_total, 2)??0.00}}</td>
                     @php
-                        $total_sum += $value->total_amount??0.00;
+                        $total_sum += $value->grand_total??0.00;
                     @endphp
               </tr>
               @endforeach

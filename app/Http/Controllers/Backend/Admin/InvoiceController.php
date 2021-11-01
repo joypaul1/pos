@@ -412,13 +412,19 @@ class InvoiceController extends Controller
         $where[] = ['status','1'];
         $start_date = date('Y-m-d',strtotime($request->start_date));
         $end_date = date('Y-m-d',strtotime($request->end_date));
-        // $allInvoice = Invoice::whereBetween('date',[$start_date, $end_date])->where($where)->get();
+
         $allInvoice = Invoice::whereBetween('date',[$start_date, $end_date])
                                 ->withCount([
                                     'invoice_details AS selling_qty' => function ($query) {
                                                 $query->select(DB::raw("SUM(selling_qty)"));
                                             }
                                         ])
+                                ->withCount([
+                                    'invoice_details AS unit_price' => function ($query) {
+                                                $query->select(DB::raw("SUM(unit_price)"));
+                                            }
+                                        ])
+
                                 ->withCount([
                                     'invoice_details AS product_qty' => function ($query) {
                                                 $query->select(DB::raw("COUNT(product_id)"));
@@ -443,8 +449,11 @@ class InvoiceController extends Controller
         $html['tdsource'] .= '<td>'.'Date'.'</td>';
         $html['tdsource'] .= '<td>'.'Memo No'.'</td>';
         $html['tdsource'] .= '<td>'.'Customer Info'.'</td>';
+        $html['tdsource'] .= '<td>'.'Unit Price/1'.'</td>';
         $html['tdsource'] .= '<td>'.'Qty'.'</td>';
         $html['tdsource'] .= '<td>'.'Amount'.'</td>';
+        $html['tdsource'] .= '<td>'.'Intertest'.'</td>';
+        $html['tdsource'] .= '<td>'.'Grand Total'.'</td>';
         $html['tdsource'] .= '</tr>';
 
         foreach ($allInvoice as $key => $v) {
@@ -453,14 +462,16 @@ class InvoiceController extends Controller
             $html['tdsource'] .= '<td>'.date('d-m-Y',strtotime(@$v->date)).'</td>';
             $html['tdsource'] .= '<td>'.'#' .@$v['invoice_no'].'</td>';
             $html['tdsource'] .= '<td>'.@$v['customer']['name'].','.@$v['customer']['mobile'].','.@$v['customer']['address'].'</td>';
+            $html['tdsource'] .= '<td>'.@$v->unit_price.'</td>';
             $html['tdsource'] .= '<td>'.@$v->selling_qty.'</td>';
-
             $html['tdsource'] .= '<td>'.@$v->total_amount.'</td>';
+            $html['tdsource'] .= '<td>'.@$v->intertest_amount.'</td>';
+            $html['tdsource'] .= '<td>'.@$v->grand_total.'</td>';
             $html['tdsource'] .= '</tr>';
-            $total_sum += $v->total_amount;
+            $total_sum += $v->grand_total;
         }
         $html['tdsource'] .= '<tr>';
-        $html['tdsource'] .= '<td colspan="5" class="text-right">'.'Grand Total'.'</td>';
+        $html['tdsource'] .= '<td colspan="8" class="text-right">'.'Grand Total'.'</td>';
         $html['tdsource'] .= '<td>'.@$total_sum.'TK'.'</td>';
         $html['tdsource'] .= '</tr>';
         return response()->json(@$html);
@@ -474,6 +485,11 @@ class InvoiceController extends Controller
                                 ->withCount([
                                     'invoice_details AS selling_qty' => function ($query) {
                                                 $query->select(DB::raw("SUM(selling_qty)"));
+                                            }
+                                        ])
+                                ->withCount([
+                                    'invoice_details AS unit_price' => function ($query) {
+                                                $query->select(DB::raw("SUM(unit_price)"));
                                             }
                                         ])
                                 ->withCount([

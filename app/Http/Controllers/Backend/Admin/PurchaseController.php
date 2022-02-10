@@ -35,13 +35,13 @@ class PurchaseController extends Controller
         }else{
             $data['invoice_no'] = str_pad(1, 7 , "0", STR_PAD_LEFT);
         }
-
         $data['suppliers'] = Supplier::all();
         $data['cdate'] = date("Y-m-d");
     	return view('backend.admin.purchase.purchase-add', $data);
     }
 
     public function store(Request $request){
+
         $checkPurchaseNo = Purchase::where('purchase_no',$request->purchase_no)->first();
         if($checkPurchaseNo != null){
             return redirect()->back()->with('error','Sorry! Purchase no is already exists');

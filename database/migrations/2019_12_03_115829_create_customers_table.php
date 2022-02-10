@@ -17,6 +17,12 @@ class CreateCustomersTable extends Migration
             $table->increments('id');
             $table->integer('project_id')->nullable();
             $table->string('name');
+            $table->string('father_name');
+            $table->string('mother_name')->nullable();
+            $table->string('district')->nullable();
+            $table->string('up')->nullable();
+            $table->string('post_office')->nullable();
+             $table->string('village')->nullable();
             $table->string('mobile')->nullable();
             $table->string('email')->nullable();
             $table->string('address')->nullable();

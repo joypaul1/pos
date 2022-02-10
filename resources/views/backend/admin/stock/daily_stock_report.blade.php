@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section('content')
 <div class="content-page">
-    
+
     <!-- Start content -->
     <div class="content">
         <div class="container-fluid">
@@ -18,7 +18,7 @@
                 </div>
             </div>
             <!-- end row -->
-            
+
             <div class="container fullbody">
 				<div class="col-md-12">
 					<div class="card">
@@ -46,12 +46,32 @@
 										</select>
 									</div>
 									<div class="form-group col-md-4">
-										<label class="control-label">Product Name <span style="color: red;">*</span></label>
+										<label class="control-label">Product Name  <span style="color: red;">*</span></label>
 										<select name="product_id" id="product_id" class="form-control form-control-sm select2">
 											<option value="">Select Product</option>
-
 										</select>
 									</div>
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Part's ID <span
+                                                style="color: red;">*</span></label>
+                                        <select name="pid" id="pid" class="form-control form-control-sm select2">
+                                            <option value="">Select part's id</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Part's Name <span
+                                                style="color: red;">*</span></label>
+                                        <select name="pname" id="pname" class="form-control form-control-sm select2">
+                                            <option value="">Select part's name</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Part's Model <span
+                                                style="color: red;">*</span></label>
+                                        <select name="pmname" id="pmname" class="form-control form-control-sm select2">
+                                            <option value="">Select part's model</option>
+                                        </select>
+                                    </div>
 									<div class="col-md-4">
 										<a class="btn btn-primary btn-sm" id="search"><i class="fa fa-search"></i> Search</a>
 										<button type="submit" class="btn btn-sm btn-success"><i class="fa fa-download"></i> Download</button>
@@ -101,10 +121,29 @@
 </script>
 
 <script type="text/javascript">
+    // $(document).on('change','#product_id, #pid, #pname, #pmname',function(){
+
+    //     var myClass = $(this).attr("id");
+
+    //     alert(myClass);
+    // });
 	$(document).on('click','#search',function(){
 		var supplier_id = $('#supplier_id').val();
 		var category_id = $('#category_id').val();
-		var product_id = $('#product_id').val();
+	
+            if($('#product_id').val()){
+                var product_id      = $('#product_id').val();
+            }
+            if($('#pid').val()){
+                var product_id      = $('#pid').val(); 
+            }
+            if($('#pname').val()){
+                var product_id      = $('#pname').val();
+            }
+            if($('#pmname').val()){
+                var product_id      = $('#pmname').val();
+               
+            }
 		$.ajax({
 			url: "{{route('stocks.stock.report.handlebar')}}",
 			type: "get",
@@ -156,10 +195,28 @@
 				data:{category_id:category_id},
 				success:function(data){
 					var html = '<option value="">Select Product</option>';
-					$.each( data, function( key, v ) {
+					$.each( data.products, function( key, v ) {
 						html +='<option value="'+v.id+'">'+v.name+'</option>';
 					});
 					$('#product_id').html(html);
+
+                    var html_2 = "<option value=''>Select Part's Id </option>";
+                    $.each( data.pid, function( key, v ) {
+						html_2 +='<option value="'+v.id+'">'+v.pid+'</option>';
+					});
+                    $('#pid').html(html_2);
+
+                    var html_3 = "<option value=''>Select Part's Name </option>";
+                    $.each( data.pname, function( key, v ) {
+						html_3 +='<option value="'+v.id+'">'+v.pname+'</option>';
+					});
+                    $('#pname').html(html_3);
+
+                    var html_4 = "<option value=''>Select Part's Model Name </option>";
+                    $.each( data.pmname, function( key, v ) {
+						html_4 +='<option value="'+v.id+'">'+v.pmname+'</option>';
+					});
+                    $('#pmname').html(html_4);
 				}
 			});
 		});

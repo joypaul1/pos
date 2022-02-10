@@ -19,6 +19,8 @@
             </div>
             <!-- end row -->
 
+
+
             <div class="container fullbody">
 				<div class="col-md-12">
 					<div class="card">
@@ -48,9 +50,9 @@
 									<tr class="{{$value->id}}">
 										<td>{{$key+1}}</td>
 										<td>
-											{{@$value['invoice_payment']['customer']['name']}}
+											{{@$value['customer']['name']}}
                                             <br> M :
-                                            {{@$value['invoice_payment']['customer']['mobile']}}
+                                            {{@$value['customer']['mobile']}}
 										</td>
 										<td> # {{$value->invoice_no}}</td>
 										<td>{{date('d-m-Y',strtotime($value->date))}}</td>
@@ -80,8 +82,25 @@
                                             @if($value->status=='2')
                                             <a class="btn btn-sm btn-info" title="Approve" href="{{route('invoices.invoice.approve-get',$value->id)}}"><i class="fa fa-check-circle"></i></a>
                                             @endif
-                                            <a target="_blank" class="btn btn-sm btn-success" title="Print" href="{{route('invoices.invoice.pdf',$value->id)}}"><i class="fa fa-print"></i></a>
-                                            <a target="_blank" class="btn btn-sm btn-success" title="others print" href="{{route('invoices.invoice.othersPdf',$value->id)}}"><i class="fa fa-print"></i></a>
+                                            
+
+                                            <a target="_blank" class="btn btn-sm btn-success" title="others print" href="{{route('invoices.invoice.othersPdf',$value->id)}}"> All <i class="fa fa-print"></i></a>
+
+
+                                             <a target="_blank" class="btn btn-sm btn-success" title="others print 1" href="{{route('invoices.invoice.pdfa',$value->id)}}"> S <i class="fa fa-print"></i></a>
+
+                                             <a target="_blank" class="btn btn-sm btn-success" title="Print" href="{{route('invoices.invoice.pdf',$value->id)}}"> P <i class="fa fa-print"></i></a>
+
+<!-- 
+                                             <a target="_blank" class="btn btn-sm btn-success" title="others print 2" href="{{route('products.product.pdf',$value->id)}}"><i class="fa fa-print"></i></a> -->
+
+
+                                             
+
+
+
+
+
 										</td>
 									</tr>
 									@endforeach

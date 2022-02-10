@@ -31,8 +31,20 @@ class DefaultController extends Controller
 
     public function getProduct(Request $request){
         $category_id = $request->category_id;
-        $products = Product::where('category_id',$category_id)->get();
-        return response()->json($products);
+        $products   = Product::where('category_id',$category_id)->get(['id','name']);
+        $pname      = Product::where('category_id',$category_id)->get(['id','pname']);
+        $pid        = Product::where('category_id',$category_id)->get(['id','pid']);
+        $pmname    = Product::where('category_id',$category_id)->get(['id','pmname']);
+
+        return response()->json([ 'products' =>$products, 'pname'=> $pname, 'pid' => $pid, 'pmname' => $pmname]);
+    }
+    public function validProduct(Request $request){
+        $category_id = $request->category_id;
+        $products   = Product::where('category_id',$category_id)->has('checkPurchase')->get(['id','name']);
+        $pname      = Product::where('category_id',$category_id)->has('checkPurchase')->get(['id','pname']);
+        $pid        = Product::where('category_id',$category_id)->has('checkPurchase')->get(['id','pid']);
+        $pmname    = Product::where('category_id',$category_id)->has('checkPurchase')->get(['id','pmname']);
+        return response()->json([ 'products' =>$products, 'pname'=> $pname, 'pid' => $pid, 'pmname' => $pmname]);
     }
 
     public function getProductCount(Request $request){

@@ -15,6 +15,7 @@
 //     return view('welcome');
 // });
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'Frontend\FrontendController@index');
@@ -28,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('get-product-category', 'Backend\DefaultController@getProductCategory')->name('get-product-category');
     Route::get('get-category', 'Backend\DefaultController@getCategory')->name('get-category');
     Route::get('get-product', 'Backend\DefaultController@getProduct')->name('get-product');
+    Route::get('get-valid-product', 'Backend\DefaultController@validProduct')->name('get-valid-product');
     Route::get('get-product-count', 'Backend\DefaultController@getProductCount')->name('get-product-count');
     Route::get('get-product-stock', 'Backend\DefaultController@getProductStock')->name('get-product-stock');
 
@@ -137,6 +139,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/update-reject', 'Backend\Admin\InvoiceController@updateReject')->name('invoices.invoice.update-reject');
         Route::post('/delete', 'Backend\Admin\InvoiceController@destroy')->name('invoices.invoice.destroy');
         Route::get('/pdf/{id}', 'Backend\Admin\InvoiceController@invoicePdf')->name('invoices.invoice.pdf');
+
+        ///amar add kora
+
+        Route::get('/pdfa/{id}', 'Backend\Admin\InvoiceController@invoicePdfa')->name('invoices.invoice.pdfa');
+        //amar add kora
+
+
         Route::get('/othersPdf/{id}', 'Backend\Admin\InvoiceController@othersPdf')->name('invoices.invoice.othersPdf');
         Route::get('/details/{id}', 'Backend\Admin\InvoiceController@invoiceDetails')->name('invoices.invoice.details');
         Route::get('/daily/invoice', 'Backend\Admin\InvoiceController@dailyInvoice')->name('invoices.invoice.date.wise');
@@ -214,3 +223,6 @@ Route::group(['middleware' => 'auth'], function () {
 //         Illuminate\Support\Facades\Schema::dropIfExists($table);
 //     }
 // });
+Route::get('export', 'MyController@export')->name('export');
+Route::get('importExportView', 'MyController@importExportView')->name('importExportView');
+Route::post('import', 'MyController@import')->name('import');

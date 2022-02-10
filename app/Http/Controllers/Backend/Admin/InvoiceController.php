@@ -56,7 +56,6 @@ class InvoiceController extends Controller
     }
 
     public function store(Request $request){
-
         if($request->estimated_amount <= $request->paid_amount){
             return redirect()->back()->with('error','Sorry! Paid price is Large then total price');
         }else{
@@ -68,6 +67,8 @@ class InvoiceController extends Controller
                 $invoice_no = str_pad($invoice_data+1, 7, "0", STR_PAD_LEFT);
             }
 
+            $invoice['service_charge']   = $request->service_charge;
+            $invoice['discount_amount']   = $request->discount_amount;
             $invoice['grand_total']   = $request->estimated_amount;
             $invoice['total_amount']  = $request->estimated_amount;
             $invoice['invoice_no']    = $invoice_no;
@@ -78,16 +79,15 @@ class InvoiceController extends Controller
                 $invoice['paid_amount']   = $request->estimated_amount??0;
             }else{
                 $invoice['paid_amount']   = $request->paid_amount??0;
-
             }
-            // dd($invoice);
+
             try {
                 DB::transaction(function() use($request, $invoice){
 
                         $customer = Customer::whereId($request->customer_id)->first();
 
-
                         $invoice = Invoice::create($invoice);
+                        // dd($invoice);
                         if($request->category_id !=null){
                             for ($i=0; $i < count($request->category_id) ; $i++) {
                                 $invoice_details['invoice_id']    = $invoice->id;
@@ -95,22 +95,27 @@ class InvoiceController extends Controller
                                 $invoice_details['date']          = date('Y-m-d',strtotime($request->date));
                                 $invoice_details['category_id']   = $request->category_id[$i];
                                 $invoice_details['product_id']    = $request->product_id[$i];
+                                $invoice_details['chasiss_no']   = $request->chasiss_no[$i];
+                                $invoice_details['engine_no']   = $request->engine_no[$i];
+                                $invoice_details['color']   =       $request->color[$i];
+                                $invoice_details['year_of_manufacture']   =       $request->input('Y/O/M')[$i];
+
                                 $invoice_details['selling_qty']   = $request->selling_qty[$i];
                                 $invoice_details['selling_price'] = $request->selling_price[$i];
                                 $invoice_details['unit_price']    = $request->unit_price[$i];
-                                $invoice_details['atcual_total_price'] = $request->unit_price[$i] *$request->selling_qty[$i] ;
+                                $invoice_details['actual_total_price'] = $request->unit_price[$i] *$request->selling_qty[$i] ;
                                 $invoice_details['total_price'] = $request->selling_price[$i] *$request->selling_qty[$i] ;
-                                if ($request->free_selling_qty[$i]) {
+                                if ($request->free_selling_qty) {
                                     $invoice_details['free_selling_qty'] = $request->free_selling_qty[$i];
                                 }else{
                                     $invoice_details['free_selling_qty'] = '0';
                                 }
-                                if ($request->serial_no[$i]) {
+                                if ($request->serial_no) {
                                     $invoice_details['serial_no'] = $request->serial_no[$i];
                                 }else{
                                     $invoice_details['serial_no'] = '0';
                                 }
-                                if ($request->warranty[$i]) {
+                                if ($request->warranty) {
                                     $invoice_details['warranty'] = $request->warranty[$i];
                                 }else{
                                     $invoice_details['warranty'] = '0';
@@ -143,13 +148,15 @@ class InvoiceController extends Controller
                             $invoicePayment = InvoicePayment::create($payment);
 
                             if (!empty($request->installmentDate && $request->installAmount)) {
+                                $interest=  number_format($request->installInterest/30, 2);
                                 $invoice->installment()->create([
                                     'payment_id'   =>  $invoicePayment->id,
                                     'customer_id'   => $request->customer_id,
                                     'amount'        => $request->installAmount,
-                                    'interest'      => $request->installInterest,
+                                    'interest'      => $interest,
                                     'date'          => date('Y-m-d',strtotime($request->installmentDate)),
                                 ]);
+                                // dd( $v);
                             }
 
                         }else{
@@ -189,46 +196,7 @@ class InvoiceController extends Controller
 
     }
 
-    public function invoiceApproveStore(Request $request,$id){
-        // if($request->free_selling_qty !=null){
-        //     foreach ($request->free_selling_qty as $key => $val) {
-        //         $invoice_details = InvoiceDetail::where('id',$key)->first();
-        //         $product_name = Product::where('id',$invoice_details->product_id)->first();
-        //         if($product_name->free_quantity < $request->free_selling_qty[$key]){
-        //             return redirect()->back()->with('error','Sorry! You approve maximum value');
-        //         }
-        //     }
-        // }
-        // foreach ($request->selling_qty as $key => $val) {
-        //     $invoice_details = InvoiceDetail::where('id',$key)->first();
-        //     $product_name = Product::where('id',$invoice_details->product_id)->first();
-        //     if($product_name->quantity < $request->selling_qty[$key]){
-        //         return redirect()->back()->with('error','Sorry! You approve maximum value');
-        //     }
-        // }
-        // $invoice = Invoice::find($id);
-        // $invoice->approved_by = Auth::user()->id;
-        // $invoice->status = '1';
-        // DB::transaction(function() use($request,$invoice,$id){
-        //     foreach ($request->selling_qty as $key => $val) {
-        //         $invoice_details = InvoiceDetail::where('id',$key)->first();
-        //         $invoice_details->status = '1';
-        //         $invoice_details->save();
-        //         $product_name = Product::where('id',$invoice_details->product_id)->first();
-        //         $product_name->free_quantity = ((float)$product_name->free_quantity)-((float)$request->free_selling_qty[$key]);
-        //         $product_name->quantity = ((float)$product_name->quantity)-((float)$request->selling_qty[$key]);
-        //         $product_name->save();
-        //     }
 
-        //     $customer = Customer::where('id',$request->customer_id)->first();
-        //     $customer->total_amount = ((float)($customer->total_amount))+((float)($request->customer_total_amount));
-        //     $customer->payment = ((float)($customer->payment))+((float)($request->customer_paid_amount));
-        //     $customer->due = ((float)($customer->due))+((float)($request->customer_due_amount));
-        //     $customer->save();
-        //     $invoice->save();
-        // });
-        return redirect()->route('invoices.invoice.view')->with('success','Invoice Successfully Added');
-    }
 
     public function dueList(){
 
@@ -236,14 +204,27 @@ class InvoiceController extends Controller
         return view('backend.admin.invoice.invoice_due_list', compact('allData'));
     }
 
+
+//amar add kora
+
+    public function invoicePdfa($id){
+        $data['owner'] = ReportHeading::first();
+        $data['invoice'] = Invoice::with(['customer','invoice_details.product.sellPrice'])->find($id);
+        return view('backend.admin.invoice.pdf.invoice_print_pdfa', $data);
+
+    }
+
+
+    //amar add kora
     public function invoicePdf($id){
 
+        $data['owner'] = ReportHeading::first();
         $data['invoice'] = Invoice::with(['customer','invoice_details.product.sellPrice'])->find($id);
         return view('backend.admin.invoice.pdf.invoice_print_pdf', $data);
 
     }
     public function othersPdf($id){
-
+        $data['owner'] = ReportHeading::first();
         $data['invoice'] = Invoice::with(['customer','installment','invoice_detail.product.sellPrice'])->find($id);
         return view('backend.admin.invoice.pdf.invoice_print_othersPdf', $data);
 
@@ -265,6 +246,7 @@ class InvoiceController extends Controller
 
     public function invoiceUpdate(Request $request ,$id){
 
+        // dd($request->all());
         $invoice = Invoice::whereId($id)->with('lastesInstallment')->first();
     	if($request->inspaidAmount < $request->paid_amount ){
             return redirect()->back()->with('error','Sorry! Paid price is Large then due price');
@@ -281,31 +263,33 @@ class InvoiceController extends Controller
 
                     if($request->paid_status=='full_paid'){
 
-                        $invoice->update([
-                            'intertest_amount'  => $request->interestamount+$invoice->interest_amount,
-                            'paid_amount'       => $invoice->paid_amount+$request->inspaidAmount??0,
-                            'grand_total'       => $invoice->grand_total+$request->interestamount
+                    $invoice->update([
+                            'intertest_amount'  => $request->interestamount + $invoice->interest_amount,
+                            'paid_amount'       => $invoice->paid_amount + $request->inspaidAmount??0,
+                            'grand_total'       => $invoice->grand_total + $request->interestamount,
+
                             ]);
 
                         $payment['paid_amount'] = $request->estimated_amount;
                         $customer->update([
-                            'total_amount' =>  $customer->total_amount+$request->interestamount,
-                            'due' =>  $customer->due-$request->due??0,
-                            'payment' =>  $customer->payment+$request->inspaidAmount,
+                            'total_amount'  =>  $customer->total_amount + $request->interestamount,
+                            'due'           =>  $customer->due - $request->due ??0,
+                            'payment'       =>  $customer->payment+$request->inspaidAmount,
                         ]);
 
                     }elseif($request->paid_status=='partial_paid'){
                         $payment['paid_amount'] = $request->paid_amount??0;
                         $customer->update([
-                            'total_amount' =>  $customer->total_amount+$request->interestamount,
-                            'due' =>  $customer->due+$request->interestamount-$request->paid_amount??0,
-                            'payment' =>  $customer->payment+$request->paid_amount,
+                            'total_amount'  =>  $customer->total_amount+$request->interestamount,
+                            'due'           =>  $customer->due+$request->interestamount-$request->paid_amount - $request->dis_cls ??0,
+                            'payment'       =>  $customer->payment+$request->paid_amount,
                         ]);
 
                         $invoice->update([
                             'intertest_amount'  => $request->interestamount+$invoice->interest_amount,
                             'paid_amount'       => $invoice->paid_amount+$request->paid_amount??0,
-                            'grand_total'       => $invoice->grand_total+$request->interestamount
+                            'grand_total'       => $invoice->grand_total+$request->interestamount,
+                            'discount_amount'   => $invoice->discount_amount + $request->dis_cls
                         ]);
 
                     }
@@ -320,13 +304,17 @@ class InvoiceController extends Controller
                     ]);
 
                     if (!empty($request->new_installAmount && $request->new_installmentDate)) {
+
+                        $interest=  number_format($request->new_installInterest/30, 2);
+
                         $invoice->installment()->create([
                             'payment_id'   =>  $invoicePayment->id,
                             'customer_id'   => $request->customer_id,
                             'amount'        => $request->new_installAmount,
-                            'interest'      => $request->new_installInterest,
+                            'interest'      => $interest,
                             'date'          => date('Y-m-d',strtotime($request->new_installmentDate)),
                         ]);
+
                     }
 
                 });

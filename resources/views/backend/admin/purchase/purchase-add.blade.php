@@ -8,155 +8,199 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="breadcrumb-holder">
-						<h2 class="main-title float-left">Manage Purchase</h2>
-						<ol class="breadcrumb float-right">
-							<li class="breadcrumb-item">Home</li>
-							<li class="breadcrumb-item">Purchase</li>
-						</ol>
-						<div class="clearfix"></div>
-					</div>
+                        <h2 class="main-title float-left">Manage Purchase</h2>
+                        <ol class="breadcrumb float-right">
+                            <li class="breadcrumb-item">Home</li>
+                            <li class="breadcrumb-item">Purchase</li>
+                        </ol>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
             <!-- end row -->
 
             <div class="container fullbody">
-				<div class="col-md-12">
-					<div class="card">
-						<div class="card-header">
-							<h5>{{(@$editData) ? ("Update Purchase") : "Add Purchase"}}
-								<a class="btn btn-sm btn-success float-right" href="{{route('purchases.purchase.view')}}"><i class="fa fa-list"></i> Purchase List</a>
-							</h5>
-						</div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>{{(@$editData) ? ("Update Purchase") : "Add Purchase"}}
+                                <a class="btn btn-sm btn-success float-right"
+                                    href="{{route('purchases.purchase.view')}}"><i class="fa fa-list"></i> Purchase
+                                    List</a>
+                            </h5>
+                        </div>
 
-						<div class="card-body">
-							<form>
-								<div class="form-row">
-									<div class="form-group col-md-4">
-										<label class="control-label">Date <span style="color: red;">*</span></label>
-										<input type="text" name="date" id="date" class="form-control form-control-sm singledatepicker" value="{{@$cdate}}" placeholder="YYYY-MM-DD" autocomplete="off" readonly>
-									</div>
-									<div class="form-group col-md-4">
-										<label class="control-label">Invoice No <span style="color: red;">*</span></label>
-										<input type="text" name="purchase_no" id="purchase_no" class="form-control form-control-sm" readonly
-                                        value="{{@$editData->purchase_no ?? @$invoice_no}}" placeholder="Write Invoice No">
-									</div>
-									<div class="form-group col-md-4">
-										<label class="control-label">Supplier Name <span style="color: red;">*</span></label>
-										<select name="supplier_id" id="supplier_id" class="form-control form-control-sm select2">
-											<option value="">Select Supplier</option>
-											@foreach($suppliers as $supplier)
-						                	<option value="{{$supplier->id}}">{{$supplier->name}}</option>
-						                	@endforeach
-										</select>
-									</div>
-									<div class="form-group col-md-4">
-										<label class="control-label">Category <span style="color: red;">*</span></label>
-										<select name="category_id" id="category_id" class="category_id form-control form-control-sm select2">
-											<option value="">Select Category</option>
-										</select>
-									</div>
-									<div class="form-group col-md-6">
-										<label class="control-label">Product Name <span style="color: red;">*</span></label>
-										<select name="product_id" id="product_id" class="form-control form-control-sm select2">
-											<option value="">Select Product</option>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Date <span style="color: red;">*</span></label>
+                                        <input type="text" name="date" id="date"
+                                            class="form-control form-control-sm singledatepicker"
+                                            placeholder="YYYY-MM-DD" autocomplete="off" required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Invoice No <span
+                                                style="color: red;">*</span></label>
+                                        <input type="text" name="purchase_no" id="purchase_no"
+                                            class="form-control form-control-sm" readonly
+                                            value="{{@$editData->purchase_no ?? @$invoice_no}}"
+                                            placeholder="Write Invoice No">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Supplier Name <span
+                                                style="color: red;">*</span></label>
+                                        <select name="supplier_id" id="supplier_id"
+                                            class="form-control form-control-sm select2">
+                                            <option value="">Select Supplier</option>
+                                            @foreach($suppliers as $supplier)
+                                            <option value="{{$supplier->id}}">{{$supplier->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">Category <span style="color: red;">*</span></label>
+                                        <select name="category_id" id="category_id"
+                                            class="category_id form-control form-control-sm select2">
+                                            <option value="">Select Category</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">Product Name <span
+                                                style="color: red;">*</span></label>
+                                        <select name="product_id" id="product_id"
+                                            class="form-control form-control-sm select2">
+                                            <option value="">Select Product</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">Part's ID <span
+                                                style="color: red;">*</span></label>
+                                        <select name="pid" id="pid" class="form-control form-control-sm select2">
+                                            <option value="">Select part's id</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">Part's Name <span
+                                                style="color: red;">*</span></label>
+                                        <select name="pname" id="pname" class="form-control form-control-sm select2">
+                                            <option value="">Select part's name</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">Part's Model <span
+                                                style="color: red;">*</span></label>
+                                        <select name="pmname" id="pmname" class="form-control form-control-sm select2">
+                                            <option value="">Select part's model</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-1" style="padding-top: 29px;">
+                                        <i class="btn btn-primary fa fa-plus-circle addeventmore"> Add</i>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
 
-										</select>
-									</div>
-									<div class="form-group col-md-1" style="padding-top: 29px;">
-										<i class="btn btn-primary fa fa-plus-circle addeventmore"> Add</i>
-									</div>
-								</div>
-							</form>
-						</div>
+                        <div class="card border-info">
+                            <form method="post" action="{{route('purchases.purchase.store')}}" id="myForm">
+                                {{csrf_field()}}
+                                <div class="card-body">
+                                    <table class="table-sm table-bordered" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Category</th>
+                                                <th>Product Name</th>
+                                                <th width="7%">Pcs/Kg</th>
+                                                <th width="10%">Unit Price</th>
+                                                <th width="10%">Selling Price</th>
+                                                <th width="7%">Free Qty</th>
+                                                <th width="10%">Total Price</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="addRow" class="addRow">
 
-						<div class="card border-info">
-							<form method="post" action="{{route('purchases.purchase.store')}}" id="myForm">
-								{{csrf_field()}}
-								<div class="card-body">
-									<table class="table-sm table-bordered" width="100%">
-										<thead>
-											<tr>
-												<th>Category</th>
-												<th>Product Name</th>
-												<th width="7%">Pcs/Kg</th>
-												<th width="10%">Unit Price</th>
-												<th width="10%">Selling Price</th>
-												<th width="7%">Free Qty</th>
-												<th width="10%">Total Price</th>
-												<th>Action</th>
-											</tr>
-										</thead>
-										<tbody id="addRow" class="addRow">
+                                        </tbody>
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="6"></td>
+                                                <td>
+                                                    <input type="text" name="estimated_amount" value="0"
+                                                        id="estimated_amount"
+                                                        class="form-control form-control-sm text-right estimated_amount"
+                                                        readonly style="background-color: #D8FDBA">
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br>
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <textarea name="description" class="form-control form-control-sm"
+                                                id="description" placeholder="Write Description here"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <label>Payment Method</label>
+                                            <select name="payment_method" id="payment_method"
+                                                class="payment_method form-control form-control-sm">
+                                                <option value="">Select Method</option>
+                                                <option value="HandCash">HandCash</option>
+                                                <option value="Cheque">Cheque</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="control-label">Paid Status</label>
+                                            <select name="paid_status" id="paid_status"
+                                                class="paid_status form-control form-control-sm">
+                                                <option value="">Select Status</option>
+                                                <option value="partial_paid">Partial Paid</option>
+                                                <option value="full_paid">Full Paid</option>
+                                                <option value="full_due">Full Due</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2" style="padding-top: 30px;">
+                                            <input type="text" name="paid_amount"
+                                                class="paid_amount form-control form-control-sm"
+                                                placeholder="Write Paid Amount" id="paid_amount" autocomplete="off"
+                                                style="display: none;">
+                                        </div>
+                                        <div class="form-row bank_info" style="display: none; padding-top: 15px;">
+                                            <div class="col-md-6">
+                                                <input type="text" name="bank_name"
+                                                    class=" form-control form-control-sm" placeholder="Write Bank Name">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="text" name="cheque_no"
+                                                    class=" form-control form-control-sm" placeholder="Write Cheque No">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-sm btn-primary" id="storeButton">Purchase
+                                            Store</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!--Form End-->
 
-										</tbody>
-										<tbody>
-												<tr>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td colspan="6"></td>
-													<td>
-														<input type="text" name="estimated_amount" value="0" id="estimated_amount" class="form-control form-control-sm text-right estimated_amount" readonly style="background-color: #D8FDBA">
-													</td>
-													<td></td>
-												</tr>
-											</tbody>
-									</table>
-									<br>
-									<div class="form-row">
-										<div class="col-md-12">
-											<textarea name="description" class="form-control form-control-sm" id="description" placeholder="Write Description here"></textarea>
-										</div>
-									</div>
-									<div class="form-row">
-										<div class="col-md-3">
-						              		<label>Payment Method</label>
-						              		<select name="payment_method" id="payment_method" class="payment_method form-control form-control-sm">
-												<option value="">Select Method</option>
-												<option value="HandCash">HandCash</option>
-												<option value="Cheque">Cheque</option>
-											</select>
-						              	</div>
-										<div class="col-md-3">
-											<label class="control-label">Paid Status</label>
-											<select name="paid_status" id="paid_status" class="paid_status form-control form-control-sm">
-												<option value="">Select Status</option>
-												<option value="partial_paid">Partial Paid</option>
-												<option value="full_paid">Full Paid</option>
-												<option value="full_due">Full Due</option>
-											</select>
-										</div>
-										<div class="col-md-2" style="padding-top: 30px;">
-											<input type="text" name="paid_amount" class="paid_amount form-control form-control-sm" placeholder="Write Paid Amount" id="paid_amount" autocomplete="off" style="display: none;">
-										</div>
-										<div class="form-row bank_info" style="display: none; padding-top: 15px;">
-											<div class="col-md-6">
-												<input type="text" name="bank_name" class=" form-control form-control-sm" placeholder="Write Bank Name">
-											</div>
-											<div class="col-md-6">
-												<input type="text" name="cheque_no" class=" form-control form-control-sm" placeholder="Write Cheque No">
-											</div>
-										</div>
-									</div>
-									<br>
-									<div class="form-group">
-										<button type="submit" class="btn btn-sm btn-primary" id="storeButton">Purchase Store</button>
-									</div>
-								</div>
-							</form>
-						</div>
-						<!--Form End-->
-
-					</div>
-				</div>
-			</div>
+                    </div>
+                </div>
+            </div>
 
         </div>
         <!-- END container-fluid -->
@@ -169,7 +213,7 @@
 
 <!-- Extra HTML for If exist Event -->
 <script id="document-template" type="text/x-handlebars-template">
-	<tr class="delete_add_more_item" id="delete_add_more_item">
+    <tr class="delete_add_more_item" id="delete_add_more_item">
 		<input type="hidden" name="date" value="@{{date}}">
 		<input type="hidden" name="purchase_no" value="@{{purchase_no}}">
 		<input type="hidden" name="project_id" value="@{{project_id}}">
@@ -179,7 +223,7 @@
 			@{{category_name}}
 		</td>
 		<td>
-			<input type="hidden" name="product_id[]" value="@{{product_id}}">
+			<input type="hidden" name="product_id[]" class="products_id" value="@{{product_id}}">
 			@{{product_name}}
 		</td>
 		<td>
@@ -204,19 +248,36 @@
 
 <!-- extra_add_exist_item -->
 <script type="text/javascript">
-	$(document).ready(function () {
+    $(document).ready(function () {
 		$(document).on("click",".addeventmore", function () {
 			var category_id  = $('#category_id').val();
 			var category_name = $('#category_id').find('option:selected').text();
 			var supplier_id  = $('#supplier_id').val();
 			var supplier_name  = $('#supplier_id').find('option:selected').text();
-			var product_id  = $('#product_id').val();
-			var product_name  = $('#product_id').find('option:selected').text();
 			var buying_qty  = $('#buying_qty').val();
 			var buying_price  = $('#buying_price').val();
 			var date  = $('#date').val();
 			var purchase_no  = $('#purchase_no').val();
 			var project_id  = $('#project_id').val();
+            var checkData = true;
+
+            if($('#product_id').val()){
+                var product_id      = $('#product_id').val();
+                var product_name    = $('#product_id').find('option:selected').text();
+            }
+            if($('#pid').val()){
+                var product_id      = $('#pid').val();
+                var product_name    = $('#pid').find('option:selected').text();
+            }
+            if($('#pname').val()){
+                var product_id      = $('#pname').val();
+                var product_name    = $('#pname').find('option:selected').text();
+            }
+            if($('#pmname').val()){
+                var product_id      = $('#pmname').val();
+                var product_name    = $('#pmname').find('option:selected').text();
+            }
+            // console.log(product_id, product_name);
 
 			if(date==''){
 				$.notify("Date is required", {globalPosition: 'top right',className: 'error'});
@@ -242,12 +303,26 @@
 				$.notify("Product is required", {globalPosition: 'top right',className: 'error'});
 				return false;
 			}
+            $('.table-sm .products_id').each(function() {
 
-			var source = $("#document-template").html();
-			var template = Handlebars.compile(source);
-			var data= {buying_price:buying_price,purchase_no:purchase_no,project_id:project_id,supplier_id:supplier_id,category_id:category_id,category_name:category_name,product_id:product_id,product_name:product_name,supplier_name:supplier_name,buying_qty:buying_qty,date:date};
-			var html = template(data);
-			$("#addRow").append(html);
+                if($(this).val() == product_id){
+                    checkData = false;
+                    $.notify("Already added this product", {globalPosition: 'top right',className: 'error'});
+				    return false;
+                } 
+                
+            });
+            if(checkData){
+                var source = $("#document-template").html();
+                var template = Handlebars.compile(source);
+                var data= {buying_price:buying_price,purchase_no:purchase_no,project_id:project_id,supplier_id:supplier_id,
+                category_id:category_id,category_name:category_name,product_id:product_id,product_name:product_name,
+                supplier_name:supplier_name,buying_qty:buying_qty,date:date};
+                var html = template(data);
+                $("#addRow").append(html);
+            }
+			
+            
 		});
 
 		$(document).on("click", ".removeeventmore", function (event) {
@@ -279,7 +354,7 @@
 </script>
 
 <script type="text/javascript">
-	$(function(){
+    $(function(){
 		$(document).on('change','#supplier_id',function(){
 			var supplier_id = $(this).val();
 			$.ajax({
@@ -298,7 +373,7 @@
 	});
 </script>
 <script type="text/javascript">
-	$(function(){
+    $(function(){
 		$(document).on('change','#category_id',function(){
 			var category_id = $('#category_id').val();
 			$.ajax({
@@ -307,10 +382,29 @@
 				data:{category_id:category_id},
 				success:function(data){
 					var html = '<option value="">Select Product</option>';
-					$.each( data, function( key, v ) {
+					$.each( data.products, function( key, v ) {
 						html +='<option value="'+v.id+'">'+v.name+'</option>';
 					});
-					$('#product_id').html(html);
+                    $('#product_id').html(html);
+
+                    var html_2 = "<option value=''>Select Part's Id </option>";
+                    $.each( data.pid, function( key, v ) {
+						html_2 +='<option value="'+v.id+'">'+v.pid+'</option>';
+					});
+                    $('#pid').html(html_2);
+
+                    var html_3 = "<option value=''>Select Part's Name </option>";
+                    $.each( data.pname, function( key, v ) {
+						html_3 +='<option value="'+v.id+'">'+v.pname+'</option>';
+					});
+                    $('#pname').html(html_3);
+
+                    var html_4 = "<option value=''>Select Part's Model Name </option>";
+                    $.each( data.pmname, function( key, v ) {
+						html_4 +='<option value="'+v.id+'">'+v.pmname+'</option>';
+					});
+                    $('#pmname').html(html_4);
+
 				}
 			});
 		});
@@ -341,7 +435,7 @@
 </script>
 
 <script type="text/javascript">
-	$(document).ready(function(){
+    $(document).ready(function(){
 		$('#myForm').validate({
 			errorClass:'text-danger',
 			validClass:'text-success',

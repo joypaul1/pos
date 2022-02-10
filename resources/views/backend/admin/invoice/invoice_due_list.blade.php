@@ -43,11 +43,14 @@
 
 											<td>
 												{{@$value['customer']['name']}} - {{@$value['customer']['mobile']}} ({{@$value['customer']['address']}})
+
+
 											</td>
 											<td> # {{@$value['invoice_no']}}</td>
 											<td>{{date('d-m-Y',strtotime($value['date']))}}</td>
 											<td>{{round($value->due_amount, 2)}} TK</td>
 											<td>
+												
 											</td>
 										</tr>
 									@endforeach

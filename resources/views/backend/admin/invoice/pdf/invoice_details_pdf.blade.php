@@ -66,7 +66,7 @@ table tr td{
 }
 
 .table-bordered thead th{
-  background-color:  #cacaca; 
+  background-color:  #cacaca;
 
 
 </style>
@@ -152,7 +152,8 @@ table tr td{
             @foreach($invoice['invoice_payment_details'] as $key2 => $payment_details)
             <tr>
               <td>{{$key2+1}}</td>
-              <td colspan="2">{{date('d-m-Y',strtotime($payment_details->date))}}</td>
+              
+              <td colspan="2">{{date('d-m-Y', strtotime($payment_details->date))}}</td>
               <td>{{$payment_details->bank_name}}</td>
               <td>{{$payment_details->cheque_no}}</td>
               <td colspan="2">{{$payment_details->current_paid_amount}}</td>
@@ -217,7 +218,7 @@ table tr td{
           <tbody>
             <tr>
               <td style="width: 40%; ">
-                <p style="text-align: center;margin-left: : 20px;">Customer Signature</p> 
+                <p style="text-align: center;margin-left: : 20px;">Customer Signature</p>
               </td>
               <td style="width: 20%"></td>
               <td style="width: 40%; text-align: center;">
@@ -228,7 +229,7 @@ table tr td{
         </table>
       </div>
     </div>
-   
+
   </div>
 </body>
 </html>

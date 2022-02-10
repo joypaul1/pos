@@ -39,20 +39,22 @@ class ReportController extends Controller
         $start_date = date('Y-m-d',strtotime($request->start_date));
         $end_date   = date('Y-m-d',strtotime($request->end_date));
         $sales      = Invoice::whereBetween('date',[$start_date, $end_date])->sum('grand_total');
+        $discount      = Invoice::whereBetween('date',[$start_date, $end_date])->sum('discount_amount');
         $purchase   = PurchasePaymentDetail::whereBetween('date',[$start_date, $end_date])->sum('current_paid_amount');
         $expanse    = Expanse::whereBetween('date',[$start_date, $end_date])->sum('amount');
-        $cost       = $purchase+$expanse;
+        $cost       = $purchase + $expanse + $discount;
         $profit     = $sales-$cost;
 
         $html['tdsource']  = '';
         $html['tdsource'] .= '<tr>';
-        $html['tdsource'] .= '<td colspan="5" class="text-center">'.'PROFIT REPORT'.date('d-m-Y',strtotime($start_date)).'-'.date('d-m-Y',strtotime($end_date)).'</td>';
+        $html['tdsource'] .= '<td colspan="5" class="text-center">'.'PROFIT REPORT '.date('d-m-Y',strtotime($start_date)).'-'.date('d-m-Y',strtotime($end_date)).'</td>';
         $html['tdsource'] .= '</tr>';
 
         $html['tdsource'] .= '<tr>';
         $html['tdsource'] .= '<td>'.'Sales'.'</td>';
         $html['tdsource'] .= '<td>'.'Purchase'.'</td>';
         $html['tdsource'] .= '<td>'.'Expanse'.'</td>';
+        $html['tdsource'] .= '<td>'.'Discount'.'</td>';
         $html['tdsource'] .= '<td>'.'Total Cost'.'</td>';
         $html['tdsource'] .= '<td>'.'Profit'.'</td>';
         $html['tdsource'] .= '</tr>';
@@ -61,6 +63,7 @@ class ReportController extends Controller
         $html['tdsource'] .= '<td>'.$sales.'</td>';
         $html['tdsource'] .= '<td>'.$purchase.'</td>';
         $html['tdsource'] .= '<td>'.$expanse.'</td>';
+        $html['tdsource'] .= '<td>'.$discount.'</td>';
         $html['tdsource'] .= '<td>'.$cost.'</td>';
         $html['tdsource'] .= '<td>'.$profit.'</td>';
         $html['tdsource'] .= '</tr>';

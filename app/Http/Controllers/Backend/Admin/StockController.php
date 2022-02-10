@@ -98,13 +98,6 @@ class StockController extends Controller
     }
 
     public function approveStore(Request $request, $id){
-        // foreach ($request->quantity as $key => $val) {
-        //     $stock_out_details = StockOutDetail::where('id',$key)->first();
-        //     $product_name = Product::where('id',$stock_out_details->product_id)->first();
-        //     if($product_name->quantity < $request->quantity[$key]){
-        //         return redirect()->back()->with('error','Sorry! You approve maximum value');
-        //     }
-        // }
         $invoice = StockOut::find($id);
         $invoice->approved_by = Auth::user()->id;
         $invoice->status = '1';
@@ -126,7 +119,6 @@ class StockController extends Controller
         $data['stock_invoice'] = StockOut::with(['stock_out_details'])->find($id);
         $data['owner'] = ReportHeading::first();
         $pdf = PDF::loadView('backend.admin.stock.pdf.stock_report_pdf', $data);
-        // $pdf->SetProtection(['copy', 'print'], '', 'pass');
         return $pdf->stream('document.pdf');
     }
 
@@ -136,6 +128,7 @@ class StockController extends Controller
     }
 
     public function stockReportHandlebar(Request $request){
+        
         $supplier_id = $request->supplier_id;
         if($supplier_id !=''){
             $where[] = ['supplier_id',$supplier_id];
@@ -149,20 +142,22 @@ class StockController extends Controller
             $where[] = ['id',$product_id];
         }
         $where[] = ['status','1'];
-        $data = Product::where($where)->get();
-        $html['thsource'] = '<th width="5%">Sl.</th>';
-        $html['thsource'] .= '<th>Supplier</th>';
-        $html['thsource'] .= '<th>Category</th>';
-        $html['thsource'] .= '<th>Unit</th>';
-        $html['thsource'] .= '<th>Product Name</th>';
-        $html['thsource'] .= '<th>In</th>';
-        $html['thsource'] .= '<th>Out</th>';
-        $html['thsource'] .= '<th>Stock</th>';
+        $data = Product::where($where)->has('checkPurchase')->get();
+        $html['thsource'] = '<th width="5%" class="text-center">Sl.</th>';
+        $html['thsource'] .= '<th class="text-center">Supplier</th>';
+        $html['thsource'] .= '<th class="text-center">Category</th>';
+        $html['thsource'] .= '<th class="text-center">Unit</th>';
+        $html['thsource'] .= '<th class="text-center">Product Name</th>';
+        $html['thsource'] .= '<th class="text-center">C/Unit Price</th>';
+        $html['thsource'] .= '<th class="text-center">C/Selling Price</th>';
+        $html['thsource'] .= '<th class="text-center">In</th>';
+        $html['thsource'] .= '<th class="text-center">Out</th>';
+        $html['thsource'] .= '<th class="text-center">C/Stock</th>';
         $html['tdsource']  = '';
-        $in_grand = 0;
-        $out_grand = 0;
-        $grand_total = 0;
+        $in_grand =  $out_grand = $grand_total = $total_unit_price = $total_selling_price = 0;
+
         foreach ($data as $key => $v) {
+            $price = PurchaseDetail::where('supplier_id',$v->supplier_id)->where('category_id',$v->category_id)->where('product_id',$v->id)->where('status','1')->latest()->first(['unit_price','selling_price']);
             $buying_qty = PurchaseDetail::where('supplier_id',$v->supplier_id)->where('category_id',$v->category_id)->where('product_id',$v->id)->where('status','1')->sum('buying_qty');
             $buying_free_qty = PurchaseDetail::where('supplier_id',$v->supplier_id)->where('category_id',$v->category_id)->where('product_id',$v->id)->where('status','1')->sum('free_quantity');
             $total_in_qty = $buying_qty+$buying_free_qty;
@@ -173,24 +168,31 @@ class StockController extends Controller
             $stock = $total_in_qty-$total_out_qty;
 
             $html['tdsource'] .= '<tr>';
-            $html['tdsource'] .= '<td>'.($key+1).'</td>';
-            $html['tdsource'] .= '<td>'.@$v['supplier']['name'].'</td>';
-            $html['tdsource'] .= '<td>'.@$v['category']['name'].'</td>';
-            $html['tdsource'] .= '<td>'.@$v['unit']['name'].'</td>';
-            $html['tdsource'] .= '<td>'.@$v->name.'</td>';
-            $html['tdsource'] .= '<td>'.round($total_in_qty,2).'</td>';
-            $html['tdsource'] .= '<td>'.round($total_out_qty,2).'</td>';
-            $html['tdsource'] .= '<td>'.$stock.'</td>';
+            $html['tdsource'] .= '<td class="text-center">'.($key+1).'</td>';
+            $html['tdsource'] .= '<td class="text-center">'.@$v['supplier']['name'].'</td>';
+            $html['tdsource'] .= '<td class="text-center">'.@$v['category']['name'].'</td>';
+            $html['tdsource'] .= '<td class="text-center">'.@$v['unit']['name'].'</td>';
+            $html['tdsource'] .= '<td class="text-center">'.@$v->name.'</td>';
+            $html['tdsource'] .= '<td class="text-center">'.@$price->unit_price.'</td>';
+            $html['tdsource'] .= '<td class="text-center">'.@$price->selling_price.'</td>';
+            $html['tdsource'] .= '<td class="text-center">'.round($total_in_qty,2).'</td>';
+            $html['tdsource'] .= '<td class="text-center">'.round($total_out_qty,2).'</td>';
+            $html['tdsource'] .= '<td class="text-center">'.$stock.'</td>';
             $html['tdsource'] .= '</tr>';
             $in_grand += $total_in_qty;
             $out_grand += $total_out_qty;
             $grand_total += $stock;
+            $total_unit_price += $price->unit_price??0;
+            $total_selling_price += $price->selling_price??0 ;
+
         }
         $html['tdsource'] .= '<tr>';
-        $html['tdsource'] .= '<td colspan="5" class="text-right">'.'Grand Total'.'</td>';
-        $html['tdsource'] .= '<td>'.$in_grand.'</td>';
-        $html['tdsource'] .= '<td>'.$out_grand.'</td>';
-        $html['tdsource'] .= '<td>'.$grand_total.'</td>';
+        $html['tdsource'] .= '<td  colspan="5" class="text-right">'.'Grand Total'.'</td>';
+        $html['tdsource'] .= '<td  class="text-center">'.$total_unit_price.'</td>';
+        $html['tdsource'] .= '<td  class="text-center">'.$total_selling_price.'</td>';
+        $html['tdsource'] .= '<td  class="text-center">'.$in_grand.'</td>';
+        $html['tdsource'] .= '<td  class="text-center">'.$out_grand.'</td>';
+        $html['tdsource'] .= '<td  class="text-center">'.$grand_total.'</td>';
         $html['tdsource'] .= '</tr>';
         return response()->json(@$html);
     }
@@ -209,7 +211,7 @@ class StockController extends Controller
             $where[] = ['id',$product_id];
         }
         $where[] = ['status','1'];
-        $data['allData'] = Product::orderBy('supplier_id')->where($where)->get();
+        $data['allData'] = Product::orderBy('supplier_id')->where($where)->has('checkPurchase')->get();
         $data['owner'] = ReportHeading::first();
         // return view('backend.admin.stock.pdf.daily_stock_report_pdf', $data);
         $pdf = PDF::loadView('backend.admin.stock.pdf.daily_stock_report_pdf', $data);

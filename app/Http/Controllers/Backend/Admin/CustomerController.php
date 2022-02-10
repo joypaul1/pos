@@ -28,14 +28,24 @@ class CustomerController extends Controller
     }
 
     public function store(Request $request){
+        if($request->ajax()){
+            return  response()->json(['data' => $request->all()]);
+        }
         $data = new Customer();
         $data->name = $request->name;
         $data->mobile = $request->mobile;
         $data->email = $request->email;
+        $data->father_name = $request->father_name;
+        $data->mother_name = $request->mother_name;
+        $data->district = $request->district;
+        $data->up = $request->up;
+        $data->post_office = $request->post_office;
+        $data->village = $request->village;
         $data->address = $request->address;
         $data->created_by = Auth::user()->id;
         $data->save();
-        return redirect()->route('customers.customer.view')->with('success','Well done! successfully inserted');
+        return back()->with('success','Well done! successfully inserted');
+        // return redirect()->route('customers.customer.view')->with('success','Well done! successfully inserted');
     }
 
     public function edit($id){
@@ -48,6 +58,12 @@ class CustomerController extends Controller
         $data->name = $request->name;
         $data->mobile = $request->mobile;
         $data->email = $request->email;
+        $data->father_name = $request->father_name;
+        $data->mother_name = $request->mother_name;
+        $data->district = $request->district;
+        $data->up = $request->up;
+        $data->post_office = $request->post_office;
+        $data->village = $request->village;
         $data->address = $request->address;
         $data->modified_by = Auth::user()->id;
         $data->save();

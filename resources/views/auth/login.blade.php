@@ -128,7 +128,7 @@
 
 
              <div class="d-flex justify-content-center mt-4 login_container">
-               <h3 style="font-size: 14px;"> <a href="https://amiritsoft.com/" target="_blank" style="color: #fff;text-decoration: none;">Developed By Popular  Soft </a></h3>
+               <h3 style="font-size: 14px;"> <a href="https://amiritsoft.com/" target="_blank" style="color: #fff;text-decoration: none;">Developed By Amir It Soft </a></h3>
             </div>
             </div>
          </div>

@@ -160,7 +160,8 @@
                                                     @endphp
 
                                                     <tr>
-                                                        <td>{{ optional($invoice->installment)->date??' ' }}</td>
+
+                                                        <td {{date('d-m-Y', strtotime( optional($invoice->installment)->date)) }}</td>
                                                         <td>{{ $amount }}</td>
                                                         <td>{{ $interest }}</td>
                                                         <td>{{ $daycount  }}</td>

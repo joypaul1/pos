@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->integer('role_id')->nullable();
+            $table->string('usertype')->nullable();
             $table->string('email')->unique();
             $table->integer('status')->default(0);
             $table->string('image')->nullable();

@@ -18,6 +18,7 @@ class UserTableSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'mobile' => '0123456789',
+            'usertype' => 'Admin',
             'status' => '1',
             'password' => Hash::make('123456789'),
             'created_at' => Carbon::now(),

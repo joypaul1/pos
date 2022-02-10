@@ -8,14 +8,14 @@
         position: fixed;
         overflow-y: scroll;
     }
-    
+
 </style>
 <div class="left main-sidebar sidescrollview">
 
     <div class="sidebar-inner leftscroll">
 
         <div id="sidebar-menu">
-    
+
         <ul>
 
             <li class="submenu">
@@ -133,6 +133,8 @@
                </ul>
             </li>
 
+
+
             <li class="submenu">
                <a style="cursor:pointer" class="{{($prefix=='/stocks')?'active':''}}"><i class="fa fa-copy"></i> <span>Manage Stock</span> <span class="menu-arrow"></span></a>
                <ul class="list-unstyled" style="display: none;">
@@ -177,7 +179,7 @@
         <div class="clearfix"></div>
 
         </div>
-    
+
         <div class="clearfix"></div>
 
     </div>

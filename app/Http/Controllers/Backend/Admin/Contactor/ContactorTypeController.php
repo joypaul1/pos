@@ -36,7 +36,7 @@ class ContactorTypeController extends Controller
     public function update(Request $request ,$id){
         $data = Reason::find($id);
         $data->name = $request->name;
-        $data->modified_by = Auth::user()->id;
+        // $data->modified_by = Auth::user()->id;
         $data->save();
         return redirect()->route('stocks.reason.view')->with('success','Well done! successfully update');
     }

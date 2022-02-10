@@ -26,19 +26,12 @@ class ProductController extends Controller
     }
 
     public function store(Request $request){
-        $data =  $request->all();
+        $data                       =  $request->all();
+        $data['model_Of_vehicle']   =  $request->model_Of_vehicle ?? $request->name;
         $data['quantity'] = '0';
-        $data['created_by'] = auth()->id();
+
         Product::create($data);
 
-        // $data = new Product();
-        // $data->supplier_id = $request->supplier_id;
-        // $data->category_id = $request->category_id;
-        // $data->unit_id = $request->unit_id;
-        // $data->name = $request->name;
-        // $data->sheif_no = $request->sheif_no;
-
-        // $data->save();
         return redirect()->route('products.product.view')->with('success','Well done! successfully inserted');
     }
 
@@ -51,14 +44,12 @@ class ProductController extends Controller
     }
     public function pdf($id){
         $data = Product::find($id);
-        // $data['suppliers'] = Supplier::all();
-        // $data['categories'] = Category::where('status','1')->get();
-        // $data['units'] = Unit::where('status','1')->get();
     	return view('backend.admin.product.pdf', ['data'=> $data]);
     }
 
     public function update(Request $request ,$id){
         $data =  $request->all();
+        $data['model_Of_vehicle']   =  $request->model_Of_vehicle ?? $request->name;
         $data['quantity'] = '0';
         $data['created_by'] = auth()->id();
         Product::find($id)->update($data);

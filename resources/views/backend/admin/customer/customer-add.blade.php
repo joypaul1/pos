@@ -33,11 +33,11 @@
 				            	<div class="form-row">
 					            	<div class="form-group col-md-6">
 						                <label>Customer Name</label>
-						                <input type="text" name="name" class="form-control" value="{{@$editData->name}}" placeholder="Write Name">
+						                <input type="text" name="name" class="form-control" value="{{@$editData->name}}" placeholder="Write Name" required>
 					              	</div>
 					              	<div class="form-group col-md-6">
 						                <label>Customer Mobile No</label>
-						                <input type="text" name="mobile" class="form-control" value="{{@$editData->mobile}}" placeholder="Write Mobile No">
+						                <input type="text" name="mobile" class="form-control" value="{{@$editData->mobile}}" placeholder="Write Mobile No" required>
 					              	</div>
 					              	<div class="form-group col-md-6">
 						                <label>Customer Email</label>
@@ -56,6 +56,12 @@
 						                <label>District Name</label>
 						                <input type="text" name="district" class="form-control" value="{{@$editData->district}}" placeholder="Write district">
 					              	</div>
+
+					              	<div class="form-group col-md-6">
+						                <label>Upazila Name</label>
+						                <input type="text" name="up" class="form-control" value="{{@$editData->up}}" placeholder="Write Upazila Name">
+					              	</div>
+
                                     <div class="form-group col-md-6">
 						                <label>Post office Name</label>
 						                <input type="text" name="post_office" class="form-control" value="{{@$editData->post_office}}" placeholder="Write post_office">
@@ -67,7 +73,7 @@
 
 					              	<div class="form-group col-md-6">
 						                <label>Address</label>
-						                <input type="text" name="address" class="form-control" value="{{@$editData->address}}" placeholder="Write Address">
+						                <input type="text" name="address" class="form-control" value="{{@$editData->address}}" placeholder="Write Address" required>
 					              	</div>
 					            </div>
 				            	<div class="form-row">

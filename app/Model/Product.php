@@ -30,9 +30,16 @@ class Product extends Model
     {
         return $this->belongsTo(SubCategory::class,'sub_category_id','id');
     }
+    public function checkPurchase()
+    {
+        return $this->hasOne(PurchaseDetail::class, 'product_id', 'id')->where('status', true);
+    }
 
     public function sellPrice()
     {
         return $this->belongsTo(PurchaseDetail::class, 'product_id', 'id')->select('product_id', 'selling_price');
     }
+
+
 }
+

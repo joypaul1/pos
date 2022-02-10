@@ -24,7 +24,9 @@
 					<div class="card">
 						<div class="card-header">
 							<h5>Product List
-								<a class="btn btn-sm btn-success float-right" href="{{route('products.product.add')}}"><i class="fa fa-plus-circle"></i> Add Product</a>
+                                <a class="btn btn-sm btn-success float-right" href="{{route('products.product.add')}}"><i class="fa fa-plus-circle"></i> Add Product</a>
+								<a class="btn btn-sm btn-info float-right" href="{{route('export')}}"><i class="fa fa-plus-circle"></i> Export Product</a>
+								<a class="btn btn-sm btn-warning float-right" href="{{route('importExportView')}}"><i class="fa fa-plus-circle"></i> Import Product</a>
 							</h5>
 						</div>
 						<div class="card-body">

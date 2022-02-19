@@ -19,7 +19,7 @@ use PDF;
 class CustomerController extends Controller
 {
     public function index(){
-    	$allData = Customer::where('status','1')->orderBy('id','desc')->get();
+    	$allData = Customer::where('status','1')->with('invoices')->orderBy('id','desc')->get();
     	return view('backend.admin.customer.customer-view', compact('allData'));
     }
 

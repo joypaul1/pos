@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section('content')
 <div class="content-page">
-    
+
     <!-- Start content -->
     <div class="content">
         <div class="container-fluid">
@@ -18,7 +18,7 @@
                 </div>
             </div>
             <!-- end row -->
-            
+
             <div class="container fullbody">
 				<div class="col-md-12">
 					<div class="card">
@@ -34,11 +34,12 @@
 										<th width="5%">S/L </th>
 										<th>Customer Name</th>
 										<th>Mobile</th>
-										<th>Email</th>
-										<th>Address</th>
 										<th>Total Amount</th>
 										<th>Due</th>
 										<th>Payment</th>
+										<th>Discount</th>
+										<th>Service Charge</th>
+										<th>Intertest Amount </th>
 										<th width="10%">Action </th>
 									</tr>
 								</thead>
@@ -48,11 +49,20 @@
 										<td>{{$key+1}}</td>
 										<td>{{$value->name}}</td>
 										<td>{{$value->mobile}}</td>
-										<td>{{$value->email}}</td>
-										<td>{{$value->address}}</td>
-										<td>{{$value->total_amount}} TK</td>
+										<td>{{ number_format (optional($value->invoices)->sum('total_amount')??0, 2)}}</td>
+										<td>{{ number_format (optional($value->invoices)->sum('paid_amount')??0, 2)}}</td>
+										<td>{{ number_format (optional($value->invoices)->sum('due_amount')??0, 2)}}</td>
+										<td>{{ number_format (optional($value->invoices)->sum('discount_amount')??0, 2)}}</td>
+										<td>{{ number_format (optional($value->invoices)->sum('service_charge')??0, 2)}}</td>
+										<td>{{ number_format (optional($value->invoices)->sum('intertest_amount')??0, 2)}}</td>
+
+                                        {{-- @foreach ($value as $item)
+                                        @endforeach --}}
+										{{-- <td>{{$value->email}}</td>
+										<td>{{$value->address}}</td> --}}
+										{{-- <td>{{ $value->total_amount }} TK</td>
 										<td>{{$value->due}} TK</td>
-										<td>{{$value->payment}} TK</td>
+										<td>{{$value->payment}} TK</td> --}}
 										<td>
 											<a class="btn btn-sm btn-info" title="Edit" href="{{route('customers.customer.edit',$value->id)}}"><i class="fa fa-edit"></i></a>
 											<a target="_blank" class="btn btn-sm btn-success" title="Details" href="{{route('customers.customer.details').'?customer_id='.$value->id}}"><i class="fa fa-eye"></i></a>

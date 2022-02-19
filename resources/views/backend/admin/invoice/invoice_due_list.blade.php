@@ -50,13 +50,16 @@
 											<td>{{date('d-m-Y',strtotime($value['date']))}}</td>
 											<td>{{round($value->due_amount, 2)}} TK</td>
 											<td>
-												
+
 											</td>
 										</tr>
 									@endforeach
 								</tbody>
 							</table>
 						</div>
+                        <div class="card-footer text-center">
+                            <strong> Total Due Amount: {{ number_format($allData->sum('due_amount')??0, 2) }} Tk </strong>
+                        </div>
 					</div>
 				</div>
 			</div>

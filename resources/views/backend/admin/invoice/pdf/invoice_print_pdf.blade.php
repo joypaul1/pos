@@ -239,9 +239,9 @@
                     <div class="row">
                         <div class="col-md-3">
                             <a target="_blank" href="https://lobianijs.com">
-                                {{-- <img src="{{ !empty($owner->image) ? url('public/backend/user_images/' . $owner->image) : url('public/backend/images/noimage.png') }}" --}}
-                                    {{-- style="height: 120px;width: 150px;"> --}}
-                                    <img src="https://placeimg.com/140/280/animals" alt=""   style="height: 120px;width: 150px;"/>
+                                <img src="{{ !empty($owner->image) ? url('public/backend/user_images/' . $owner->image) : url('public/backend/images/noimage.png') }}"
+                                    style="height: 120px;width: 150px;">
+                                    {{-- <img src="https://placeimg.com/140/280/animals" alt=""   style="height: 120px;width: 150px;"/> --}}
                             </a>
                         </div>
                         <div class=" bike col-md-6 company-details text-center" id="">
@@ -356,6 +356,24 @@
                                 </td>
                                 <td class="text-right">{{ $invoice->total_amount ?? '0' }}</td>
                             </tr>
+                            <tr>
+                                <td style="border-right: 0; border-top: 0;border-bottom:0" colspan="4"></td>
+                                <td style="border-left: 0; border-top: 0;border-bottom:0" colspan="2"></td>
+                                <td class="text-center" style="font-size: 16px; font-weight: 600">
+                                    Discount Amount
+                                </td>
+                                <td class="text-right">{{ $invoice->discount_amount ?? '0' }}</td>
+
+                            </tr>
+                            <tr>
+                                <td style="border-right: 0; border-top: 0;border-bottom:0" colspan="4"></td>
+                                <td style="border-left: 0; border-top: 0;border-bottom:0" colspan="2"></td>
+                                <td class="text-center" style="font-size: 16px; font-weight: 600">
+                                    Service chnarge
+                                </td>
+                                <td class="text-right">{{ $invoice->service_charge ?? '0' }}</td>
+
+                            </tr>
 
                             <tr>
 
@@ -382,24 +400,7 @@
                                 <td class="text-right">{{ $invoice->due_amount ?? '0' }}</td>
 
                             </tr>
-                            <tr>
-                                <td style="border-right: 0; border-top: 0;border-bottom:0" colspan="4"></td>
-                                <td style="border-left: 0; border-top: 0;border-bottom:0" colspan="2"></td>
-                                <td class="text-center" style="font-size: 16px; font-weight: 600">
-                                    Discount Amount
-                                </td>
-                                <td class="text-right">{{ $invoice->discount_amount ?? '0' }}</td>
 
-                            </tr>
-                            <tr>
-                                <td style="border-right: 0; border-top: 0" colspan="4"></td>
-                                <td style="border-left: 0; border-top: 0" colspan="2"></td>
-                                <td class="text-center" style="font-size: 16px; font-weight: 600">
-                                    Service chnarge
-                                </td>
-                                <td class="text-right">{{ $invoice->service_charge ?? '0' }}</td>
-
-                            </tr>
 
                             <tr>
                                 <td colspan="6" class="text-left">Payment Reference :</td>

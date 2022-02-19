@@ -106,18 +106,7 @@
 						            	<td  class="text-right"><p style="font-weight: bold;">
                                         {{ number_format($invoice->intertest_amount, 2) }} TK</p></td>
 						            </tr>
-						            <tr>
-
-						            	<td  class="text-right"><p style="font-weight: bold;">Grand Total</p></td>
-						            	<td  class="text-right"><p style="font-weight: bold;">
-                                            {{ number_format($invoice->grand_total, 2) }} TK</p></td>
-						            </tr>
-						            <tr>
-						            	<td  class="text-right"><p style="font-weight: bold;">Paid</p></td>
-						            	<td  class="text-right"><p style="font-weight: bold;">
-                                            {{number_format($invoice->paid_amount, 2)}} TK</p></td>
-						            </tr>
-						            <tr>
+                                    <tr>
 						            	<td  class="text-right"><p style="font-weight: bold;">Service Charge</p></td>
 						            	<td  class="text-right"><p style="font-weight: bold;">
                                             {{number_format($invoice->service_charge, 2)}} TK</p></td>
@@ -127,6 +116,17 @@
 						            	<td  class="text-right"><p style="font-weight: bold;">
                                             {{number_format($invoice->discount_amount, 2)}} TK</p></td>
 						            </tr>
+						            <tr>
+						            	<td  class="text-right"><p style="font-weight: bold;">Grand Total</p></td>
+						            	<td  class="text-right"><p style="font-weight: bold;">
+                                            {{ number_format($invoice->grand_total, 2) }} TK</p></td>
+						            </tr>
+						            <tr>
+						            	<td  class="text-right"><p style="font-weight: bold;">Paid</p></td>
+						            	<td  class="text-right"><p style="font-weight: bold;">
+                                            {{number_format($invoice->paid_amount, 2)}} TK</p></td>
+						            </tr>
+
 						            <tr>
 						            	<td  class="text-right"><p style="font-weight: bold;">Due</p></td>
 						            	<td  class="text-right">

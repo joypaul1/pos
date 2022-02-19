@@ -56,6 +56,8 @@ class InvoiceController extends Controller
     }
 
     public function store(Request $request){
+
+
         if($request->estimated_amount <= $request->paid_amount){
             return redirect()->back()->with('error','Sorry! Paid price is Large then total price');
         }else{
@@ -70,7 +72,7 @@ class InvoiceController extends Controller
             $invoice['service_charge']   = $request->service_charge;
             $invoice['discount_amount']   = $request->discount_amount;
             $invoice['grand_total']   = $request->estimated_amount;
-            $invoice['total_amount']  = $request->estimated_amount;
+            $invoice['total_amount']  = $request->estimated_amount+$invoice['discount_amount']-$request->service_charge;
             $invoice['invoice_no']    = $invoice_no;
             $invoice['date']          = date('Y-m-d',strtotime($request->date));
             $invoice['description']   = $request->description??' ';
@@ -87,7 +89,6 @@ class InvoiceController extends Controller
                         $customer = Customer::whereId($request->customer_id)->first();
 
                         $invoice = Invoice::create($invoice);
-                        // dd($invoice);
                         if($request->category_id !=null){
                             for ($i=0; $i < count($request->category_id) ; $i++) {
                                 $invoice_details['invoice_id']    = $invoice->id;
@@ -321,7 +322,7 @@ class InvoiceController extends Controller
             } catch (\Exception $ex) {
                 dd($ex->getMessage(), $ex->getLine());
             }
-            return redirect()->route('invoices.invoice.due')->with('success','Invoice Successfully Updated');
+            return redirect()->to('invoices/view')->with('success','Invoice Successfully Updated');
         }
     }
 

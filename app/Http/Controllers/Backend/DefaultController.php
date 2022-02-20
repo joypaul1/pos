@@ -57,8 +57,6 @@ class DefaultController extends Controller
 
     public function getProductStock(Request $request){
         $product_id = $request->product_id;
-        // $qty = Product::where('id',$product_id)->first();
-        // $stock = $qty->quantity;
         $buying_qty = PurchaseDetail::where('product_id', $product_id)->where('status','1')->sum('buying_qty');
         $buying_free_qty = PurchaseDetail::where('product_id',$product_id)->where('status','1')->sum('free_quantity');
         $total_in_qty = $buying_qty+$buying_free_qty;

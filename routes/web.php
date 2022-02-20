@@ -139,6 +139,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/update-reject', 'Backend\Admin\InvoiceController@updateReject')->name('invoices.invoice.update-reject');
         Route::post('/delete', 'Backend\Admin\InvoiceController@destroy')->name('invoices.invoice.destroy');
         Route::get('/pdf/{id}', 'Backend\Admin\InvoiceController@invoicePdf')->name('invoices.invoice.pdf');
+        Route::get('/bank/{id}', 'Backend\Admin\InvoiceController@bankpdf')->name('invoices.invoice.bankpdf');
 
         ///amar add kora
 

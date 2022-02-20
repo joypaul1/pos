@@ -82,7 +82,7 @@
                                             @if($value->status=='2')
                                             <a class="btn btn-sm btn-info" title="Approve" href="{{route('invoices.invoice.approve-get',$value->id)}}"><i class="fa fa-check-circle"></i></a>
                                             @endif
-                                            
+
 
                                             <a target="_blank" class="btn btn-sm btn-success" title="others print" href="{{route('invoices.invoice.othersPdf',$value->id)}}"> All <i class="fa fa-print"></i></a>
 
@@ -90,14 +90,7 @@
                                              <a target="_blank" class="btn btn-sm btn-success" title="others print 1" href="{{route('invoices.invoice.pdfa',$value->id)}}"> S <i class="fa fa-print"></i></a>
 
                                              <a target="_blank" class="btn btn-sm btn-success" title="Print" href="{{route('invoices.invoice.pdf',$value->id)}}"> P <i class="fa fa-print"></i></a>
-
-<!-- 
-                                             <a target="_blank" class="btn btn-sm btn-success" title="others print 2" href="{{route('products.product.pdf',$value->id)}}"><i class="fa fa-print"></i></a> -->
-
-
-                                             
-
-
+                                             <a target="_blank" class="btn btn-sm btn-info" title="Bank Print" href="{{route('invoices.invoice.bankpdf',$value->id)}}"> Bank <i class="fa fa-print"></i></a>
 
 
 

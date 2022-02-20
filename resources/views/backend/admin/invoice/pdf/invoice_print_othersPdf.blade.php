@@ -407,7 +407,7 @@
                     ">
 
                                     <h4>
-                                        <span style="width: 40%; display:inline-block"> 08. Size Of type </span>
+                                        <span style="width: 40%; display:inline-block"> 08. Size Of Tyre </span>
                                         <span style="width: 40%">
                                             : {{ optional(optional($invoice->invoice_detail)->product)->size??' ' }}
                                         </span>
@@ -521,8 +521,8 @@
                                     <h4>
                                         <span style="width: 40%; display:inline-block"> 15. Unit Price </span>
                                         <span style="width: 40%">
-                                            : {{ optional(optional($invoice->invoice_detail)->product)->unit_price??' '
-                                            }}
+                                            : {{ number_format(optional(optional($invoice->invoice_detail)->product)->unit_price, 2)??' '
+                                            }} TK
                                         </span>
                                     </h4>
                                 </td>
@@ -786,7 +786,7 @@
                                 ">
 
                                  <h4>
-                                    <span style="width: 40%; display:inline-block"> 10. Size Of type </span>
+                                    <span style="width: 40%; display:inline-block"> 10. Size Of Tyre </span>
                                     <span style="width: 40%">
                                         : {{ optional(optional($invoice->invoice_detail)->product)->size??' ' }}
                                     </span>
@@ -830,29 +830,6 @@
         <div></div>
     </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <div id="invoice">
 

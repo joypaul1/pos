@@ -172,6 +172,7 @@
         }
 
         body {
+            /* content:url("http://127.0.0.1:8000/motor.png"); */
             /* -webkit-print-color-adjust: exact !important; Chrome, Safari */
             /* color-adjust: exact !important;  Firefox */
             /* display: inline; */
@@ -183,17 +184,18 @@
             opacity: 0.9; */
             -webkit-print-color-adjust: exact !important;
             color-adjust: exact !important;
-            background-image: url("http://127.0.0.1:8000/motor.png") ;
-            background-repeat: no-repeat;
-            background-position: 50% 50%;
+            /* background-image: url("{{ asset('motor.png') }}") ; */
+            /* background-repeat: no-repeat; */
+            background:url("{{ asset('motor.png') }}") no-repeat;
+            /* background-position: 50% 50%; */
             /* border: 0;
             margin-bottom: 20%;
             opacity: 0.9; */
             /* background-image: linear-gradient(rgba(0, 0, 180, 0.5), rgba(70, 140, 220, 0.5)) !important; */
-            background-size: contain;
+            /* background-size: contain;
             justify-content: center;
-            print-color-adjust: exact;
-            z-index: 9999999999900;
+            print-color-adjust: exact; */
+            /* z-index: 9999999999900; */
 
         }
 
@@ -220,7 +222,7 @@
         }
     }
 </style>
-
+{{-- @dd(3242) --}}
 <body >
     <div id="invoice">
         <div class="toolbar hidden-print">

@@ -56,7 +56,7 @@
 										</td>
 										<td> # {{$value->invoice_no}}</td>
 										<td>{{date('d-m-Y',strtotime($value->date))}}</td>
-										<td>T.A. = {{round($value->total_amount, 2)}} TK
+										<td>T.A. = {{round($value->grand_total, 2)}} TK
                                             <br> P. A = {{round($value->paid_amount, 2)}} TK
                                             <br> D. A = {{round($value->due_amount, 2)}} TK
                                         </td>

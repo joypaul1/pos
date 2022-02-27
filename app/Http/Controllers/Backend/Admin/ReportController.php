@@ -39,7 +39,7 @@ class ReportController extends Controller
         $start_date = date('Y-m-d',strtotime($request->start_date));
         $end_date   = date('Y-m-d',strtotime($request->end_date));
         $sales      = Invoice::whereBetween('date',[$start_date, $end_date])->sum('grand_total');
-        $discount      = Invoice::whereBetween('date',[$start_date, $end_date])->sum('discount_amount');
+        $discount    = Invoice::whereBetween('date',[$start_date, $end_date])->sum('discount_amount');
         $purchase   = PurchasePaymentDetail::whereBetween('date',[$start_date, $end_date])->sum('current_paid_amount');
         $expanse    = Expanse::whereBetween('date',[$start_date, $end_date])->sum('amount');
         $cost       = $purchase + $expanse + $discount;

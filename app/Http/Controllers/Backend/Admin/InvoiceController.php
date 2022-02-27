@@ -269,7 +269,7 @@ class InvoiceController extends Controller
                     $payment['paid_status']     = $request->paid_status;
                     $payment['payment_method']  = $request->payment_method;
                     $payment['date']            = date('Y-m-d');
-
+                    // dd($payment);
                     if($request->paid_status=='full_paid'){
 
                     $invoice->update([
@@ -287,6 +287,7 @@ class InvoiceController extends Controller
                         ]);
 
                     }elseif($request->paid_status=='partial_paid'){
+                        // dd( $customer);
                         $payment['paid_amount'] = $request->paid_amount??0;
                         $customer->update([
                             'total_amount'  =>  $customer->total_amount+$request->interestamount,
@@ -298,8 +299,10 @@ class InvoiceController extends Controller
                             'intertest_amount'  => $request->interestamount+$invoice->interest_amount,
                             'paid_amount'       => $invoice->paid_amount+$request->paid_amount??0,
                             'grand_total'       => $invoice->grand_total+$request->interestamount,
-                            'discount_amount'   => $invoice->discount_amount + $request->dis_cls
+                            'discount_amount'   => $invoice->discount_amount + $request->dis_cls,
+                            'installment_discount_amount'   => $invoice->installment_discount_amount + $request->dis_cls
                         ]);
+                        // dd($invoice);
 
                     }
 

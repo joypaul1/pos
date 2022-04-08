@@ -302,10 +302,8 @@ class InvoiceController extends Controller
                             'discount_amount'   => $invoice->discount_amount + $request->dis_cls,
                             'installment_discount_amount'   => $invoice->installment_discount_amount + $request->dis_cls
                         ]);
-                        // dd($invoice);
 
                     }
-
 
                     $invoicePayment = InvoicePayment::create($payment);
 

@@ -17,7 +17,6 @@ class MyController extends Controller
     */
     public function importExportView()
     {
-        // return DB::getSchemaBuilder()->getColumnListing('products');
        return view('backend.admin.product.import');
     }
 

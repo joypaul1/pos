@@ -215,15 +215,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
-// Route::any('Schema', function () {
 
-//     $dropTable = ['invoice_repayments', 'invoice_payments', 'invoice_payment_due_logs', 'invoice_payment_details', 'invoice_installments',  'invoice_details', 'invoices'];
-
-//     foreach($dropTable as $key=>$table){
-
-//         Illuminate\Support\Facades\Schema::dropIfExists($table);
-//     }
-// });
 Route::get('export', 'MyController@export')->name('export');
 Route::get('importExportView', 'MyController@importExportView')->name('importExportView');
 Route::post('import', 'MyController@import')->name('import');

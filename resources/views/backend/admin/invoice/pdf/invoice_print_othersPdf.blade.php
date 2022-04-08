@@ -239,20 +239,20 @@
             <div style="min-width: 600px">
                 <header>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-3">
                             <a target="_blank" href="https://lobianijs.com">
                                 <img src="{{(!empty($owner->image)) ? url('public/backend/user_images/'.$owner->image) : url('public/backend/images/noimage.png')}}"
                                     style="height: 120px;width: 150px;">
                             </a>
                         </div>
-                        <div class="col-md-6 company-details text-center">
+                        <div class="col-6 company-details text-center">
                             <h2 class="name"><strong style="color: green; font-size: 40px; ">নোভা বাজাজ</strong></h2>
                             <h2 class="name"><strong style="color: blue">{{$owner->name}}</strong></h2>
                             <h2 class="name"><strong style="color: black"> ডিলার: উত্তরা মোটরস্ লিমিটেড </strong></h2>
                             <h3 class="name"><strong style="color: red">{{$owner->address}}</strong></h3>
                             <h4 class="name">Mobile: <strong>{{$owner->mobile}}</strong></h4>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-3">
                         </div>
                     </div>
                 </header>
@@ -532,14 +532,14 @@
                 </main>
                 <div class="row">
                     <p>
-                    <h4 class="col-md-12 text-right text-bold">For Nova Bajaj</h4>
+                    <h4 class="col-12 text-right text-bold">For Nova Bajaj</h4>
                     </p>
-                    <div class="col-md-6 text-left text-bold">
+                    <div class="col-6 text-left text-bold">
                         <span style="border-top: 1px dotted red">
                             <h4> Owner's Signature </h4>
                         </span>
                     </div>
-                    <div class="col-md-6 text-right text-bold">
+                    <div class="col-6 text-right text-bold">
                         <span style="border-top: 1px dotted red">
                             <h4> Sales Department </h4>
                         </span>
@@ -565,13 +565,13 @@
         <div style="min-width: 600px">
             <header>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-3">
                         <a target="_blank" href="https://lobianijs.com">
                             <img src="{{(!empty($owner->image)) ? url('public/backend/user_images/'.$owner->image) : url('public/backend/images/noimage.png')}}"
                                 style="height: 120px;width: 150px;">
                         </a>
                     </div>
-                    <div class="col-md-6 company-details text-center">
+                    <div class="col-6 company-details text-center">
                         <h4 class="name">Delivery Chalan </h4>
                         <h2 class="name"><strong style="color: green; font-size: 40px; ">নোভা বাজাজ</strong></h2>
                         <h2 class="name"><strong style="color: blue">{{$owner->name}}</strong></h2>
@@ -579,7 +579,7 @@
                         <h3 class="name"><strong style="color: red">{{$owner->address}}</strong></h3>
                         <h4 class="name">Mobile: <strong>{{$owner->mobile}}</strong></h4>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-3">
 
                     </div>
                 </div>
@@ -598,7 +598,7 @@
                             <h4> Date: {{date('d-m-Y', strtotime($invoice->date)) }} </h4>
                         </div>
                     </div>
-                    <!-- <div class="col-md-12"> -->
+                    <!-- <div class="col-12"> -->
 
                     <!-- </div> -->
                 </div>
@@ -797,7 +797,7 @@
                 </table>
                 <br>
 
-                <div class="col-md-12" style="border:2px solid #3989c6; height: 200px; width: 120%; ">
+                <div class="col-12" style="border:2px solid #3989c6; height: 200px; width: 120%; ">
                     <h4> Remarks: </h4>
                 </div>
                 <br>
@@ -811,13 +811,13 @@
             <div class="row">
                 <br> <br> <br> <br> <br> <br>
 
-                <h4 class="col-md-12 text-right text-bold">For Nova Bajaj</h4>
-                <div class="col-md-6 text-left text-bold">
+                <h4 class="col-12 text-right text-bold">For Nova Bajaj</h4>
+                <div class="col-6 text-left text-bold">
                     <span style="border-top: 1px dotted red">
                         <h4> Owner's Signature </h4>
                     </span>
                 </div>
-                <div class="col-md-6 text-right text-bold">
+                <div class="col-6 text-right text-bold">
                     <span style="border-top: 1px dotted red">
                         <h4> Sales Department </h4>
                     </span>
@@ -836,13 +836,13 @@
         <div class="invoice overflow-auto">
             <div style="min-width: 600px">
                 <div class="row">
-                    <div class="col-md-12 company-details text-center">
+                    <div class="col-12 company-details text-center">
                         <h4 class="name">
                             <strong style="font-size: 25px; ">FORM OF APPLICATION FOR THE REGISTRATION OF MOTOR
                                 VEHICLE</strong>
                         </h4>
                         <h5 class="name">
-                            <strong class="col-md-12" style="font-size: 25px; "> <u>To be filled in by the office</u>
+                            <strong class="col-12" style="font-size: 25px; "> <u>To be filled in by the office</u>
                             </strong>
                         </h5>
                         <h4 class="name"><strong>Section-I</strong></h4>
@@ -850,7 +850,7 @@
                     </div>
 
 
-                    <div class="col-md-4" style="text-align: left; font-size: 17px">
+                    <div class="col-4" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light"> <strong> Regn No: </strong> </div>
                         <div class="text-gray-light"> <strong> Issue No: </strong> </div>
                         <div class="text-gray-light"> <strong> Diary No: </strong> </div>
@@ -861,7 +861,7 @@
                         <div class="text-gray-light"> <strong> Remarks (if any) </strong> </div>
                     </div>
 
-                    <div class="col-md-4" style="text-align: left; font-size: 17px">
+                    <div class="col-4" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light"> <strong> Date: </strong> </div>
                         <div class="text-gray-light"> <strong> Date: </strong> </div>
                         <div class="text-gray-light"> <strong> Date: </strong> </div>
@@ -870,7 +870,7 @@
                         <div class="text-gray-light"> <strong> Refusal Code: </strong> </div>
                     </div>
 
-                    <div class="col-md-4" style="text-align: left; font-size: 17px">
+                    <div class="col-4" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light"> <strong> Prev. Regn. No. (If any) </strong> </div>
                         <div class="text-gray-light"> <strong> Issue by: </strong> </div>
                         <div class="text-gray-light"> <strong> Received by: </strong> </div>
@@ -880,7 +880,7 @@
                         <div class="text-gray-light"> <strong> Index No. </strong> </div>
                     </div>
 
-                    <center class="text-bold text-center col-md-12">
+                    <center class="text-bold text-center col-12">
                         <h5>
                             <strong> <u> To be filled in by the Owner </u> </strong>
                         </h5>
@@ -888,7 +888,7 @@
                         <h5><strong> (Owner information) </strong></h5>
                     </center>
 
-                    <div class="col-md-6" style="text-align: left; font-size: 17px">
+                    <div class="col-6" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light"> <strong> 01. Name of owner: {{
                                 optional($invoice->customer)->name??' ' }} </strong> </div>
                         <div class="text-gray-light"> <strong> 03. Father/Husband: {{
@@ -899,7 +899,7 @@
                         <div class="text-gray-light"> <strong> 13. Hire: NO </strong> </div>
                     </div>
 
-                    <div class="col-md-6" style="text-align: left; font-size: 17px">
+                    <div class="col-6" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light"> <strong> 02. Date of birth : </strong> </div>
                         <div class="text-gray-light"> <strong> 04. Nationality : BANGLADESHI </strong> </div>
                         <div class="text-gray-light"> <strong> 06. Guardian’s name : NO </strong> </div>
@@ -908,7 +908,7 @@
                         <div class="text-gray-light"> <strong> 14. Hire purchase: NO </strong> </div>
                     </div>
 
-                    <center class="text-bold text-center col-md-12">
+                    <center class="text-bold text-center col-12">
                         <h5>
                             <strong> <u> To be filled in by the Owner </u> </strong>
                         </h5>
@@ -916,7 +916,7 @@
                         <h5><strong> (Owner information) </strong></h5>
                     </center>
 
-                    <div class="col-md-6" style="text-align: left; font-size: 17px">
+                    <div class="col-6" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light"> <strong> 14. Vehicle or trailer: VEHICLE </strong> </div>
                         <div class="text-gray-light">
                             <strong> 14a. Class of vehicle: MOTORCYCLE </strong>
@@ -941,7 +941,7 @@
                                 optional(optional($invoice->invoice_detail)->product)->laden_weight }} </strong> </div>
                     </div>
 
-                    <div class="col-md-6" style="text-align: left; font-size: 17px">
+                    <div class="col-6" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light">
                             <strong> 15. Prev. Regn. No. (If any): NEW </strong>
                         </div>
@@ -972,7 +972,7 @@
                     </div>
                     <br>
 
-                    <center class="text-bold text-center col-md-12">
+                    <center class="text-bold text-center col-12">
                         <h4 class="name"><strong>Section IV</strong></h4>
                         <h5>
                             <strong>
@@ -981,7 +981,7 @@
                         </h5>
                     </center>
 
-                    <div class="col-md-6" style="text-align: left; font-size: 17px">
+                    <div class="col-6" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light"> <strong> 32. No. of types : 02 TWO </strong> </div>
                         <div class="text-gray-light"> <strong> 34. No. of axle &nbsp : 02 TWO </strong> </div>
                         <br>
@@ -989,7 +989,7 @@
                         <br>
                     </div>
 
-                    <div class="col-md-6" style="text-align: left; font-size: 17px">
+                    <div class="col-6" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light"> <strong> 33. Tyres size: &nbsp; R: </strong> </div>
                         <div class="text-gray-light"> <strong> 35. Maximum axle weight (kg): </strong> </div>
                         <div class="text-gray-light">
@@ -1004,7 +1004,7 @@
 
                     </div>
 
-                    <div class="col-md-12" style="text-align: left; font-size: 17px">
+                    <div class="col-12" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light">
                             <strong> 36. Dimensions (mm): </strong> <br>
 
@@ -1033,7 +1033,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12 pagebreak" style="text-align: justify; font-size: 17px;">
+                    <div class="col-12 pagebreak" style="text-align: justify; font-size: 17px;">
                         <strong> 38. A copy of the drawing showing the vehicle dimension
                             specifications of the body and the seating arrangements approved
                             by ....................................................on.
@@ -1046,12 +1046,12 @@
         <div class="invoice overflow-auto" style="margin-top: 300px;">
             <div style="min-width: 600px">
                 <div class="row">
-                    <div class="col-md-12 company-details text-center">
+                    <div class="col-12 company-details text-center">
                         <h4 class="name"><strong>Section-V</strong></h4>
                         <br>
                     </div>
 
-                    <div class="col-md-8" style="text-align: left; font-size: 17px">
+                    <div class="col-8" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light">
                             <strong> 39. Hire purchase/hypothecation information: </strong>
                         </div>
@@ -1063,13 +1063,13 @@
                         <div class="text-gray-light">&nbsp; <strong> c) Address: </strong> </div>
                     </div>
 
-                    <div class="col-md-4" style="text-align: left; font-size: 17px">
+                    <div class="col-4" style="text-align: left; font-size: 17px">
                         <br>
                         <br>
                         <div class="text-gray-light"> <strong> b) Date: </strong> </div>
                     </div>
 
-                    <div class="col-md-8" style="text-align: left; font-size: 17px">
+                    <div class="col-8" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light"> <strong> 40. Insurance information: </strong> </div>
                         <div class="text-gray-light">
                             <strong> a) Policy no: </strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -1081,33 +1081,33 @@
                         <div class="text-gray-light"> <strong> d) Date of expiry: </strong> </div>
                     </div>
 
-                    <div class="col-md-4" style="text-align: left; font-size: 17px">
+                    <div class="col-4" style="text-align: left; font-size: 17px">
                         <br>
                         <div class="text-gray-light">
                             <strong> c) Insurer’s name &amp; address: </strong>
                         </div>
                     </div>
 
-                    <div class="col-md-8" style="text-align: left; font-size: 17px">
+                    <div class="col-8" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light"> <strong> 41. Joint owner information: </strong> </div>
                         <div class="text-gray-light"> <strong> a) Name: </strong></div>
                         <div class="text-gray-light">&nbsp; <strong> Father/Husband: </strong> </div>
                     </div>
 
-                    <div class="col-md-4" style="text-align: left; font-size: 17px">
+                    <div class="col-4" style="text-align: left; font-size: 17px">
                         <br>
                         <div class="text-gray-light"> <strong> b) Name:</strong> </div>
                         <div class="text-gray-light"> <strong> &nbsp; Father/Husband: </strong> </div>
                     </div>
 
-                    <div class="col-md-12 company-details text-center">
+                    <div class="col-12 company-details text-center">
                         <h4 class="name"><strong>Section-VI </strong></h4>
                         <h5 class="name">
                             <strong> (Declaration, Certificates and documents) </strong>
                         </h5>
                     </div>
 
-                    <div class="col-md-12" style="text-align: justify; font-size: 17px">
+                    <div class="col-12" style="text-align: justify; font-size: 17px">
                         <div class="text-gray-light"> <strong> 42. Declaration by owner: </strong> </div>
                         <div class="text-gray-light">
                             <strong>
@@ -1126,8 +1126,8 @@
                         </div>
                     </div>
 
-                    <div class="col-md-8" style="text-align: justify; font-size: 17px"></div>
-                    <div class="col-md-4" style="
+                    <div class="col-8" style="text-align: justify; font-size: 17px"></div>
+                    <div class="col-4" style="
                 text-align: center;
                 font-size: 17px;
                 margin-top: 40px;
@@ -1137,7 +1137,7 @@
                         <div class="text-gray-light"> <strong> Seal </strong> </div>
                     </div>
 
-                    <div class="col-md-12" style="text-align: justify; font-size: 17px">
+                    <div class="col-12" style="text-align: justify; font-size: 17px">
                         <div class="text-gray-light"> <strong> Date: </strong> </div>
                         <div class="text-gray-light"> <strong> Encl: List of documents </strong> </div>
                         <div class="text-gray-light">
@@ -1153,8 +1153,8 @@
                         </div>
                     </div>
 
-                    <div class="col-md-8" style="text-align: justify; font-size: 17px"></div>
-                    <div class="col-md-4" style="
+                    <div class="col-8" style="text-align: justify; font-size: 17px"></div>
+                    <div class="col-4" style="
                 text-align: center;
                 font-size: 17px;
                 margin-top: 40px;
@@ -1164,7 +1164,7 @@
                         <div class="text-gray-light"> <strong> Seal </strong> </div>
                     </div>
 
-                    <div class="col-md-12" style="text-align: justify; font-size: 17px">
+                    <div class="col-12" style="text-align: justify; font-size: 17px">
                         <div class="text-gray-light"> <strong> Date: </strong> </div>
                         <div class="text-gray-light"> <strong> Encl: List of documents </strong> </div>
                         <div class="text-gray-light">
@@ -1176,7 +1176,7 @@
                                 No
 
 
-                                <span class="col-md-1" style="border-bottom: 2px dotted; width: 100%"> {{
+                                <span class="col-1" style="border-bottom: 2px dotted; width: 100%"> {{
                                     optional($invoice->invoice_detail)->chasiss_no??' ' }} </span>
 
                             </strong>
@@ -1184,7 +1184,7 @@
                             <strong>
                                 Engine
                                 No
-                            </strong> <span class="col-md-1" style="border-bottom: 2px dotted; width: 100%">
+                            </strong> <span class="col-1" style="border-bottom: 2px dotted; width: 100%">
 
 
 
@@ -1200,13 +1200,13 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4" style="text-align: left; font-size: 17px">
+                    <div class="col-4" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light"> <strong> Date: </strong> </div>
                         <div class="text-gray-light"> <strong> Encl: List of documents </strong> </div>
                     </div>
 
-                    <div class="col-md-4" style="text-align: justify; font-size: 17px"></div>
-                    <div class="col-md-4" style="
+                    <div class="col-4" style="text-align: justify; font-size: 17px"></div>
+                    <div class="col-4" style="
                 text-align: center;
                 font-size: 17px;
                 margin-top: 40px;
@@ -1218,15 +1218,15 @@
                         <div class="text-gray-light"> <strong> Official Seal </strong> </div>
                     </div>
 
-                    <div class="col-md-4" style="text-align: left; font-size: 17px">
+                    <div class="col-4" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light"> <strong> 45. Registration Status: </strong> </div>
                         <div class="text-gray-light">
                             &nbsp; <strong> Registration allowed/not allowed </strong>
                         </div>
                     </div>
 
-                    <div class="col-md-4" style="text-align: justify; font-size: 17px"></div>
-                    <div class="col-md-4" style="
+                    <div class="col-4" style="text-align: justify; font-size: 17px"></div>
+                    <div class="col-4" style="
                 text-align: center;
                 font-size: 17px;
                 margin-top: 40px;
@@ -1238,7 +1238,7 @@
                         <div class="text-gray-light"> <strong> Seal </strong> </div>
                     </div>
 
-                    <div class="col-md-12" style="text-align: justify; font-size: 17px">
+                    <div class="col-12" style="text-align: justify; font-size: 17px">
                         <div class="text-gray-light"> <strong> 46. Fees and Tax Accounts: </strong> </div>
                         <div class="text-gray-light">
                             &nbsp; <strong> Necessary fees and taxes amounting to
@@ -1247,7 +1247,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4" style="
+                    <div class="col-4" style="
                 text-align: left;
                 font-size: 17px;
                 text-align: center;
@@ -1263,13 +1263,13 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4" style="
+                    <div class="col-4" style="
                 text-align: justify;
                 font-size: 17px;
                 text-align: center;
                 font-size: 17px;
               "></div>
-                    <div class="col-md-4" style="
+                    <div class="col-4" style="
                 text-align: center;
                 font-size: 17px;
                 text-align: center;
@@ -1280,7 +1280,7 @@
                         <div class="text-gray-light"> <strong> Signature of dealing assistant </strong> </div>
                     </div>
 
-                    <div class="col-md-12" style="text-align: center; font-size: 17px">
+                    <div class="col-12" style="text-align: center; font-size: 17px">
                         <div class="text-gray-light">
                             <strong> Counter signature by the registering authority. </strong>
                         </div>
@@ -1294,15 +1294,15 @@
             <div style="min-width: 600px">
                 <div class="row">
 
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8 company-details text-center">
+                    <div class="col-2"></div>
+                    <div class="col-8 company-details text-center">
                         <h2 class="name"><strong> OWNER’S PARTICULARS/SPECIMEN SIGNATURE </strong></h2>
                     </div>
-                    <div class="col-md-2"
+                    <div class="col-2"
                         style="border:2px solid #3989c6; height: 200px; width: 200px; text-align: center; font-size: 18px;  ">
                         <p>Stamp Size Color Pic</p>
                     </div>
-                    <div class="col-md-12" style="font-size: 30px;">
+                    <div class="col-12" style="font-size: 30px;">
                         <div class="text-gray-light text-left">01. NAME &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; : {{ optional($invoice->customer)->name??' ' }} </div>
                     </div>
@@ -1310,14 +1310,14 @@
                     <br>
                     <br>
 
-                    <div class="col-md-12" style="font-size: 30px;">
+                    <div class="col-12" style="font-size: 30px;">
                         <div class="text-gray-light text-left">02. FATHER/ HUSBAND : {{
                             optional($invoice->customer)->father_name??' ' }} </div>
                     </div>
                     <br>
                     <br>
                     <br>
-                    <div class="col-md-12" style="font-size: 30px;">
+                    <div class="col-12" style="font-size: 30px;">
                         <div class="text-gray-light text-left">03. Mobile &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: {{
                             optional($invoice->customer)->mobile??' ' }} </div>
@@ -1326,7 +1326,7 @@
                     <br>
                     <br>
 
-                    <div class="col-md-12" style="font-size: 30px;">
+                    <div class="col-12" style="font-size: 30px;">
                         <div class="text-gray-light text-left">04. ADDRESS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; : {{ optional($invoice->customer)->address??' ' }} </div>
                     </div>
@@ -1334,14 +1334,14 @@
                     <br>
                     <br>
 
-                    <div class="col-md-12" style="font-size: 30px;">
+                    <div class="col-12" style="font-size: 30px;">
                         <div class="text-gray-light text-left">05. SEX &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : MALE &nbsp;</div>
                     </div>
                     <br>
                     <br>
                     <br>
-                    <div class="col-md-12" style="font-size: 30px;">
+                    <div class="col-12" style="font-size: 30px;">
                         <div class="text-gray-light text-left">06. NATIONALITY &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; :
                             BANGLADESHI &nbsp;</div>
                     </div>
@@ -1349,7 +1349,7 @@
                     <br>
                     <br>
 
-                    <div class="col-md-12" style="font-size: 30px;">
+                    <div class="col-12" style="font-size: 30px;">
                         <div class="text-gray-light text-left">07. DATE OF BIRTH &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp;
                         </div>
 
@@ -1358,14 +1358,14 @@
                     <br>
                     <br>
 
-                    <div class="col-md-12" style="font-size: 30px;">
+                    <div class="col-12" style="font-size: 30px;">
                         <div class="text-gray-light text-left">08. GUARDIAN’S NAME : NO &nbsp;</div>
                     </div>
                     <br>
                     <br>
                     <br>
 
-                    <div class="col-md-12" style="font-size: 30px;">
+                    <div class="col-12" style="font-size: 30px;">
                         <div class="text-gray-light text-left">09. CHASSIS NO &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             : {{
                             optional($invoice->invoice_detail)->chasiss_no??' ' }} &nbsp; </div>
@@ -1373,7 +1373,7 @@
                     <br>
                     <br>
                     <br>
-                    <div class="col-md-12" style="font-size: 30px;">
+                    <div class="col-12" style="font-size: 30px;">
                         <div class="text-gray-light text-left">10. ENGINE NO &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; : {{
                             optional($invoice->invoice_detail)->engine_no??' ' }}
@@ -1383,7 +1383,7 @@
                     <br>
                     <br>
 
-                    <div class="col-md-12" style="font-size: 30px;">
+                    <div class="col-12" style="font-size: 30px;">
                         <div class="text-gray-light text-left">11. YEAR OF MFG &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : {{
                             optional($invoice->invoice_detail)->year_of_manufacture??' ' }} &nbsp;
                         </div>
@@ -1392,14 +1392,14 @@
                     <br>
                     <br>
 
-                    <div class="col-md-12" style="font-size: 30px;">
+                    <div class="col-12" style="font-size: 30px;">
                         <div class="text-gray-light text-left">12. PREV. REGN. NO. (IF ANY) : NEW &nbsp;</div>
                     </div>
                     <br>
                     <br>
                     <br>
 
-                    <div class="col-md-12" style="font-size: 30px;">
+                    <div class="col-12" style="font-size: 30px;">
                         <div class="text-gray-light text-left">13. P.O./BANK &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; : &nbsp;</div>
                     </div>
@@ -1410,7 +1410,7 @@
                     <br>
                     <br>
 
-                    <div class="col-md-12" style="font-size: 30px;">
+                    <div class="col-12" style="font-size: 30px;">
                         <div class="text-gray-light text-left">
                             <h3> &nbsp; &nbsp; &nbsp; <u> SPECIMEN SIGNATURE </u> </h3>
                         </div>
@@ -1420,18 +1420,18 @@
                     <br>
 
 
-                    <div class="col-md-1"> </div>
+                    <div class="col-1"> </div>
                     <br>
                     <br>
 
                     <small style="font-size: 30px;"> 1. </small> &nbsp;
-                    <div class="col-md-4"
+                    <div class="col-4"
                         style="border:2px solid #3989c6; height: 110px; width: 50px; text-align: center; "></div>
 
-                    <div class="col-md-2"> </div>
+                    <div class="col-2"> </div>
 
                     <small style="font-size: 30px; "> 2. </small> &nbsp;
-                    <div class="col-md-4"
+                    <div class="col-4"
                         style="border:2px solid #3989c6; height: 110px; width: 50px; text-align: center;  ">
                     </div>
 
@@ -1443,20 +1443,20 @@
 
 
 
-                    <div class="col-md-1"> </div>
+                    <div class="col-1"> </div>
 
 
                     <small style="font-size: 30px; "> 3. </small> &nbsp;
-                    <div class="col-md-4"
+                    <div class="col-4"
                         style="border:2px solid #3989c6; height: 110px; width: 50px; text-align: center; "></div>
 
-                    <div class="col-md-2"> </div>
+                    <div class="col-2"> </div>
 
                     <small style="font-size: 30px;"> 4. </small> &nbsp;
-                    <div class="col-md-4"
+                    <div class="col-4"
                         style="border:2px solid #3989c6; height: 110px; width: 50px; text-align: center;  ">
                     </div>
-                    <div class="col-md-1"> </div>
+                    <div class="col-1"> </div>
 
 
 

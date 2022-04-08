@@ -29,7 +29,6 @@ class ProductController extends Controller
         $data                       =  $request->all();
         $data['model_Of_vehicle']   =  $request->model_Of_vehicle ?? $request->name;
         $data['quantity'] = '0';
-
         Product::create($data);
 
         return redirect()->route('products.product.view')->with('success','Well done! successfully inserted');
@@ -52,15 +51,9 @@ class ProductController extends Controller
         $data['model_Of_vehicle']   =  $request->model_Of_vehicle ?? $request->name;
         $data['quantity'] = '0';
         $data['created_by'] = auth()->id();
+        // dd($data);
         Product::find($id)->update($data);
-        // $data = Product::find($id);
-        // $data->supplier_id = $request->supplier_id;
-        // $data->category_id = $request->category_id;
-        // $data->unit_id = $request->unit_id;
-        // $data->name = $request->name;
-        // $data->sheif_no = $request->sheif_no;
-        // $data->modified_by = Auth::user()->id;
-        // $data->save();
+
         return redirect()->route('products.product.view')->with('success','Well done! successfully update');
     }
 

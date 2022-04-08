@@ -17,7 +17,6 @@ class UsersImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        // dd($row);
         return new Product([
             'name'     => $row['name'] ,
             'pid'     => $row['parts_id']??null,

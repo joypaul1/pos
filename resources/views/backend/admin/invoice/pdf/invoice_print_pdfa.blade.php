@@ -1,446 +1,499 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+			rel="stylesheet"
+		/>
 
-<head>
-    <title>{{ optional($invoice->customer)->name.'-'.date('m-d-Y') ?? date('m-d-Y') }}</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<style>
+			* {
+				-webkit-print-color-adjust: exact !important; /* Chrome, Safari, Edge */
+				color-adjust: exact !important; /*Firefox*/
+				box-sizing: border-box !important;
+				border-color: #478fcc !important;
+			}
+			body {
+				margin-top: 20px;
+				color: #484b51;
+			}
+			.overlap {
+				position: absolute;
+				top: 0;
+				height: 100%;
+				width: 100%;
+				opacity: 0.1;
+				z-index: -1;
+                background-size:40% auto;
+                background-repeat:no-repeat;
+                background-position:center center;
+			}
+			.text-secondary-d1 {
+				color: #728299 !important;
+			}
+			.page-header {
+				margin: 0 0 1rem;
+				padding-bottom: 1rem;
+				padding-top: 0.5rem;
+				border-bottom: 1px dotted #e2e2e2;
+				display: -ms-flexbox;
+				display: flex;
+				-ms-flex-pack: justify;
+				justify-content: flex-end;
+				-ms-flex-align: center;
+				align-items: center;
+			}
+			.page-title {
+				padding: 0;
+				margin: 0;
+				font-size: 1.75rem;
+				font-weight: 300;
+			}
+			.brc-default-l1 {
+				border-color: #dce9f0 !important;
+			}
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-</head>
-<style>
-    #invoice {
-        padding: 30px;
-    }
+			.ml-n1,
+			.mx-n1 {
+				margin-left: -0.25rem !important;
+			}
+			.mr-n1,
+			.mx-n1 {
+				margin-right: -0.25rem !important;
+			}
+			.mb-4,
+			.my-4 {
+				margin-bottom: 1.5rem !important;
+			}
 
-    .invoice {
-        position: relative;
-        background-color: #fff;
-        min-height: 680px;
-        padding: 15px;
-    }
+			hr {
+				margin-top: 1rem;
+				margin-bottom: 1rem;
+				border: 0;
+				border-top: 1px solid rgba(0, 0, 0, 0.1);
+			}
+			.text-95 .border {
+				border-color: #3989c6 !important;
+			}
+			.text-grey-m2 {
+				color: #888a8d !important;
+			}
 
-    .invoice header {
-        padding: 10px 0;
-        margin-bottom: 2px;
-        border-bottom: 2px double #3989c6;
-    }
+			.text-success-m2 {
+				color: #86bd68 !important;
+			}
 
-    .invoice .company-details {
-        text-align: right;
-    }
+			.font-bolder,
+			.text-600 {
+				font-weight: 600 !important;
+			}
 
-    .invoice .company-details .name {
-        margin-top: 0;
-        margin-bottom: 0;
-    }
+			.text-110 {
+				font-size: 110% !important;
+			}
+			.text-blue {
+				color: #478fcc !important;
+			}
+			.pb-25,
+			.py-25 {
+				padding-bottom: 0.75rem !important;
+			}
 
-    .invoice .contacts {
-        margin-bottom: 20px;
-    }
+			.pt-25,
+			.py-25 {
+				padding-top: 0.75rem !important;
+			}
+			.bgc-default-tp1 {
+				background-color: green !important;
+			}
+			.bgc-default-l4,
+			.bgc-h-default-l4:hover {
+				background-color: #f3f8fa !important;
+			}
+			.page-header .page-tools {
+				-ms-flex-item-align: end;
+				align-self: flex-end;
+				z-index: 999;
+			}
 
-    .invoice .invoice-to {
-        text-align: left;
-    }
+			.btn-light {
+				color: #757984;
+				background-color: #f5f6f9;
+				border-color: #dddfe4;
+			}
+			.w-2 {
+				width: 1rem;
+			}
 
-    .invoice .invoice-to .to {
-        margin-top: 0;
-        margin-bottom: 0;
-    }
+			.text-120 {
+				font-size: 120% !important;
+			}
+			.text-primary-m1 {
+				color: #4087d4 !important;
+			}
 
-    .invoice .invoice-details {
-        text-align: right;
-    }
+			.text-danger-m1 {
+				color: #dd4949 !important;
+			}
+			.text-blue-m2 {
+				color: #68a3d5 !important;
+			}
+			.text-150 {
+				font-size: 150% !important;
+			}
+			.text-60 {
+				font-size: 60% !important;
+			}
+			.text-grey-m1 {
+				color: #7b7d81 !important;
+			}
+			.align-bottom {
+				vertical-align: bottom !important;
+			}
 
-    .invoice .invoice-details .invoice-id {
-        margin-top: 0;
-        color: #3989c6;
-    }
+			@media print {
+				@page {
+					size: A4 landscape;
+					transform: scale(0.90);
+				}
+				body{
+					transform: scale(0.90);
+                    height: 100vh;
+                    overflow: hidden;
 
-    .invoice main {
-        padding-bottom: 50px;
-    }
+				}
+				.page-header {
+					display: none;
+				}
+				.page-content {
+					padding: 0;
+					margin: 0;
+				}
+				* {
+					margin: 0;
+					padding: 0;
+				}
+				/* .break {
+					page-break-after: always !important;
+					page-break-inside: avoid !important;
+					page-break-before: always !important;
+				} */
+			}
+		</style>
 
-    .invoice main .thanks {
-        margin-top: -100px;
-        font-size: 2em;
-        margin-bottom: 50px;
-    }
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+			crossorigin="anonymous"
+		/>
 
-    .invoice main .notices {
-        padding-left: 6px;
-        border-left: 6px solid #3989c6;
-    }
+		<title>{{$owner->name}}</title>
+	</head>
+	<body>
+		<div class="page-content">
+			<div class="page-header text-blue-d2">
+				<div class="page-tools">
+					<div class="action-buttons">
+						<a
+							class="btn bg-white btn-light mx-1px text-95"
+							href="#"
+							data-title="Print"
+							id="printInvoice"
+						>
+							<i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
+							Print
+						</a>
+					</div>
+				</div>
+			</div>
 
-    .invoice main .notices .notice {
-        font-size: 1.2em;
-    }
-
-    .invoice table {
-        width: 100%;
-        border-collapse: collapse;
-        border-spacing: 0;
-        /* margin-bottom: 20px; */
-    }
-
-    .invoice table td,
-    .invoice table th {
-        padding: 10px;
-        /* background: #eee; */
-        border: 1px solid #3782bc;
-    }
-
-    .invoice table th {
-        white-space: nowrap;
-        /* font-weight: 400; */
-        font-size: 20px;
-    }
-
-    .invoice table td h3 {
-        margin: 0;
-        font-weight: 400;
-        color: #3989c6;
-        font-size: 1.2em;
-    }
-
-    .invoice table .qty,
-    .invoice table .total,
-    .invoice table .unit {
-        text-align: right;
-        font-size: 1.2em;
-    }
-
-
-
-    .invoice table tfoot td {
-        background: 0 0;
-        /* border-bottom: none; */
-        white-space: nowrap;
-        text-align: right;
-        /* padding: 10px 20px; */
-        font-size: 1.5em;
-        /* border-top: 1px solid #aaa; */
-    }
-
-    .invoice table tfoot tr:first-child td {
-        border-top: none;
-    }
-
-    .invoice table tfoot tr:last-child td {
-        /* color: #3989c6; */
-        /* font-size: 1.4em; */
-        /* border-top: 1px solid #3989c6; */
-    }
-
-    .invoice table tfoot tr td:first-child {
-        /* border: none; */
-    }
-
-    .invoice footer {
-        width: 100%;
-        text-align: center;
-        color: #777;
-        border-bottom: 1px solid #aaa;
-        /* padding: 8px 0; */
-    }
-
-    .bg-voilet {
-        background-color: #0e6a91;
-    }
-
-    .bd-dotted {
-        border-bottom: 2px dotted gray !important;
-    }
-
-    .table-header {
-        background: green;
-        color: white;
-    }
-
-    @media print {
-        @page {
-            size: A4 landscape;
-            margin: 0;
-        }
-
-        body {
-            -webkit-print-color-adjust: exact;
-        }
-
-        .invoice {
-            font-size: 11px !important;
-            overflow: hidden !important;
-        }
-
-        .bg-voilet {
-            background-color: #0e6a91 !important;
-            -webkit-print-color-adjust: exact;
-        }
-
-        .invoice footer {
-            position: absolute;
-            /* bottom: 10px; */
-            /* page-break-after: always; */
-        }
-
-        .invoice>div:last-child {
-            /* page-break-before: always; */
-        }
-
-        .hidden-print {
-            display: none !important;
-        }
-    }
-</style>
-
-<body>
-    <div id="invoice">
-        <div class="toolbar hidden-print">
-            <div class="text-right">
-                <button id="printInvoice" class="btn btn-info">
-                    <i class="fa fa-print"></i> Print
-                </button>
-            </div>
-            <hr />
-        </div>
-        <div class="invoice overflow-auto">
-
-
-            <div style="min-width: 600px">
-                <header>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <a target="_blank" href="https://lobianijs.com">
+			<div class="px-0 invoice">
+				<div class="row px-0 m-0">
+					<div class="col-12 col-lg-12">
+						<div class="row">
+							<div class="col-3">
+								{{-- <img src="./logo.png" width="100px" alt="" /> --}}
                                 <img src="{{(!empty($owner->image)) ? url('public/backend/user_images/'.$owner->image) : url('public/backend/images/noimage.png')}}"
-                                    style="height: 120px;width: 150px;">
-                            </a>
+                                style="height: 120px;width: 150px;">
+							</div>
+							<!-- /.col -->
+							<div class="col-6 text-center">
+								<p class="p-0 m-0">Sale Invoice</p>
+								<h4 class="p-0 m-0" style="color: green">নোভা বাজাজ</h4>
+								<h4 class="p-0 m-0" style="color: blue">{{$owner->name}}</</h4>
+								<h6 class="p-0 m-0" style="color: green">
+									Authorised Dealer: Uttara Motors Limited
+								</h6>
+								<h5 class="p-0 m-0" style="color: red">{{$owner->address}}</h5>
+								<p class="p-0 m-0">
+									Mobile: <strong>{{$owner->mobile}}</strong>,
+									<strong>{{$owner->email}}</strong>
+								</p>
+							</div>
+							<div
+								class="text-95 col-3 align-self-start d-sm-flex justify-content-end"
+							>
+								<hr class="d-sm-none" />
+								<div class="text-grey-m2 p-2" style="border: 1px solid #3989c6">
+									<div class="my-1">
+										<i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
+										<span class="text-600 text-90">Buyer's :</span> {{ optional($invoice->customer)->name??' ' }}
+									</div>
+
+									<div class="my-1">
+										<i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
+										<span class="text-600 text-90">S/O:</span> {{ optional($invoice->customer)->father_name??' ' }}
+									</div>
+
+									<div class="my-1">
+										<i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
+										<span class="text-600 text-90">Vill :</span>
+                                        {{ optional($invoice->customer)->village??' ' }}
+									</div>
+									<div class="my-1">
+										<i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
+										<span class="text-600 text-90">Post :</span>
+										{{ optional($invoice->customer)->post_office??' ' }}
+									</div>
+									<div class="my-1">
+										<i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
+										<span class="text-600 text-90">UP :</span>
+                                        {{ optional($invoice->customer)->up??' ' }}
+									</div>
+									<div class="my-1">
+										<i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
+										<span class="text-600 text-90">Dist :</span>
+                                        {{ optional($invoice->customer)->district??' ' }}
+									</div>
+								</div>
+							</div>
+							<!-- /.col -->
+						</div>
+						<hr style="background-color: #3989c6; height: 2px; opacity: 1" />
+
+
+						<div class="row">
+							<div class="col-4">
+								<div class="d-flex">
+									<p class="pe-2">L/C No:</p>
+									<p
+										style="
+											border-bottom: 2px dotted #333;
+											min-width: 50%;
+											padding: 1px;
+										"
+									></p>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="d-flex">
+									<p class="pe-2">Vessel Name:</p>
+									<p
+										style="
+											border-bottom: 2px dotted #333;
+											min-width: 50%;
+											padding: 1px;
+										"
+									></p>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="d-flex">
+									<p class="pe-2">Sales Invoice :</p>
+									<p
+										style="
+											border-bottom: 2px dotted #333;
+											min-width: 50%;
+											padding: 1px;
+										"
+									>
+										#
+									</p>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="d-flex">
+									<p class="pe-2">Invoice No:</p>
+									<p
+										style="
+											border-bottom: 2px dotted #333;
+											min-width: 50%;
+											padding: 1px;
+										"
+									>
+                                    #{{ $invoice->invoice_no??'' }}
+									</p>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="d-flex">
+									<p class="pe-2">B/E No :</p>
+									<p
+										style="
+											border-bottom: 2px dotted #333;
+											min-width: 50%;
+											padding: 1px;
+										"
+									>
+										#
+									</p>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="d-flex">
+									<p class="pe-2">Date :</p>
+									<p
+										style="
+											border-bottom: 2px dotted #333;
+											min-width: 50%;
+											padding: 1px;
+										"
+									>
+                                    {{date('d-m-Y', strtotime($invoice->date)) }}
+                                </p>
+								</div>
+							</div>
+						</div>
+
+                        <div style="position: relative" >
+                            <table class="table table-bordered">
+                                <thead style="background-color: green; color: #fff">
+                                    <tr>
+                                        <th scope="col">Sl No.</th>
+                                        <th scope="col">Chassis No.</th>
+                                        <th scope="col">Engine No.</th>
+                                        <th scope="col">Key No.</th>
+                                        <th scope="col">Color</th>
+                                        <th scope="col">Qty</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Unit Price</th>
+                                        <th scope="col">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($invoice->invoice_details as $key=>$item)
+                                    <tr>
+                                        <td >{{ $key+1 }}</td>
+                                        <td >{{ $item->chasiss_no??'-' }}</td>
+                                        <td >{{ $item->engine_no?? '-'}}</td>
+                                        <td >{{ optional($item->product)->key_no??'-' }}</td>
+                                        <td >{{ $item->color??'-' }}</td>
+                                        <td >{{ $item->selling_qty ??'-' }}</td>
+                                        <td  style="text-align: center"> {{ optional($item->product)->description??'-' }}</td>
+                                        <td >{{ $item->selling_price??'-' }}</td>
+                                        <td >{{ $item->total_price??'-' }}</td>
+                                    </tr>
+                                    @empty
+
+                                @endforelse
+                                    <tr>
+                                        <td class="col" colspan="7" rowspan="3">
+                                            <div class="d-flex p-2">
+                                                <h5 class="pe-2">Take In Word :</h5>
+                                                <h6
+                                                    style="
+                                                        border-bottom: 2px dotted #333;
+                                                        min-width: 80%;
+                                                        padding: 1px;
+                                                    "
+                                                >
+                                                {{ ucwords(numberTowords($invoice->total_amount??'0' )) }} Only.
+                                                </h6>
+                                            </div>
+                                        </td>
+                                        <td class="col">Total Amount</td>
+                                        <td class="col">
+                                            <h5 class="fw-bold">{{ ($invoice->total_amount??'0' ) }}</h5>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col">Less Advance</td>
+                                        <td class="col"> {{ ($invoice->paid_amount??'0' ) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col">Balance</td>
+                                        <td class="col">{{ ($invoice->due_amount??'0' ) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col" colspan="7">
+                                            <strong> Payment Reference : </strong>
+                                        </td>
+                                        <td class="col" rowspan="4" colspan="2">
+                                            <div
+                                                class="text-center d-flex flex-column align-items-center justify-content-end h-100"
+                                            >
+                                                <strong>For Nova Bajaj</strong>
+
+                                                <p style="border-top: 2px dotted green" class="mt-4">
+                                                    Sales Department
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col" colspan="4">
+                                            <strong> M.R. No : </strong>
+                                        </td>
+                                        <td class="col" colspan="3">
+                                            <strong> Dated : {{ date('d-m-Y') }}</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col" colspan="7">
+                                            <strong> For Taka : </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col" colspan="7">
+                                            <strong> In Cash/ by : </strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+
+                        <div class="overlap" style="background-image:url('{{ asset('motor.png')}}');">
+
                         </div>
-                        <div class="col-md-6 company-details text-center">
-                            <h5> Sale Invoice</h5>
-                            <h2 class="name"><strong style="color: green">নোভা বাজাজ</strong></h2>
-                            <h2 class="name"><strong style="color: blue">{{$owner->name}}</strong></h2>
-                            <h4 class="name"><strong style="color: green"> Authorised Dealer: Uttara Motors Limited
-                                </strong></h4>
-                            <h4 class="name"><strong style="color: red">{{$owner->address}}</strong></h4>
-                            <h4 class="name">Mobile: <strong>{{$owner->mobile}}</strong></h4>
-
-
-
-                        </div>
-                        <div class="col-md-3" style="border:2px solid #3989c6">
-                            <p style="font-size: 18px;"> <strong>Buyer's</strong>
-                                <br>
-                                &nbsp; &nbsp;&nbsp;<b>{{ optional($invoice->customer)->name??' ' }}<br>
-                                    &nbsp;&nbsp; S/O {{ optional($invoice->customer)->father_name??' ' }} <br>
-                                    &nbsp;&nbsp;&nbsp; Vill &nbsp;: {{ optional($invoice->customer)->village??' ' }}
-                                    <br>
-                                    &nbsp;&nbsp;&nbsp; Post: {{ optional($invoice->customer)->post_office??' ' }} <br>
-                                    &nbsp;&nbsp;&nbsp; Up &nbsp;: {{ optional($invoice->customer)->up??' ' }} <br>
-                                    &nbsp;&nbsp;&nbsp; Dist &nbsp;: {{ optional($invoice->customer)->district??' ' }}
-                            </p>
-
-                        </div>
-                    </div>
-                </header>
-                <main>
-                    <div class="row contacts">
-                        <div class="col-md-1s" style="">
-                            <div class="text-gray-light text-left ">L/C No : &nbsp;</div>
-                        </div>
-                        <div class="col-md-3" style="border-bottom: 2px dotted; width: 100%"></div>
-                        <div class="col-md-2">
-                            <div class="text-gray-light text-right"> Vessel Name:</div>
-                        </div>
-                        <div class="col-md-2" style="border-bottom: 2px dotted; width: 100%"> </div>
-                        <div class="col-md-2">
-                            <div class="text-gray-light text-right">Sales Invoice :</div>
-                        </div>
-                        <div class="col-md-2" style="border-bottom: 2px dotted; width: 100%">#</div>
-                    </div>
-
-                    <div class="row contacts">
-                        <div class="col-md-2s">
-                            <div class="text-gray-light text-right">Invoice No:</div>
-                        </div>
-                        <div class="col-md-2" style="border-bottom: 2px dotted; width: 100%"># {{
-                            $invoice->invoice_no??'' }}</div>
-                        <div class="col-md-2">
-                            <div class="text-gray-light text-right">B/E No : </div>
                         </div>
 
-                        <div class="col-md-2" style="border-bottom: 2px dotted; width: 100%"> # </div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-                        <div class="col-md-2">
-                            <div class="text-gray-light text-right"> &nbsp; Date : </div>
-                        </div>
-                        <div class="col-md-2" style="border-bottom: 2px dotted; width: 100%">
-                        {{date('d-m-Y', strtotime($invoice->date)) }}</div>
+		<script
+			src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+			crossorigin="anonymous"
+		></script>
 
-                    </div>
-
-                    <table border="0" cellspacing="0" cellpadding="0">
-                        <thead>
-
-                            <tr>
-                                <th class="text-center table-header" style="width: 1px !important">
-                                    Sl No.
-                                </th>
-                                <th class="text-center table-header" style="width: 10%">
-                                    Chassis No.
-                                </th>
-                                <th class="text-center table-header" style="width: 10%">
-                                    Engine No.
-                                </th>
-                                <th class="text-center table-header" style="width: 10%">
-                                    Key No.
-                                </th>
-                                <th class="text-center table-header" style="width: 5%">
-                                    Color
-                                </th>
-
-                                <th class="text-center table-header">
-                                    Qnty
-                                </th>
-                                <th class="text-center table-header" style="width: 50%">Description</th>
-                                <th class="text-center table-header">Unit Price</th>
-                                <th class="text-center table-header" style="width: 20%">
-                                    Amount
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @forelse ($invoice->invoice_details as $key=>$item)
-
-                            <tr style="" aria-rowspan="">
-                                <td class="total">{{ $key+1 }}</td>
-                                <td class="total">{{ $item->chasiss_no??'-' }}</td>
-                                <td class="total">{{ $item->engine_no?? '-'}}</td>
-                                <td class="total">{{ optional($item->product)->key_no??'-' }}</td>
-                                <td class="total">{{ $item->color??'-' }}</td>
-                                <td class="total">{{ $item->selling_qty ??'-' }}</td>
-                                <td class="total" style="text-align: center"> {{ optional($item->product)->description??
-                                    '-' }}</td>
-
-                                <td class="total">{{ $item->selling_price??'-' }}</td>
-                                <td class="total">{{ $item->total_price??'-' }}</td>
-                            </tr>
-                            @empty
-
-                            @endforelse
-
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td style="border-right: 0; border-bottom: 0">
-                                    <!-- Take In Word : -->
-                                    <span class="text-left">Take In Word :</span>
-                                </td>
-                                <td class="text-left" style="border-left: 0; border-bottom: 2px dotted gray"
-                                    colspan="6">
-                                    <h6 style="font-size: 25px;"> <span class="text-left">
-                                            {{ ucwords(numberTowords($invoice->total_amount??'0' )) }} Only.</span>
-                                    </h6>
-                                </td>
-
-                                <td class="text-center" style="font-size: 20px; font-weight: 600">
-                                    Total Amount
-                                </td>
-                                <td class="text-right">{{ ($invoice->total_amount??'0' ) }}</td>
-                            </tr>
-                            <tr>
-
-                            </tr>
-
-                            <tr>
-                                <td style="border-right: 0; border-top: 0;border-bottom:0" colspan="7"></td>
-
-                                <td class="text-center" style="font-size: 20px; font-weight: 600">
-                                    Less Advance
-                                </td>
-                                <td class="text-right">
-                                    <!-- {{ ($invoice->paid_amount??'0' ) }} -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="border-right: 0; border-top: 0" colspan="4"></td>
-                                <td style="border-left: 0; border-top: 0" colspan="3"></td>
-                                <td class="text-center" style="font-size: 20px; font-weight: 600">
-                                    Balance
-                                </td>
-                                <td class="text-right">
-                                    <!-- {{ ($invoice->due_amount??'0' ) }} -->
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td colspan="7" class="text-left">Payment Reference :</td>
-                                <td colspan="2" style="border-top:0 ;border-bottom: 0;"> </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4" class="text-left">M.R. No :</td>
-                                <td colspan="3" class="text-left">Dated :
-                                    <!-- {{ date('d-m-Y') }} -->
-                                </td>
-                                <td colspan="2" style="border-top:0 ;border-bottom: 0;"> </td>
-                            </tr>
-                            <tr>
-                                <td colspan="7" class="text-left">For Taka :</td>
-                                <td colspan="2" class="text-center" style="border-top:0 ;border-bottom: 0;">For Nova
-                                    Bajaj
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="text-left" colspan="1" style="border-right: 0">In Cash/ by :</td>
-                                <td colspan="6" style="border-left: 0;" {{-- {{ $invoice->updatedUser->name??' ' }} --}}
-                                    ></td>
-
-                                <td colspan="2" class="text-center" style="border-top:0;">
-
-                                    <span style="border-top:2px dotted gray;"> Sales Department</span>
-
-                                </td>
-                            </tr>
-
-                        </tfoot>
-                    </table>
-
-                </main>
-
-            </div>
-            <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
-            <div></div>
-        </div>
-    </div>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
-
-    <script>
-        $("#printInvoice").click(function () {
-        Popup($(".invoice")[0].outerHTML);
-        function Popup(data) {
-          window.print();
-          return true;
-        }
-      });
-      $(document).ready(function(){
-            // window.print();
-      })
-    </script>
-</body>
-
+		<script>
+			$('#printInvoice').click(function () {
+				Popup($('.invoice')[0].outerHTML);
+				function Popup(data) {
+					window.print();
+					return true;
+				}
+			});
+			$(document).ready(function () {
+				// window.print();
+			});
+		</script>
+	</body>
 </html>

@@ -363,29 +363,29 @@
                             <table class="table table-bordered">
                                 <thead style="background-color: green; color: #fff">
                                     <tr>
-                                        <th scope="col">Sl No.</th>
-                                        <th scope="col">Chassis No.</th>
-                                        <th scope="col">Engine No.</th>
-                                        <th scope="col">Key No.</th>
-                                        <th scope="col">Color</th>
-                                        <th scope="col">Qty</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Unit Price</th>
-                                        <th scope="col">Amount</th>
+                                        <th style="text-align:center;width:2%" scope="col">Sl No.</thsscope=>
+                                        <th style="text-align:center;width:15%" scope="col">Chassis No.</thsscope=>
+                                        <th style="text-align:center;width:15%" scope="col">Engine No.</thsscope=>
+                                        <th style="text-align:center;width:10%" scope="col">Key No.</thsscope=>
+                                        <th style="text-align:center;width:10%" scope="col">Color</thsscope=>
+                                        <th style="text-align:center;width:2%" scope="col">Qty</thsscope=>
+                                        <th style="text-align:center;width:19%" scope="col">Description</thsscope=>
+                                        <th style="text-align:center;width:10%" scope="col">Unit Price</thsscope=>
+                                        <th style="text-align:center;width:10%" scope="col">Amount</thsscope=>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($invoice->invoice_details as $key=>$item)
                                     <tr>
-                                        <td >{{ $key+1 }}</td>
-                                        <td >{{ $item->chasiss_no??'-' }}</td>
-                                        <td >{{ $item->engine_no?? '-'}}</td>
-                                        <td >{{ optional($item->product)->key_no??'-' }}</td>
-                                        <td >{{ $item->color??'-' }}</td>
-                                        <td >{{ $item->selling_qty ??'-' }}</td>
-                                        <td  style="text-align: center"> {{ optional($item->product)->description??'-' }}</td>
-                                        <td >{{ $item->selling_price??'-' }}</td>
-                                        <td >{{ $item->total_price??'-' }}</td>
+                                        <td style="text-align:center" >{{ $key+1 }}</td>
+                                        <td style="text-align:center">{{ $item->chasiss_no??'-' }}</td>
+                                        <td style="text-align:center">{{ $item->engine_no?? '-'}}</td>
+                                        <td style="text-align:center">{{ optional($item->product)->key_no??'-' }}</td>
+                                        <td style="text-align:center">{{ $item->color??'-' }}</td>
+                                        <td style="text-align:center">{{ $item->selling_qty ??'-' }}</td>
+                                        <td style="text-align:center"> {{ optional($item->product)->description??'-' }}</td>
+                                        <td style="text-align:right">{{ $item->selling_price??'-' }}</td>
+                                        <td style="text-align:right">{{ $item->total_price??'-' }}</td>
                                     </tr>
                                     @empty
 
@@ -407,16 +407,16 @@
                                         </td>
                                         <td class="col">Total Amount</td>
                                         <td class="col">
-                                            <h5 class="fw-bold">{{ ($invoice->total_amount??'0' ) }}</h5>
+                                            <h5 class="fw-bold text-right" style="text-align: right">{{ ($invoice->total_amount??'0' ) }}</h5>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="col">Less Advance</td>
-                                        <td class="col"> {{ ($invoice->paid_amount??'0' ) }}</td>
+                                        <td class="col" style="text-align: right"> {{ ($invoice->paid_amount??'0' ) }}</td>
                                     </tr>
                                     <tr>
                                         <td class="col">Balance</td>
-                                        <td class="col">{{ ($invoice->due_amount??'0' ) }}</td>
+                                        <td class="col" style="text-align: right">{{ ($invoice->due_amount??'0' ) }}</td>
                                     </tr>
                                     <tr>
                                         <td class="col" colspan="7">

@@ -157,10 +157,11 @@
 			@media print {
 				@page {
 					size: A4 landscape;
-					transform: scale(0.90);
+                    margin: 0 !important;
+					transform: scale(0.90)  !important;
 				}
 				body{
-					transform: scale(0.90);
+					transform: scale(0.90) !important;
                     height: 100vh;
                     overflow: hidden;
 
@@ -363,16 +364,16 @@
                             <table class="table table-bordered">
                                 <thead style="background-color: green; color: #fff">
                                     <tr>
-                                        <th style="text-align:center;width:2%" scope="col">Sl No.</thsscope=>
-                                        <th style="text-align:center;width:15%" scope="col">Chassis No.</thsscope=>
-                                        <th style="text-align:center;width:15%" scope="col">Engine No.</thsscope=>
-                                        <th style="text-align:center;width:10%" scope="col">Key No.</thsscope=>
-                                        <th style="text-align:center;width:10%" scope="col">Color</thsscope=>
-                                        <th style="text-align:center;width:2%" scope="col">Qty</thsscope=>
-                                        <th style="text-align:center;width:19%" scope="col">Description</thsscope=>
-                                        <th style="text-align:center;width:10%" scope="col">Unit Price</thsscope=>
-                                        <th style="text-align:center;width:10%" scope="col">Amount</thsscope=>
-                                    </tr>
+                                        <th style="text-align:center;width:2%" scope="col">No.
+                                        </th><th style="text-align:center;width:12%" scope="col">Chassis No.
+                                        </th><th style="text-align:center;width:12%" scope="col">Engine No.
+                                        </th><th style="text-align:center;width:7%" scope="col">Key No.
+                                        </th><th style="text-align:center;width:10%" scope="col">Color
+                                        </th><th style="text-align:center;width:2%" scope="col">Qty
+                                        </th><th style="text-align:center;width:26%" scope="col">Description
+                                        </th><th style="text-align:center;width:10%" scope="col">Unit Price
+                                        </th><th style="text-align:center;width:10%" scope="col">Amount
+                                    </th></tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($invoice->invoice_details as $key=>$item)

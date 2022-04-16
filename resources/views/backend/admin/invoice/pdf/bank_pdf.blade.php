@@ -407,10 +407,7 @@
                                             <h5 class="fw-bold text-right" style="text-align: right">{{  number_format($invoice->invoice_details[0]->product->unit_price * $invoice->invoice_details[0]->selling_qty??'0' , 2) }}</h5>
                                         </td>
                                     </tr>
-                                    {{-- <tr>
-                                        <td class="col">Less Advance</td>
-                                        <td class="col" style="text-align: right"> 0.00</td>
-                                    </tr> --}}
+
                                     <tr>
                                         <td class="col">Balance</td>
                                         <td class="col" style="text-align: right">{{  number_format($invoice->invoice_details[0]->product->unit_price * $invoice->invoice_details[0]->selling_qty??'0' , 2) }}</td>

@@ -35,8 +35,8 @@
 										<th>Customer Name</th>
 										<th>Mobile</th>
 										<th>Total Amount</th>
-										<th>Due</th>
 										<th>Payment</th>
+										<th>Due</th>
 										<th>Discount</th>
 										<th>Service Charge</th>
 										<th>Intertest Amount </th>
@@ -55,14 +55,6 @@
 										<td>{{ number_format (optional($value->invoices)->sum('discount_amount')??0, 2)}}</td>
 										<td>{{ number_format (optional($value->invoices)->sum('service_charge')??0, 2)}}</td>
 										<td>{{ number_format (optional($value->invoices)->sum('intertest_amount')??0, 2)}}</td>
-
-                                        {{-- @foreach ($value as $item)
-                                        @endforeach --}}
-										{{-- <td>{{$value->email}}</td>
-										<td>{{$value->address}}</td> --}}
-										{{-- <td>{{ $value->total_amount }} TK</td>
-										<td>{{$value->due}} TK</td>
-										<td>{{$value->payment}} TK</td> --}}
 										<td>
 											<a class="btn btn-sm btn-info" title="Edit" href="{{route('customers.customer.edit',$value->id)}}"><i class="fa fa-edit"></i></a>
 											<a target="_blank" class="btn btn-sm btn-success" title="Details" href="{{route('customers.customer.details').'?customer_id='.$value->id}}"><i class="fa fa-eye"></i></a>

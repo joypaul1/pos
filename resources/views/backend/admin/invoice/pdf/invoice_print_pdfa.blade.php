@@ -416,14 +416,18 @@
                                         <td class="col" style="text-align: right"> {{ ($invoice->paid_amount??'0' ) }}</td>
                                     </tr>
                                     <tr>
+                                        <td class="col">Less Advance</td>
+                                        <td class="col" style="text-align: right"> {{ ($invoice->paid_amount??'0' ) }}</td>
+                                    </tr>
+                                    <tr>
                                         <td class="col">Balance</td>
                                         <td class="col" style="text-align: right">{{ ($invoice->due_amount??'0' ) }}</td>
                                     </tr>
-                                    <tr>
+                                    {{-- <tr>
                                         <td class="col" colspan="7">
                                             <strong> Payment Reference : </strong>
                                         </td>
-                                        <td class="col" rowspan="4" colspan="2">
+                                        <td class="col" rowspan="2" colspan="2">
                                             <div
                                                 class="text-center d-flex flex-column align-items-center justify-content-end h-100"
                                             >
@@ -434,8 +438,8 @@
                                                 </p>
                                             </div>
                                         </td>
-                                    </tr>
-                                    <tr>
+                                    </tr> --}}
+                                    {{-- <tr>
                                         <td class="col" colspan="4">
                                             <strong> M.R. No : </strong>
                                         </td>
@@ -452,7 +456,7 @@
                                         <td class="col" colspan="7">
                                             <strong> In Cash/ by : </strong>
                                         </td>
-                                    </tr>
+                                    </tr> --}}
                                 </tbody>
                             </table>
 

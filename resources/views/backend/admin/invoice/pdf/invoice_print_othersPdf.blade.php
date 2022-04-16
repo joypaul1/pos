@@ -257,7 +257,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bd-dotted">&nbsp; &nbsp; <h4> Address: {{ optional($invoice->customer)->address??' ' }}  </h4>
+                                <td class="bd-dotted">&nbsp; &nbsp; <h4> ADDRESS : {{ optional($invoice->customer)->address??' ' }}  </h4>
                                 </td>
                             </tr>
                         </tbody>
@@ -296,7 +296,7 @@
                                     <h4>
                                         <span style="width: 40%; display:inline-block"> 03. Chasiss No</span>
                                         <span style="width: 40%">
-                                            :{{ optional($invoice->invoice_detail)->chasiss_no??' ' }}
+                                            : {{ optional($invoice->invoice_detail)->chasiss_no??' ' }}
                                         </span>
                                     </h4>
                                 </td>
@@ -310,7 +310,7 @@
                                     <h4>
                                         <span style="width: 40%; display:inline-block">04. Engine No</span>
                                         <span style="width: 40%">
-                                            :{{ optional($invoice->invoice_detail)->engine_no??' '}}
+                                            : {{ optional($invoice->invoice_detail)->engine_no??' '}}
                                         </span>
                                     </h4>
                                 </td>
@@ -321,7 +321,7 @@
                                     <h4>
                                         <span style="width: 40%; display:inline-block"> 05. key No </span>
                                         <span style="width: 40%">
-                                            :{{ optional( optional($invoice->invoice_detail)->product)->key_no??' ' }}
+                                            : {{ optional( optional($invoice->invoice_detail)->product)->key_no??' ' }}
                                         </span>
                                     </h4>
                                 </td>
@@ -472,7 +472,7 @@
                                     <h4>
                                         <span style="width: 40%; display:inline-block"> 15. Unit Price </span>
                                         <span style="width: 40%">
-                                            :{{ number_format(optional(optional($invoice->invoice_detail)->product)->unit_price, 2)??' '}} TK
+                                            : {{ number_format(optional(optional($invoice->invoice_detail)->product)->unit_price, 2)??' '}} TK
                                         </span>
                                     </h4>
                                 </td>
@@ -481,9 +481,9 @@
                     </table>
                 </main>
                 <div class="row">
-                    <p>
+
                     <h4 class="col-12 text-right text-bold">For Nova Bajaj</h4>
-                    </p>
+
                     <div class="col-6 text-left text-bold">
                         <span style="border-top: 1px dotted red">
                             <h4> Owner's Signature </h4>
@@ -491,6 +491,7 @@
                     </div>
                     <div class="col-6 text-right text-bold">
                         <span style="border-top: 1px dotted red">
+                            <br>
                             <h4> Sales Department </h4>
                         </span>
                     </div>
@@ -563,7 +564,7 @@
                         </tr>
 
                         <tr>
-                            <td class="bd-dotted">&nbsp; &nbsp; <h4> Address:  {{optional($invoice->customer)->address??' ' }} </h4>
+                            <td class="bd-dotted">&nbsp; &nbsp; <h4> ADDRESS :  {{optional($invoice->customer)->address??' ' }} </h4>
                             </td>
                         </tr>
                     </tbody>
@@ -667,7 +668,7 @@
                                     <span style="width: 40%; display:inline-block">06. None Of Cylineder With CC
                                     </span>
                                     <span style="width: 40%">
-                                        :{{optional(optional($invoice->invoice_detail)->product)->none_of_cylineder_with_cc??'' }}
+                                        : {{optional(optional($invoice->invoice_detail)->product)->none_of_cylineder_with_cc??'' }}
                                     </span>
                                 </h4>
                             </td>
@@ -749,7 +750,7 @@
             </main>
 
             <div class="row">
-                <br>
+
 
                 <h4 class="col-12 text-right text-bold">For Nova Bajaj</h4>
                 <div class="col-6 text-left text-bold">
@@ -759,6 +760,7 @@
                 </div>
                 <div class="col-6 text-right text-bold">
                     <span style="border-top: 1px dotted red">
+                        <br>
                         <h4> Sales Department </h4>
                     </span>
                 </div>
@@ -830,12 +832,12 @@
                     </center>
 
                     <div class="col-6" style="text-align: left; font-size: 17px">
-                        <div class="text-gray-light"> <strong> 01. Name of owner: {{optional($invoice->customer)->name??' ' }} </strong> </div>
-                        <div class="text-gray-light"> <strong> 03. Father/Husband: {{optional($invoice->customer)->father_name??' ' }} </strong> </div>
-                        <div class="text-gray-light"> <strong> 05. Sex: Male </strong> </div>
-                        <div class="text-gray-light"> <strong> 07. Owner’s Address (One only): </strong> </div>
-                        <div class="text-gray-light"> <strong> 08. Phone No. (If any): 01767554784 </strong> </div>
-                        <div class="text-gray-light"> <strong> 13. Hire: NO </strong> </div>
+                        <div class="text-gray-light"> <strong> 01. Name of owner : {{optional($invoice->customer)->name??' ' }} </strong> </div>
+                        <div class="text-gray-light"> <strong> 03. Father/Husband : {{optional($invoice->customer)->father_name??' ' }} </strong> </div>
+                        <div class="text-gray-light"> <strong> 05. Sex : Male </strong> </div>
+                        <div class="text-gray-light"> <strong> 07. Owner’s Address (One only) :  {{optional($invoice->customer)->address??' ' }} </strong> </div>
+                        <div class="text-gray-light"> <strong> 08. Phone No. (If any) : {{optional($invoice->customer)->mobile??' ' }}  </strong> </div>
+                        <div class="text-gray-light"> <strong> 13. Hire : NO </strong> </div>
                     </div>
 
                     <div class="col-6" style="text-align: left; font-size: 17px">
@@ -843,7 +845,7 @@
                         <div class="text-gray-light"> <strong> 04. Nationality : BANGLADESHI </strong> </div>
                         <div class="text-gray-light"> <strong> 06. Guardian’s name : NO </strong> </div>
                         <br>
-                        <div class="text-gray-light"> <strong> 11. Owner type: PRIVATE </strong> </div>
+                        <div class="text-gray-light"> <strong> 11. Owner type : PRIVATE </strong> </div>
                         <div class="text-gray-light"> <strong> 14. Hire purchase: NO </strong> </div>
                     </div>
                     <center class="text-bold text-center col-12">
@@ -855,56 +857,55 @@
                     </center>
 
                     <div class="col-6" style="text-align: left; font-size: 17px">
-                        <div class="text-gray-light"> <strong> 14. Vehicle or trailer: VEHICLE </strong> </div>
+                        <div class="text-gray-light"> <strong> 14. Vehicle or trailer : VEHICLE </strong> </div>
                         <div class="text-gray-light">
-                            <strong> 14a. Class of vehicle: MOTORCYCLE </strong>
+                            <strong> 14. Class of vehicle : MOTORCYCLE </strong>
                         </div>
-                        <div class="text-gray-light"> <strong> 16. Type of body: MOTORCYCLE </strong> </div>
-                        <div class="text-gray-light"> <strong> 18. Color (cabin/body): {{optional($invoice->invoice_detail)->color??' ' }} </strong> </div>
+                        <div class="text-gray-light"> <strong> 16. Type of body : MOTORCYCLE </strong> </div>
+                        <div class="text-gray-light"> <strong> 18. Color (cabin/body) : {{optional($invoice->invoice_detail)->color??' ' }} </strong> </div>
                         <div class="text-gray-light">
                             <strong> 20. Number of cylinders: 01 CYLINDER </strong>
                         </div>
-                        <div class="text-gray-light"> <strong> 22. Engine number: {{
+                        <div class="text-gray-light"> <strong> 22. Engine number : {{
                                 optional($invoice->invoice_detail)->engine_no??' ' }} </strong>
                         </div>
-                        <div class="text-gray-light"> <strong> 24. Horse power: {{
+                        <div class="text-gray-light"> <strong> 24. Horse power : {{
                                 optional(optional($invoice->invoice_detail)->product)->hourse_power??' ' }} </strong>
                         </div>
-                        <div class="text-gray-light"> <strong> 26. Cubic capacity: {{
+                        <div class="text-gray-light"> <strong> 26. Cubic capacity : {{
                                 optional(optional($invoice->invoice_detail)->product)->seating_capacity??' ' }}
                             </strong> </div>
-                        <div class="text-gray-light"> <strong> 28. No. of Standee: </strong> </div>
+                        <div class="text-gray-light"> <strong> 28. No. of Standee : </strong> </div>
                         <div class="text-gray-light"> <strong> 30. Unladen weight (kg) {{
                                 optional(optional($invoice->invoice_detail)->product)->laden_weight }} </strong> </div>
                     </div>
 
                     <div class="col-6" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light">
-                            <strong> 15. Prev. Regn. No. (If any): NEW </strong>
+                            <strong> 15. Prev. Regn. No. (If any) : NEW </strong>
                         </div>
                         <div class="text-gray-light">
                             <strong> 15a. Maker’s name: BAJAJ AUTO LTD. INDIA </strong>
                         </div>
-                        <div class="text-gray-light"> <strong> 17. Maker’s Country: INDIA </strong> </div>
-                        <div class="text-gray-light"> <strong> 19. Year of manufacture: {{
+                        <div class="text-gray-light"> <strong> 17. Maker’s Country : INDIA </strong> </div>
+                        <div class="text-gray-light"> <strong> 19. Year of manufacture : {{
                                 optional($invoice->invoice_detail)->year_of_manufacture??' ' }}
                             </strong> </div>
-                        <div class="text-gray-light"> <strong> 21. Chassis number: {{
+                        <div class="text-gray-light"> <strong> 21. Chassis number : {{
                                 optional($invoice->invoice_detail)->chasiss_no??' ' }} </strong>
                         </div>
-                        <div class="text-gray-light"> <strong> 23. Fuel used: PETROL </strong> </div>
-                        <div class="text-gray-light"> <strong> 25. RPM: {{
-                                optional(optional($invoice->invoice_detail)->product)->hourse_power??' ' }} RPM: {{
+                        <div class="text-gray-light"> <strong> 23. Fuel used : PETROL </strong> </div>
+                        <div class="text-gray-light"> <strong> 25. RPM : {{
                                 optional(optional($invoice->invoice_detail)->product)->hourse_power??' ' }} </strong>
                         </div>
                         <div class="text-gray-light">
                             <strong> 27. Seats (incl. driver):2 PERSON </strong>
                         </div>
-                        <div class="text-gray-light"> <strong> 29. Wheel base: {{
+                        <div class="text-gray-light"> <strong> 29. Wheel base : {{
                                 optional(optional($invoice->invoice_detail)->product)->wheel_base??' ' }} </strong>
                         </div>
                         <div class="text-gray-light">
-                            <strong> 31. Maximum laden/train weight (kg): </strong>
+                            <strong> 31. Maximum laden/train weight (kg) : </strong>
                         </div>
                     </div>
                     <br>
@@ -927,8 +928,8 @@
                     </div>
 
                     <div class="col-6" style="text-align: left; font-size: 17px">
-                        <div class="text-gray-light"> <strong> 33. Tyres size: &nbsp; R: </strong> </div>
-                        <div class="text-gray-light"> <strong> 35. Maximum axle weight (kg): </strong> </div>
+                        <div class="text-gray-light"> <strong> 33. Tyres size : &nbsp; R: {{ optional(optional($invoice->invoice_detail)->product)->size??' ' }} </strong> </div>
+                        <div class="text-gray-light"> <strong> 35. Maximum axle weight (kg) : </strong> </div>
                         <div class="text-gray-light">
                             <strong> a) Front axle &nbsp; (1) &nbsp; (2) </strong>
                         </div>
@@ -943,7 +944,7 @@
 
                     <div class="col-12" style="text-align: left; font-size: 17px">
                         <div class="text-gray-light">
-                            <strong> 36. Dimensions (mm): </strong> <br>
+                            <strong> 36. Dimensions (mm) : </strong> <br>
 
                             &nbsp; <strong> a) Overall length </strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -993,48 +994,47 @@
                             <strong> 39. Hire purchase/hypothecation information: </strong>
                         </div>
                         <div class="text-gray-light">
-                            <strong> &nbsp; The vehicle is subject to hire purchase/hypothecation
-                                with: </strong>
+                            <strong> &nbsp; The vehicle is subject to hire purchase/hypothecation with : </strong>
                         </div>
-                        <div class="text-gray-light">&nbsp; <strong> a) Name: </strong> </div>
-                        <div class="text-gray-light">&nbsp; <strong> c) Address: </strong> </div>
+                        <div class="text-gray-light">&nbsp; <strong> a) Name : </strong> </div>
+                        <div class="text-gray-light">&nbsp; <strong> c) Address : </strong> </div>
                     </div>
 
                     <div class="col-4" style="text-align: left; font-size: 17px">
                         <br>
                         <br>
-                        <div class="text-gray-light"> <strong> b) Date: </strong> </div>
+                        <div class="text-gray-light"> <strong> b) Date : </strong> </div>
                     </div>
 
                     <div class="col-8" style="text-align: left; font-size: 17px">
-                        <div class="text-gray-light"> <strong> 40. Insurance information: </strong> </div>
+                        <div class="text-gray-light"> <strong> 40. Insurance information : </strong> </div>
                         <div class="text-gray-light">
                             <strong> a) Policy no: </strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            &nbsp; &nbsp; <strong> b) Type of policy: </strong>
+                            &nbsp; &nbsp; <strong> b) Type of policy : </strong>
                         </div>
-                        <div class="text-gray-light"> <strong> d) Date of expiry: </strong> </div>
+                        <div class="text-gray-light"> <strong> d) Date of expiry : </strong> </div>
                     </div>
 
                     <div class="col-4" style="text-align: left; font-size: 17px">
                         <br>
                         <div class="text-gray-light">
-                            <strong> c) Insurer’s name &amp; address: </strong>
+                            <strong> c) Insurer’s name &amp; address : </strong>
                         </div>
                     </div>
 
                     <div class="col-8" style="text-align: left; font-size: 17px">
-                        <div class="text-gray-light"> <strong> 41. Joint owner information: </strong> </div>
-                        <div class="text-gray-light"> <strong> a) Name: </strong></div>
-                        <div class="text-gray-light">&nbsp; <strong> Father/Husband: </strong> </div>
+                        <div class="text-gray-light"> <strong> 41. Joint owner information : </strong> </div>
+                        <div class="text-gray-light"> <strong> a) Name : </strong></div>
+                        <div class="text-gray-light">&nbsp; <strong> Father/Husband : </strong> </div>
                     </div>
 
                     <div class="col-4" style="text-align: left; font-size: 17px">
                         <br>
-                        <div class="text-gray-light"> <strong> b) Name:</strong> </div>
-                        <div class="text-gray-light"> <strong> &nbsp; Father/Husband: </strong> </div>
+                        <div class="text-gray-light"> <strong> b) Name :</strong> </div>
+                        <div class="text-gray-light"> <strong> &nbsp; Father/Husband : </strong> </div>
                     </div>
 
                     <div class="col-12 company-details text-center">
@@ -1045,7 +1045,7 @@
                     </div>
 
                     <div class="col-12" style="text-align: justify; font-size: 17px">
-                        <div class="text-gray-light"> <strong> 42. Declaration by owner: </strong> </div>
+                        <div class="text-gray-light"> <strong> 42. Declaration by owner : </strong> </div>
                         <div class="text-gray-light">
                             <strong>
 
@@ -1055,8 +1055,6 @@
                                 papers/documents and
                                 information furnished are found to be incorrect at any later
                                 stage, I shall be liable for legal action.
-
-
 
                             </strong>
 
@@ -1075,8 +1073,8 @@
                     </div>
 
                     <div class="col-12" style="text-align: justify; font-size: 17px">
-                        <div class="text-gray-light"> <strong> Date: </strong> </div>
-                        <div class="text-gray-light"> <strong> Encl: List of documents </strong> </div>
+                        <div class="text-gray-light"> <strong> Date : </strong> </div>
+                        <div class="text-gray-light"> <strong> Encl : List of documents </strong> </div>
                         <div class="text-gray-light">
                             <strong> 43. Registered dealer’s certificate: </strong>
                         </div>
@@ -1102,10 +1100,10 @@
                     </div>
 
                     <div class="col-12" style="text-align: justify; font-size: 17px">
-                        <div class="text-gray-light"> <strong> Date: </strong> </div>
-                        <div class="text-gray-light"> <strong> Encl: List of documents </strong> </div>
+                        <div class="text-gray-light"> <strong> Date : </strong> </div>
+                        <div class="text-gray-light"> <strong> Encl : List of documents </strong> </div>
                         <div class="text-gray-light">
-                            <strong> 44. Certificate by the Inspector of Motor Vehicles: </strong>
+                            <strong> 44. Certificate by the Inspector of Motor Vehicles : </strong>
                         </div>
                         <div class="text-gray-light">
                             <strong> Certificate that the particulars pertaining to the owner and the
@@ -1131,8 +1129,8 @@
                     </div>
 
                     <div class="col-4" style="text-align: left; font-size: 17px">
-                        <div class="text-gray-light"> <strong> Date: </strong> </div>
-                        <div class="text-gray-light"> <strong> Encl: List of documents </strong> </div>
+                        <div class="text-gray-light"> <strong> Date : </strong> </div>
+                        <div class="text-gray-light"> <strong> Encl : List of documents </strong> </div>
                     </div>
 
                     <div class="col-4" style="text-align: justify; font-size: 17px"></div>
@@ -1149,7 +1147,7 @@
                     </div>
 
                     <div class="col-4" style="text-align: left; font-size: 17px">
-                        <div class="text-gray-light"> <strong> 45. Registration Status: </strong> </div>
+                        <div class="text-gray-light"> <strong> 45. Registration Status : </strong> </div>
                         <div class="text-gray-light">
                             &nbsp; <strong> Registration allowed/not allowed </strong>
                         </div>
@@ -1169,7 +1167,7 @@
                     </div>
 
                     <div class="col-12" style="text-align: justify; font-size: 17px">
-                        <div class="text-gray-light"> <strong> 46. Fees and Tax Accounts: </strong> </div>
+                        <div class="text-gray-light"> <strong> 46. Fees and Tax Accounts : </strong> </div>
                         <div class="text-gray-light">
                             &nbsp; <strong> Necessary fees and taxes amounting to
                                 taka..............................................................................has
@@ -1233,94 +1231,127 @@
                         <p>Stamp Size Color Pic</p>
                     </div>
                     <div class="col-12" style="font-size: 30px;">
-                        <div class="text-gray-light text-left">01. NAME &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            &nbsp; &nbsp; &nbsp; &nbsp; :  {{ optional($invoice->customer)->name??' ' }}  </div>
-                    </div>
-                    <br>
+                        <div class="text-gray-light text-left row">
 
-
-                    <div class="col-12" style="font-size: 30px;">
-                        <div class="text-gray-light text-left">02. FATHER/ HUSBAND :  {{ optional($invoice->customer)->father_name??' ' }}  </div>
-                    </div>
-                    <br>
-
-                    <div class="col-12" style="font-size: 30px;">
-                        <div class="text-gray-light text-left">03. Mobile &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: {{
-                                optional($invoice->customer)->mobile??' ' }} </div>
-                    </div>
-                    <br>
-
-                    <div class="col-12" style="font-size: 30px;">
-                        <div class="text-gray-light text-left">04. ADDRESS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            &nbsp; &nbsp; : {{ optional($invoice->customer)->address??' ' }} </div>
-                    </div>
-                    <br>
-
-                    <div class="col-12" style="font-size: 30px;">
-                        <div class="text-gray-light text-left">05. SEX &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : MALE &nbsp;</div>
-                    </div>
-                    <br>
-
-                    <div class="col-12" style="font-size: 30px;">
-                        <div class="text-gray-light text-left">06. NATIONALITY &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; :
-                            BANGLADESHI &nbsp;</div>
-                    </div>
-                    <br>
-
-
-                    <div class="col-12" style="font-size: 30px;">
-                        <div class="text-gray-light text-left">07. DATE OF BIRTH &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp;
-                        </div>
-
-                    </div>
-                    <br>
-
-
-                    <div class="col-12" style="font-size: 30px;">
-                        <div class="text-gray-light text-left">08. GUARDIAN’S NAME : NO &nbsp;</div>
-                    </div>
-                    <br>
-
-
-                    <div class="col-12" style="font-size: 30px;">
-                        <div class="text-gray-light text-left">09. CHASSIS NO &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            :{{optional($invoice->invoice_detail)->chasiss_no??' ' }} &nbsp; </div>
-                    </div>
-
-                    <br>
-                    <div class="col-12" style="font-size: 30px;">
-                        <div class="text-gray-light text-left">10. ENGINE NO &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            &nbsp; : {{ optional($invoice->invoice_detail)->engine_no??' ' }}
+                            <span class="col-4">01. NAME</span>
+                            <span class="col-1 text-right">:</span>
+                            <span class="col-7 ">{{ optional($invoice->customer)->name??' ' }}</span>
                         </div>
                     </div>
 
-                    <br>
+
 
                     <div class="col-12" style="font-size: 30px;">
-                        <div class="text-gray-light text-left">11. YEAR OF MFG &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; :{{optional($invoice->invoice_detail)->year_of_manufacture??' ' }}
-                            &nbsp;
+                        <div class="text-gray-light text-left row">
+                            <span class="col-4">02. FATHER/ HUSBAND </span>
+                            <span class="col-1 text-right">:</span>
+                            <span class="col-7 ">{{ optional($invoice->customer)->father_name??' ' }}</span>
                         </div>
                     </div>
 
-                    <br>
-
                     <div class="col-12" style="font-size: 30px;">
-                        <div class="text-gray-light text-left">12. PREV. REGN. NO. (IF ANY) : NEW &nbsp;</div>
+                        <div class="text-gray-light text-left row">
+                            <span class="col-4">03. Mobile </span>
+                            <span class="col-1 text-right">:</span>
+                            <span class="col-7 ">{{ optional($invoice->customer)->mobile??' ' }}</span>
+                        </div>
                     </div>
 
-                    <br>
 
                     <div class="col-12" style="font-size: 30px;">
-                        <div class="text-gray-light text-left">13. P.O./BANK &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            &nbsp; &nbsp; : &nbsp;</div>
+                        <div class="text-gray-light text-left row">
+                            <span class="col-4">04. Address </span>
+                            <span class="col-1 text-right">:</span>
+                            <span class="col-7 ">{{ optional($invoice->customer)->address??' ' }}</span>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12" style="font-size: 30px;">
+                        <div class="text-gray-light text-left row">
+                            <span class="col-4">05. SEX </span>
+                            <span class="col-1 text-right">:</span>
+                            <span class="col-7 ">MALE</span>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12" style="font-size: 30px;">
+                        <div class="text-gray-light text-left row">
+                            <span class="col-4">06. NATIONALITY </span>
+                            <span class="col-1 text-right">:</span>
+                            <span class="col-7 ">BANGLADESHI</span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-12" style="font-size: 30px;">
+                        <div class="text-gray-light text-left row">
+                            <span class="col-4">07. DATE OF BIRTH </span>
+                            <span class="col-1 text-right">:</span>
+                            <span class="col-7 "></span>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="col-12" style="font-size: 30px;">
+                        <div class="text-gray-light text-left row">
+                            <span class="col-4">08. GUARDIAN’S NAME </span>
+                            <span class="col-1 text-right">:</span>
+                            <span class="col-7 ">NO</span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-12" style="font-size: 30px;">
+                        <div class="text-gray-light text-left row">
+                            <span class="col-4">09. CHASSIS NO </span>
+                            <span class="col-1 text-right">:</span>
+                            <span class="col-7 "> {{optional($invoice->invoice_detail)->chasiss_no??' ' }}</span>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12" style="font-size: 30px;">
+                        <div class="text-gray-light text-left row">
+                            <span class="col-4">10. ENGINE NO</span>
+                            <span class="col-1 text-right">:</span>
+                            <span class="col-7 "> {{optional($invoice->invoice_detail)->engine_no??' ' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12" style="font-size: 30px;">
+                        <div class="text-gray-light text-left row">
+                            <span class="col-4">11. YEAR OF MFG</span>
+                            <span class="col-1 text-right">:</span>
+                            <span class="col-7 "> {{optional($invoice->invoice_detail)->year_of_manufacture??' ' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12" style="font-size: 30px;">
+                        <div class="text-gray-light text-left row">
+                            <span class="col-4">12. PREV. REGN. NO. (IF ANY) </span>
+                            <span class="col-1 text-right">:</span>
+                            <span class="col-7 "> NEW</span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-12" style="font-size: 30px;">
+                        <div class="text-gray-light text-left row">
+                            <span class="col-4">13. P.O./BANK</span>
+                            <span class="col-1 text-right">:</span>
+                            <span class="col-7 "> NEW</span>
+                        </div>
                     </div>
                     <br>
                     <br>
                     <br>
-
-
 
                     <div class="col-12" style="font-size: 30px;">
                         <div class="text-gray-light text-left">

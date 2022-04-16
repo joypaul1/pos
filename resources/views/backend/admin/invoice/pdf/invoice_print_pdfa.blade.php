@@ -25,7 +25,7 @@
 				top: 0;
 				height: 100%;
 				width: 100%;
-				opacity: 0.1;
+				opacity: 0.3;
 				z-index: -1;
                 background-size:40% auto;
                 background-repeat:no-repeat;
@@ -364,16 +364,16 @@
                             <table class="table table-bordered">
                                 <thead style="background-color: green; color: #fff">
                                     <tr>
-                                        <th style="text-align:center;width:2%" scope="col">No.
-                                        </th><th style="text-align:center;width:12%" scope="col">Chassis No.
-                                        </th><th style="text-align:center;width:12%" scope="col">Engine No.
-                                        </th><th style="text-align:center;width:7%" scope="col">Key No.
-                                        </th><th style="text-align:center;width:10%" scope="col">Color
-                                        </th><th style="text-align:center;width:2%" scope="col">Qty
-                                        </th><th style="text-align:center;width:26%" scope="col">Description
-                                        </th><th style="text-align:center;width:10%" scope="col">Unit Price
-                                        </th><th style="text-align:center;width:10%" scope="col">Amount
-                                    </th></tr>
+                                        <th style="text-align:center;width:2%" scope="col">No.</th>
+                                        <th style="text-align:center;width:12%" scope="col">Chassis No.</th>
+                                        <th style="text-align:center;width:12%" scope="col">Engine No.</th>
+                                        <th style="text-align:center;width:7%" scope="col">Key No.</th>
+                                        <th style="text-align:center;width:10%" scope="col">Color</th>
+                                        <th style="text-align:center;width:2%" scope="col">Qty</th>
+                                        <th style="text-align:center;width:26%" scope="col">Description</th>
+                                        <th style="text-align:center;width:10%" scope="col">Unit Price</th>
+                                        <th style="text-align:center;width:10%" scope="col">Amount</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($invoice->invoice_details as $key=>$item)

@@ -25,7 +25,7 @@
 				top: 0;
 				height: 100%;
 				width: 100%;
-				opacity: 0.1;
+				opacity: 0.3;
 				z-index: -1;
                 background-size:40% auto;
                 background-repeat:no-repeat;
@@ -157,10 +157,11 @@
 			@media print {
 				@page {
 					size: A4 landscape;
-					transform: scale(0.90);
+                    margin: 0 !important;
+					transform: scale(0.90) !important;
 				}
 				body{
-					transform: scale(0.90);
+					/* transform: scale(0.90)!important; */
                     height: 100vh;
                     overflow: hidden;
 
@@ -176,11 +177,7 @@
 					margin: 0;
 					padding: 0;
 				}
-				/* .break {
-					page-break-after: always !important;
-					page-break-inside: avoid !important;
-					page-break-before: always !important;
-				} */
+
 			}
 		</style>
 
@@ -213,7 +210,7 @@
 
 			<div class="px-0 invoice">
 				<div class="row px-0 m-0">
-					<div class="col-12 col-lg-12">
+					<div class="">
 						<div class="row">
 							<div class="col-3">
 								{{-- <img src="./logo.png" width="100px" alt="" /> --}}
@@ -363,15 +360,15 @@
                             <table class="table table-bordered">
                                 <thead style="background-color: green; color: #fff">
                                     <tr>
-                                        <th style="text-align:center;width:2%" scope="col">Sl No.</thsscope=>
-                                        <th style="text-align:center;width:15%" scope="col">Chassis No.</thsscope=>
-                                        <th style="text-align:center;width:15%" scope="col">Engine No.</thsscope=>
-                                        <th style="text-align:center;width:10%" scope="col">Key No.</thsscope=>
-                                        <th style="text-align:center;width:10%" scope="col">Color</thsscope=>
-                                        <th style="text-align:center;width:2%" scope="col">Qty</thsscope=>
-                                        <th style="text-align:center;width:19%" scope="col">Description</thsscope=>
-                                        <th style="text-align:center;width:10%" scope="col">Unit Price</thsscope=>
-                                        <th style="text-align:center;width:10%" scope="col">Amount</thsscope=>
+                                        <th style="text-align:center;width:2%" scope="col">No.</th>
+                                        <th style="text-align:center;width:12%" scope="col">Chassis No.</th>
+                                        <th style="text-align:center;width:12%" scope="col">Engine No.</th>
+                                        <th style="text-align:center;width:7%" scope="col">Key No.</th>
+                                        <th style="text-align:center;width:10%" scope="col">Color</th>
+                                        <th style="text-align:center;width:2%" scope="col">Qty</th>
+                                        <th style="text-align:center;width:26%" scope="col">Description</th>
+                                        <th style="text-align:center;width:10%" scope="col">Unit Price</th>
+                                        <th style="text-align:center;width:10%" scope="col">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -410,10 +407,10 @@
                                             <h5 class="fw-bold text-right" style="text-align: right">{{  number_format($invoice->invoice_details[0]->product->unit_price * $invoice->invoice_details[0]->selling_qty??'0' , 2) }}</h5>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    {{-- <tr>
                                         <td class="col">Less Advance</td>
                                         <td class="col" style="text-align: right"> 0.00</td>
-                                    </tr>
+                                    </tr> --}}
                                     <tr>
                                         <td class="col">Balance</td>
                                         <td class="col" style="text-align: right">{{  number_format($invoice->invoice_details[0]->product->unit_price * $invoice->invoice_details[0]->selling_qty??'0' , 2) }}</td>
@@ -457,9 +454,9 @@
 
 
 
-                        <div class="overlap" style="background-image:url('{{ asset('motor.png')}}');">
+							<div class="overlap" style="background-image:url('{{ asset('motor.png')}}');">
 
-                        </div>
+							</div>
                         </div>
 
 					</div>
